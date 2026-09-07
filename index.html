@@ -2786,12 +2786,28 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       const num = el("text", { class: "pnum", y: 6, "text-anchor": "middle" });
       num.textContent = i + 1;
       g.appendChild(num);
-      if (plus > 0) scoreBadge(-6, "+" + plus, "#9fd0a8", "plus", LIVE.plus);
-      if (minus > 0) scoreBadge(plus > 0 ? 14 : -6, "−" + minus, "#e08a80", "minus", LIVE.minus);
+      if (simple) {
+        num.setAttribute("y", "-7");
+        num.style.fontSize = "20px";
+        const bars = el("g", { class: "seat-confidence-bars", "pointer-events": "none" });
+        for (const [color, x, label, fill] of [["red", -23, "К", "#ed8076"], ["black", 5, "Ч", "#292d37"]]) {
+          const value = confidenceScore(read || {}, color), height = value * 2;
+          bars.appendChild(el("rect", { x, y: 0, width: 18, height: 20, rx: 2, fill: "#112018", stroke: "#a6b4aa", "stroke-width": 1 }));
+          bars.appendChild(el("rect", { x: x + 1, y: 20 - height, width: 16, height, fill, stroke: color === "black" && value ? "#d2d5df" : "none", "stroke-width": 0.7, "data-confidence": color, "data-value": value }));
+          const caption = el("text", { x: x + 9, y: 33, "text-anchor": "middle", fill: "#fff5e5" });
+          caption.style.fontSize = "12px";
+          caption.style.fontWeight = "700";
+          caption.textContent = label + value;
+          bars.appendChild(caption);
+        }
+        g.appendChild(bars);
+      }
+      if (!simple && plus > 0) scoreBadge(-6, "+" + plus, "#9fd0a8", "plus", LIVE.plus);
+      if (!simple && minus > 0) scoreBadge(plus > 0 ? 14 : -6, "−" + minus, "#e08a80", "minus", LIVE.minus);
       if (mark) {
         const b = el("text", {
           class: "mark-badge",
-          y: 27,
+          y: simple ? -27 : 27,
           "text-anchor": "middle",
           fill: mark === "sheriff" ? "var(--gold)" : mark === "don" ? "#e08a80" : "var(--cream)"
         });
@@ -2819,7 +2835,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       g.style.cursor = "pointer";
       g.setAttribute("tabindex", "0");
       g.setAttribute("role", "button");
-      g.setAttribute("aria-label", LN(i) + (mark ? ", моя версия: " + MARK_BADGE[mark] : "") + (out ? ", выбыл" : ""));
+      g.setAttribute("aria-label", LN(i) + (mark ? ", моя версия: " + MARK_BADGE[mark] : "") + (out ? ", выбыл" : "") + (simple ? ", очки за красного " + confidenceScore(read || {}, "red") + ", за чёрного " + confidenceScore(read || {}, "black") : ""));
       g.addEventListener("keydown", (e) => {
         if (e.target === g && (e.key === "Enter" || e.key === " ")) {
           e.preventDefault();
