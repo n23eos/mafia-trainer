@@ -404,6 +404,14 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 #playerHistory{padding-left:20px;overflow-wrap:anywhere}#playerCard footer{position:sticky;bottom:-22px;background:#112b1e;padding:12px 0;display:flex;gap:10px;align-items:center;justify-content:space-between}
 #playerNext{background:var(--cream)!important;color:var(--ink)!important;font-weight:700!important}
 @media(max-width:600px){.casual-seats{grid-template-columns:repeat(2,minmax(0,1fr))}.casual-panel{padding:14px}#playerCard{padding:16px}#playerCard footer{bottom:-16px;flex-wrap:wrap}#playerNext{width:100%}}
+.confidence-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.confidence-column{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px;background:#0c2016;border:1px solid var(--line);border-radius:12px}
+.confidence-column strong{font-size:14px}.confidence-column output{font:700 20px 'Manrope',sans-serif;font-variant-numeric:tabular-nums}
+.confidence-track{height:100px;width:56px;display:flex;align-items:flex-end;border:1px solid #8c9a90;border-radius:7px;background:repeating-linear-gradient(to top,transparent 0,transparent 9px,#ffffff15 9px,#ffffff15 10px);overflow:hidden}
+.confidence-track>div{width:100%;height:0;background:#dc665d}.black-column .confidence-track>div{background:#20232b;border-top:3px solid #c9cbd4}
+.confidence-controls{display:flex;gap:8px;width:100%}.confidence-controls button{flex:1;font-size:22px!important;min-width:44px}
+.confidence-controls button:disabled{opacity:.35;cursor:default!important}
+.seat-confidence{display:block;margin-top:7px;font-size:12px;color:var(--cream-dim)}
 </style>
 </head>
 <body>
@@ -768,6 +776,20 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   <header><h2 id="playerCardTitle" tabindex="-1"></h2><button id="playerClose" aria-label="Закрыть карточку">✕</button></header>
   <p id="playerPrevious"></p>
   <h3>Моя версия</h3><div id="playerRoles" class="card-choices"></div>
+  <h3>Насколько я уверен</h3>
+  <p>Две независимые оценки от 0 до 10 за текущий круг. Они не меняют выбранную роль.</p>
+  <div id="playerConfidence" class="confidence-columns">
+    <section class="confidence-column red-column" aria-label="Очки за красного">
+      <strong>Красный</strong><output id="redPointsValue" aria-live="polite">0 / 10</output>
+      <div class="confidence-track" role="meter" aria-label="Уверенность: красный" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="redPointsMeter"><div id="redPointsFill"></div></div>
+      <div class="confidence-controls"><button data-score="red" data-delta="-1" aria-label="Уменьшить очки за красного">−</button><button data-score="red" data-delta="1" aria-label="Добавить очко за красного">+</button></div>
+    </section>
+    <section class="confidence-column black-column" aria-label="Очки за чёрного">
+      <strong>Чёрный</strong><output id="blackPointsValue" aria-live="polite">0 / 10</output>
+      <div class="confidence-track" role="meter" aria-label="Уверенность: чёрный" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="blackPointsMeter"><div id="blackPointsFill"></div></div>
+      <div class="confidence-controls"><button data-score="black" data-delta="-1" aria-label="Уменьшить очки за чёрного">−</button><button data-score="black" data-delta="1" aria-label="Добавить очко за чёрного">+</button></div>
+    </section>
+  </div>
   <label for="playerNote">Что сказал, кого считает красным или чёрным, что проверил</label>
   <textarea id="playerNote" maxlength="1000" rows="3" placeholder="Например: назвался шерифом, проверил №7 красным; играет с №3"></textarea>
   <details><summary>Его слова об игроках</summary>
@@ -1292,7 +1314,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     if (JSON.stringify(prev) === JSON.stringify(next)) return null;
     round.reads[id] = next;
     const labels = { red: "красный", black: "чёрный", sheriff: "шериф", don: "дон", unknown: "не определился" };
-    return { t: "read", round: live.cur, id, prev, next, txt: `№${id + 1}: ${patch.role ? "моя версия — " + labels[patch.role] : patch.seen ? "речь отмечена" : patch.sheriffClaim !== void 0 ? patch.sheriffClaim ? "назвался шерифом" : "заявление шерифа снято" : patch.saysRed || patch.saysBlack ? "обновлено его мнение об игроках" : "заметка обновлена"}` };
+    return { t: "read", round: live.cur, id, prev, next, txt: `№${id + 1}: ${patch.redPoints !== void 0 ? "очки за красного: " + patch.redPoints : patch.blackPoints !== void 0 ? "очки за чёрного: " + patch.blackPoints : patch.role ? "моя версия — " + labels[patch.role] : patch.seen ? "речь отмечена" : patch.sheriffClaim !== void 0 ? patch.sheriffClaim ? "назвался шерифом" : "заявление шерифа снято" : patch.saysRed || patch.saysBlack ? "обновлено его мнение об игроках" : "заметка обновлена"}` };
   }
   function toggleTeamLink(live, a, b) {
     if (a === b) return null;
@@ -1334,6 +1356,17 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       else if (!left && !right) groups.push([a, b]);
     }
     return groups.map((g) => g.sort((a, b) => a - b));
+  }
+  function confidenceScore(read, color) {
+    const value = read[color + "Points"];
+    return Number.isInteger(value) ? Math.max(0, Math.min(10, value)) : 0;
+  }
+  function adjustConfidence(live, id, color, delta) {
+    if (!["red", "black"].includes(color) || ![1, -1].includes(delta)) return null;
+    const current = confidenceScore(readPlayer(live, id), color);
+    const next = Math.max(0, Math.min(10, current + delta));
+    if (current === next) return null;
+    return updatePlayer(live, id, { [color + "Points"]: next });
   }
 
   // app/js/util/escape.js
@@ -1388,6 +1421,11 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       if (document.hidden && dialog.open) saveNote();
     });
     $2("playerNext").onclick = next;
+    $2("playerConfidence").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-score]");
+      if (!b) return;
+      commit(adjustConfidence(getLive(), selected, b.dataset.score, Number(b.dataset.delta)));
+    });
     $2("playerSheriffClaim").onchange = () => commit(updatePlayer(getLive(), selected, { sheriffClaim: $2("playerSheriffClaim").checked }));
     $2("playerSaysKind").onchange = render;
     $2("playerNote").addEventListener("change", saveNote);
@@ -1439,12 +1477,24 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       $2("casualSeats").querySelectorAll("button").forEach((b, i) => {
         const read2 = readPlayer(live, i), out = live.out[i];
         b.textContent = `№${i + 1} · ${read2.role ? roles[read2.role] : "Не знаю"}${read2.seen ? " ✓" : ""}${out && out.round <= live.cur ? " · выбыл" : ""}`;
+        const scores = document.createElement("span");
+        scores.className = "seat-confidence";
+        scores.textContent = `Красный ${confidenceScore(read2, "red")} · Чёрный ${confidenceScore(read2, "black")}`;
+        b.appendChild(scores);
         b.dataset.role = read2.role || "unknown";
-        b.setAttribute("aria-label", `Игрок ${i + 1}, ${roles[read2.role] || "не определился"}${read2.seen ? ", речь отмечена" : ""}`);
+        b.setAttribute("aria-label", `Игрок ${i + 1}, ${roles[read2.role] || "не определился"}${read2.seen ? ", речь отмечена" : ""}, очки за красного ${confidenceScore(read2, "red")}, за чёрного ${confidenceScore(read2, "black")}`);
       });
       const groups = teamsForRound(round);
       $2("casualTeams").textContent = groups.length ? "Мои команды: " + groups.map((g) => g.map((i) => "№" + (i + 1)).join(" + ")).join(" · ") : "Свяжи игроков в карточке, если считаешь их одной командой.";
       const read = readPlayer(live, selected);
+      for (const color of ["red", "black"]) {
+        const value = confidenceScore(read, color);
+        $2(color + "PointsValue").textContent = value + " / 10";
+        $2(color + "PointsFill").style.height = value * 10 + "%";
+        $2(color + "PointsMeter").setAttribute("aria-valuenow", String(value));
+        $2("playerConfidence").querySelector(`[data-score="${color}"][data-delta="-1"]`).disabled = value === 0;
+        $2("playerConfidence").querySelector(`[data-score="${color}"][data-delta="1"]`).disabled = value === 10;
+      }
       $2("playerSheriffClaim").checked = !!read.sheriffClaim;
       $2("playerSaysTargets").querySelectorAll("button").forEach((b, id) => {
         b.hidden = id === selected;
@@ -1467,7 +1517,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       $2("playerHistory").innerHTML = live.rounds.map((r, i) => {
         const item = r.reads?.[selected];
         if (!item) return "";
-        return `<li><b>Круг ${i + 1}</b> · ${escH(roles[item.role] || "Не знаю")}${item.seen ? " · речь отмечена" : ""}${item.sheriffClaim ? " · назвался шерифом" : ""}<p>Его красные: ${numbers(item.saysRed)}; чёрные: ${numbers(item.saysBlack)}</p>${item.note ? "<p>" + escH(item.note) + "</p>" : ""}</li>`;
+        return `<li><b>Круг ${i + 1}</b> · ${escH(roles[item.role] || "Не знаю")} · очки: красный ${confidenceScore(item, "red")}/10, чёрный ${confidenceScore(item, "black")}/10${item.seen ? " · речь отмечена" : ""}${item.sheriffClaim ? " · назвался шерифом" : ""}<p>Его красные: ${numbers(item.saysRed)}; чёрные: ${numbers(item.saysBlack)}</p>${item.note ? "<p>" + escH(item.note) + "</p>" : ""}</li>`;
       }).join("") || "<li>Здесь появятся твои записи по кругам.</li>";
     }
     return { open, render };
@@ -3147,7 +3197,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     const sh = e.sh === "s1" ? "1" : "2";
     switch (e.t) {
       case "read":
-        return nm(e.id) + ": запись наблюдателя" + K + " — " + ({ red: "красный", black: "чёрный", sheriff: "шериф", don: "дон", unknown: "не знаю" }[e.next.role] || "без версии") + (e.next.sheriffClaim ? "; назвался шерифом" : "") + "; его красные: " + (e.next.saysRed || []).map(nm).join(", ") + "; его чёрные: " + (e.next.saysBlack || []).map(nm).join(", ") + (e.next.note ? "; " + e.next.note : "") + (e.next.seen ? "; речь отмечена" : "") + ".";
+        return nm(e.id) + ": запись наблюдателя" + K + " — " + ({ red: "красный", black: "чёрный", sheriff: "шериф", don: "дон", unknown: "не знаю" }[e.next.role] || "без версии") + "; очки за красного: " + (e.next.redPoints || 0) + "/10; за чёрного: " + (e.next.blackPoints || 0) + "/10" + (e.next.sheriffClaim ? "; назвался шерифом" : "") + "; его красные: " + (e.next.saysRed || []).map(nm).join(", ") + "; его чёрные: " + (e.next.saysBlack || []).map(nm).join(", ") + (e.next.note ? "; " + e.next.note : "") + (e.next.seen ? "; речь отмечена" : "") + ".";
       case "teamLink":
         return nm(e.a) + " и " + nm(e.b) + (e.added ? ": возможно одна команда" : ": связь команды снята") + K + ".";
       case "round":
