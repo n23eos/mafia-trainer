@@ -383,6 +383,27 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   #liveTools .live-tools button{flex:1 1 auto;padding:10px}
   .live-notes-row{flex-wrap:wrap}.live-notes-row input{min-width:0;width:100%}
 }
+#liveMode{gap:8px;margin:12px 0}#liveMode button{min-height:44px}
+#liveMode [aria-pressed=true]{background:var(--cream);color:var(--ink)}
+.casual-panel{padding:18px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;margin-bottom:14px}
+.casual-panel h2{font-size:20px}.casual-panel p{font-size:13px;line-height:1.6;margin:10px 0;color:var(--cream-dim)}
+.casual-seats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:14px 0}
+.casual-seats button{min-height:66px;white-space:normal}
+.casual-seats button,.card-choices button,#playerCard button{padding:10px;border:1px solid var(--brass-dim);border-radius:8px;background:#173a28;color:var(--cream);font:inherit;cursor:pointer}
+.casual-seats [data-role=red]{border-left:5px solid #ef7c72}.casual-seats [data-role=black]{border-left:5px solid #aab0be;background:#191b21}.casual-seats [data-role=sheriff]{border-left:5px solid #eac65f}
+#playerCard{margin:auto;width:min(600px,calc(100% - 24px));max-height:90dvh;overflow:auto;border:1px solid var(--brass-dim);border-radius:18px;padding:22px;background:#112b1e;color:var(--cream)}
+#playerCard::backdrop{background:rgba(0,0,0,.65)}
+#playerCard header{display:flex;gap:12px;justify-content:space-between;align-items:center}#playerCard h2{font-size:21px}
+#playerCard h3,#playerCard label{display:block;font-size:14px;margin:18px 0 8px}
+#playerCard p,#playerCard footer span{font-size:12px;line-height:1.6;color:var(--cream-dim);margin:8px 0}
+#playerCard button{min-height:44px}#playerClose{min-width:44px}
+.card-choices{display:flex;flex-wrap:wrap;gap:8px}.card-choices button{flex:1 1 auto}
+#playerCard [aria-pressed=true]{background:var(--cream);color:var(--ink);box-shadow:inset 0 0 0 2px var(--brass)}
+#playerSaysKind{min-height:44px;font:inherit;padding:8px;margin-bottom:10px}#playerSheriffClaim{width:20px;height:20px;vertical-align:middle}
+#playerNote{width:100%;resize:vertical;padding:12px;font:inherit;font-size:16px;border:1px solid var(--brass-dim);border-radius:8px;background:#0c2016;color:var(--cream)}
+#playerHistory{padding-left:20px;overflow-wrap:anywhere}#playerCard footer{position:sticky;bottom:-22px;background:#112b1e;padding:12px 0;display:flex;gap:10px;align-items:center;justify-content:space-between}
+#playerNext{background:var(--cream)!important;color:var(--ink)!important;font-weight:700!important}
+@media(max-width:600px){.casual-seats{grid-template-columns:repeat(2,minmax(0,1fr))}.casual-panel{padding:14px}#playerCard{padding:16px}#playerCard footer{bottom:-16px;flex-wrap:wrap}#playerNext{width:100%}}
 </style>
 </head>
 <body>
@@ -537,6 +558,19 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     <strong id="liveName"></strong><span id="liveRoundLabel"></span>
     <span id="liveSaveStatus" role="status" aria-live="polite"></span>
   </div>
+  <div id="liveMode" class="pickrow" aria-label="Режим записи">
+    <button class="btn slim" data-mode="casual">Простой</button>
+    <button class="btn slim" data-mode="expert">Подробный</button>
+  </div>
+  <section id="casualPanel" class="casual-panel">
+    <h2>Слушай игрока — собирай картину</h2>
+    <p>Нажми номер: отметь свою версию, запиши речь и соедини возможную команду.</p>
+    <div id="casualRoundTabs" class="tabs"></div>
+    <p id="casualProgress" tabindex="-1" role="status"></p>
+    <button id="casualContinue" class="btn slim">Продолжить по кругу →</button>
+    <div id="casualSeats" class="casual-seats"></div>
+    <p id="casualTeams"></p>
+  </section>
   <div class="pickrow" id="toolCategories" aria-label="Группы инструментов">
     <button class="btn slim" data-category="0">Основное</button>
     <button class="btn slim" data-category="1">Отношения</button>
@@ -730,6 +764,25 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   </div>
 </div>
 
+<dialog id="playerCard" aria-labelledby="playerCardTitle">
+  <header><h2 id="playerCardTitle" tabindex="-1"></h2><button id="playerClose" aria-label="Закрыть карточку">✕</button></header>
+  <p id="playerPrevious"></p>
+  <h3>Моя версия</h3><div id="playerRoles" class="card-choices"></div>
+  <label for="playerNote">Что сказал, кого считает красным или чёрным, что проверил</label>
+  <textarea id="playerNote" maxlength="1000" rows="3" placeholder="Например: назвался шерифом, проверил №7 красным; играет с №3"></textarea>
+  <details><summary>Его слова об игроках</summary>
+    <label><input type="checkbox" id="playerSheriffClaim"> Назвался шерифом</label>
+    <label for="playerSaysKind">Кого он считает</label>
+    <select id="playerSaysKind"><option value="saysRed">Красным</option><option value="saysBlack">Чёрным</option></select>
+    <div id="playerSaysTargets" class="card-choices"></div>
+    <p id="playerSaysSummary"></p>
+  </details>
+  <h3>Возможно одна команда с…</h3>
+  <p>Нажми номер, чтобы соединить. Повтор — убрать связь. Цепочка связей образует команду.</p>
+  <div id="playerTeamTargets" class="card-choices"></div>
+  <details><summary>Записи по кругам</summary><ul id="playerHistory"></ul></details>
+  <footer><span id="playerSaveState" role="status">Заметка сохраняется при выходе из поля</span><button id="playerNext">Записал → следующий</button></footer>
+</dialog>
 <div class="modal-bg" id="gamesModal">
   <div class="modal">
     <h2>Сохранённые игры</h2>
@@ -1228,6 +1281,198 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     return base;
   }
 
+  // app/js/state/casual.js
+  function readPlayer(live, id) {
+    return live.rounds[live.cur].reads?.[id] || {};
+  }
+  function updatePlayer(live, id, patch) {
+    const round = live.rounds[live.cur];
+    round.reads ??= {};
+    const prev = structuredClone(round.reads[id] || {}), next = { ...prev, ...patch };
+    if (JSON.stringify(prev) === JSON.stringify(next)) return null;
+    round.reads[id] = next;
+    const labels = { red: "красный", black: "чёрный", sheriff: "шериф", don: "дон", unknown: "не определился" };
+    return { t: "read", round: live.cur, id, prev, next, txt: `№${id + 1}: ${patch.role ? "моя версия — " + labels[patch.role] : patch.seen ? "речь отмечена" : patch.sheriffClaim !== void 0 ? patch.sheriffClaim ? "назвался шерифом" : "заявление шерифа снято" : patch.saysRed || patch.saysBlack ? "обновлено его мнение об игроках" : "заметка обновлена"}` };
+  }
+  function toggleTeamLink(live, a, b) {
+    if (a === b) return null;
+    const round = live.rounds[live.cur];
+    round.teamLinks ??= [];
+    const pair = [Math.min(a, b), Math.max(a, b)];
+    const idx = round.teamLinks.findIndex((p) => p[0] === pair[0] && p[1] === pair[1]);
+    const added = idx < 0;
+    if (added) round.teamLinks.push(pair);
+    else round.teamLinks.splice(idx, 1);
+    return { t: "teamLink", round: live.cur, a: pair[0], b: pair[1], added, txt: `№${a + 1} ↔ №${b + 1}: ${added ? "возможно одна команда" : "связь снята"}` };
+  }
+  function undoCasual(live, e) {
+    const round = live.rounds[e.round];
+    if (e.t === "read") {
+      round.reads ??= {};
+      if (Object.keys(e.prev).length) round.reads[e.id] = e.prev;
+      else delete round.reads[e.id];
+      return true;
+    }
+    if (e.t === "teamLink") {
+      round.teamLinks ??= [];
+      const idx = round.teamLinks.findIndex((p) => p[0] === e.a && p[1] === e.b);
+      if (e.added && idx >= 0) round.teamLinks.splice(idx, 1);
+      if (!e.added && idx < 0) round.teamLinks.push([e.a, e.b]);
+      return true;
+    }
+    return false;
+  }
+  function teamsForRound(round) {
+    const groups = [];
+    for (const [a, b] of round.teamLinks || []) {
+      const left = groups.find((g) => g.includes(a)), right = groups.find((g) => g.includes(b));
+      if (left && right && left !== right) {
+        left.push(...right);
+        groups.splice(groups.indexOf(right), 1);
+      } else if (left && !right) left.push(b);
+      else if (right && !left) right.push(a);
+      else if (!left && !right) groups.push([a, b]);
+    }
+    return groups.map((g) => g.sort((a, b) => a - b));
+  }
+
+  // app/js/util/escape.js
+  var escH = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  // app/js/ui/casual.js
+  function setupCasual({ getLive, act, refresh }) {
+    const $2 = (id) => document.getElementById(id), dialog = $2("playerCard");
+    let selected = 0, returnTo = "grid";
+    const roles = { unknown: "Не знаю", red: "Красный", black: "Чёрный", sheriff: "Шериф", don: "Дон" };
+    const commit = (e) => {
+      if (e) act(e);
+    };
+    function open(id) {
+      if (!dialog.open) returnTo = document.activeElement?.closest("#liveSvg") ? "table" : "grid";
+      selected = id;
+      render();
+      if (!dialog.open) dialog.showModal();
+      $2("playerCardTitle").focus();
+    }
+    dialog.addEventListener("close", () => {
+      document.querySelectorAll(returnTo === "table" ? "#liveSvg g.seat" : "#casualSeats button")[selected]?.focus({ preventScroll: true });
+    });
+    function saveNote() {
+      const note = $2("playerNote").value.trim();
+      if (note !== (readPlayer(getLive(), selected).note || "")) commit(updatePlayer(getLive(), selected, { note }));
+    }
+    function next() {
+      saveNote();
+      commit(updatePlayer(getLive(), selected, { seen: true }));
+      const live = getLive();
+      for (let offset = 1; offset <= 10; offset++) {
+        const id = (selected + offset) % 10, out = live.out[id];
+        if (!(out && out.round < live.cur) && !readPlayer(live, id).seen) {
+          open(id);
+          return;
+        }
+      }
+      dialog.close();
+      refresh();
+      $2("casualProgress").focus();
+    }
+    $2("playerClose").onclick = () => {
+      saveNote();
+      dialog.close();
+    };
+    dialog.addEventListener("cancel", saveNote);
+    window.addEventListener("pagehide", () => {
+      if (dialog.open) saveNote();
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && dialog.open) saveNote();
+    });
+    $2("playerNext").onclick = next;
+    $2("playerSheriffClaim").onchange = () => commit(updatePlayer(getLive(), selected, { sheriffClaim: $2("playerSheriffClaim").checked }));
+    $2("playerSaysKind").onchange = render;
+    $2("playerNote").addEventListener("change", saveNote);
+    $2("playerNote").addEventListener("input", () => {
+      $2("playerSaveState").textContent = "Заметка сохранится при выходе из поля";
+    });
+    for (const [role, label] of Object.entries(roles)) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.role = role;
+      b.textContent = label;
+      b.onclick = () => commit(updatePlayer(getLive(), selected, { role }));
+      $2("playerRoles").appendChild(b);
+    }
+    for (let id = 0; id < 10; id++) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.player = id;
+      b.onclick = () => open(id);
+      $2("casualSeats").appendChild(b);
+      const t = document.createElement("button");
+      t.type = "button";
+      t.dataset.target = id;
+      t.onclick = () => commit(toggleTeamLink(getLive(), selected, id));
+      $2("playerTeamTargets").appendChild(t);
+      const said = document.createElement("button");
+      said.type = "button";
+      said.textContent = "№" + (id + 1);
+      said.onclick = () => {
+        const read = readPlayer(getLive(), selected), kind = $2("playerSaysKind").value, other = kind === "saysRed" ? "saysBlack" : "saysRed";
+        const values = read[kind] || [];
+        commit(updatePlayer(getLive(), selected, { [kind]: values.includes(id) ? values.filter((i) => i !== id) : [...values, id], [other]: (read[other] || []).filter((i) => i !== id) }));
+      };
+      $2("playerSaysTargets").appendChild(said);
+    }
+    $2("casualContinue").onclick = () => {
+      const live = getLive();
+      const id = Array.from({ length: 10 }, (_, i) => i).find((i) => !(live.out[i]?.round < live.cur) && !readPlayer(live, i).seen);
+      open(id ?? 0);
+    };
+    function render() {
+      const live = getLive(), round = live.rounds[live.cur];
+      $2("playerSaveState").textContent = $2("liveSaveStatus").textContent;
+      $2("playerSaveState").classList.toggle("save-error", $2("liveSaveStatus").classList.contains("save-error"));
+      const alive = Array.from({ length: 10 }, (_, i) => i).filter((i) => !(live.out[i]?.round < live.cur));
+      const seen = alive.filter((i) => readPlayer(live, i).seen).length;
+      $2("casualProgress").textContent = `Круг ${live.cur + 1} · речи отмечены ${seen} из ${alive.length}`;
+      $2("casualContinue").textContent = seen === alive.length ? "Пересмотреть записи" : "Продолжить по кругу →";
+      $2("casualSeats").querySelectorAll("button").forEach((b, i) => {
+        const read2 = readPlayer(live, i), out = live.out[i];
+        b.textContent = `№${i + 1} · ${read2.role ? roles[read2.role] : "Не знаю"}${read2.seen ? " ✓" : ""}${out && out.round <= live.cur ? " · выбыл" : ""}`;
+        b.dataset.role = read2.role || "unknown";
+        b.setAttribute("aria-label", `Игрок ${i + 1}, ${roles[read2.role] || "не определился"}${read2.seen ? ", речь отмечена" : ""}`);
+      });
+      const groups = teamsForRound(round);
+      $2("casualTeams").textContent = groups.length ? "Мои команды: " + groups.map((g) => g.map((i) => "№" + (i + 1)).join(" + ")).join(" · ") : "Свяжи игроков в карточке, если считаешь их одной командой.";
+      const read = readPlayer(live, selected);
+      $2("playerSheriffClaim").checked = !!read.sheriffClaim;
+      $2("playerSaysTargets").querySelectorAll("button").forEach((b, id) => {
+        b.hidden = id === selected;
+        b.setAttribute("aria-pressed", String((read[$2("playerSaysKind").value] || []).includes(id)));
+      });
+      const numbers = (values) => (values || []).map((i) => "№" + (i + 1)).join(", ") || "—";
+      $2("playerSaysSummary").textContent = `Считает красными: ${numbers(read.saysRed)}. Чёрными: ${numbers(read.saysBlack)}.`;
+      $2("playerCardTitle").textContent = `Игрок №${selected + 1} · круг ${live.cur + 1}`;
+      const prev = live.rounds.slice(0, live.cur).map((r, i) => ({ read: r.reads?.[selected], i })).filter((x) => x.read?.role).at(-1);
+      $2("playerPrevious").textContent = prev ? `В круге ${prev.i + 1}: ${roles[prev.read.role]}. Сейчас можно записать новую версию.` : "Это твоя версия роли; заявления и сомнения запиши ниже.";
+      $2("playerRoles").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String((read.role || "unknown") === b.dataset.role)));
+      if (document.activeElement !== $2("playerNote")) $2("playerNote").value = read.note || "";
+      $2("playerTeamTargets").querySelectorAll("button").forEach((b, id) => {
+        b.hidden = id === selected;
+        b.textContent = "№" + (id + 1);
+        const linked = (round.teamLinks || []).some((p) => p.includes(selected) && p.includes(id));
+        b.setAttribute("aria-pressed", String(linked));
+        b.setAttribute("aria-label", `${linked ? "Разъединить" : "Соединить"} №${selected + 1} и №${id + 1}`);
+      });
+      $2("playerHistory").innerHTML = live.rounds.map((r, i) => {
+        const item = r.reads?.[selected];
+        if (!item) return "";
+        return `<li><b>Круг ${i + 1}</b> · ${escH(roles[item.role] || "Не знаю")}${item.seen ? " · речь отмечена" : ""}${item.sheriffClaim ? " · назвался шерифом" : ""}<p>Его красные: ${numbers(item.saysRed)}; чёрные: ${numbers(item.saysBlack)}</p>${item.note ? "<p>" + escH(item.note) + "</p>" : ""}</li>`;
+      }).join("") || "<li>Здесь появятся твои записи по кругам.</li>";
+    }
+    return { open, render };
+  }
+
   // app/js/state/live-actions.js
   function toggleVote(live, voter, target) {
     if (![voter, target].every((i) => Number.isInteger(i) && i >= 0 && i < 10)) return null;
@@ -1267,9 +1512,6 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     return false;
   }
 
-  // app/js/util/escape.js
-  var escH = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-
   // app/js/state/storage.js
   var SCHEMA_VERSION = 2;
   var SAVE_KEY = "protokol-save-v1";
@@ -1291,6 +1533,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       schemaVersion: SCHEMA_VERSION,
       rounds: [{ votes: {}, noms: [] }],
       cur: 0,
+      mode: "casual",
       view: "cur",
       marks: {},
       team: {},
@@ -2086,6 +2329,10 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   }
   function liveTap(i) {
     const r = LIVE.rounds[LIVE.cur];
+    if (LIVE.mode !== "expert") {
+      casualUI.open(i);
+      return;
+    }
     if (liveTool === "erase") return;
     if (liveTool === "suspect") {
       liveCycleMark(i);
@@ -2198,7 +2445,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   function liveUndo() {
     const e = LIVE.journal.pop();
     if (!e) return;
-    if (undoVoteOrRound(LIVE, e)) {
+    if (undoCasual(LIVE, e) || undoVoteOrRound(LIVE, e)) {
     } else if (e.t === "mark") {
       if (e.prev === null) delete LIVE.marks[e.id];
       else LIVE.marks[e.id] = e.prev;
@@ -2419,6 +2666,12 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         });
       }
     }
+    for (const [a, b] of LIVE.rounds[LIVE.cur].teamLinks || []) {
+      const c = liveChord(svg, a, b, "cwline", "#bda0ec", 0, false);
+      c.g.style.opacity = ".85";
+      c.path.style.stroke = "#bda0ec";
+      c.path.style.strokeDasharray = "6 5";
+    }
     for (let i = 0; i < N; i++) {
       let scoreBadge = function(x, txt, color, kind, store) {
         if (liveTool === "erase") {
@@ -2445,12 +2698,14 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       };
       const p = seatPosLive(i);
       const g = el("g", { class: "seat", transform: "translate(" + p.x + "," + p.y + ")" });
-      const mark = LIVE.marks[i], out = LIVE.out[i];
+      const simple = LIVE.mode !== "expert";
+      const read = LIVE.rounds[LIVE.cur].reads?.[i];
+      const mark = simple ? read?.role === "unknown" ? null : read?.role : LIVE.marks[i], out = LIVE.out[i];
       const plus = LIVE.plus[i] || 0, minus = LIVE.minus[i] || 0;
       if (mark) g.classList.add("mark-" + mark);
       if (out) g.classList.add("dead");
       if (liveSel === i) g.classList.add("sel");
-      if (LIVE.team[i]) {
+      if (!simple && LIVE.team[i]) {
         const ring = el("circle", { r: 44, fill: "none", stroke: TEAM_COLORS[LIVE.team[i] - 1], "stroke-width": 3.2 });
         ring.style.pointerEvents = "none";
         g.appendChild(ring);
@@ -2473,7 +2728,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         btn.style.cursor = "pointer";
         btn.addEventListener("click", (e) => {
           e.stopPropagation();
-          liveCycleMark(i);
+          if (LIVE.mode !== "expert") casualUI.open(i);
+          else liveCycleMark(i);
         });
         g.appendChild(btn);
       }
@@ -2534,6 +2790,14 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     });
   }
   function renderLive() {
+    const simple = LIVE.mode !== "expert";
+    $("screen-live").classList.toggle("casual-mode", simple);
+    $("casualPanel").hidden = !simple;
+    $("toolCategories").hidden = simple;
+    $("liveTools").hidden = simple;
+    $("liveHint").hidden = simple;
+    document.querySelectorAll("#liveMode button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === (simple ? "casual" : "expert"))));
+    casualUI.render();
     $("liveName").textContent = LIVE.meta.name || "Новая партия";
     $("liveRoundLabel").textContent = "Круг " + (LIVE.cur + 1) + " из " + LIVE.rounds.length + (LIVE.meta.status === "done" ? " · Завершена" : " · В процессе");
     $("liveFinish").textContent = LIVE.meta.status === "done" ? "Возобновить" : "Завершить";
@@ -2576,6 +2840,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       liveAct(addRound(LIVE));
     };
     tabs.appendChild(add);
+    const casualTabs = $("casualRoundTabs");
+    casualTabs.innerHTML = "";
+    [...tabs.children].forEach((original) => {
+      const button = original.cloneNode(true);
+      button.onclick = () => original.click();
+      casualTabs.appendChild(button);
+    });
     document.querySelectorAll("#pickView button").forEach((b) => b.classList.toggle("on", b.dataset.v === (LIVE.view || "cur")));
     const vg = $("liveVotes");
     vg.innerHTML = "";
@@ -2875,6 +3146,10 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     const K = " (круг " + ((e.round || 0) + 1) + ")";
     const sh = e.sh === "s1" ? "1" : "2";
     switch (e.t) {
+      case "read":
+        return nm(e.id) + ": запись наблюдателя" + K + " — " + ({ red: "красный", black: "чёрный", sheriff: "шериф", don: "дон", unknown: "не знаю" }[e.next.role] || "без версии") + (e.next.sheriffClaim ? "; назвался шерифом" : "") + "; его красные: " + (e.next.saysRed || []).map(nm).join(", ") + "; его чёрные: " + (e.next.saysBlack || []).map(nm).join(", ") + (e.next.note ? "; " + e.next.note : "") + (e.next.seen ? "; речь отмечена" : "") + ".";
+      case "teamLink":
+        return nm(e.a) + " и " + nm(e.b) + (e.added ? ": возможно одна команда" : ": связь команды снята") + K + ".";
       case "round":
         return "Начат круг " + (e.round + 1) + ".";
       case "vote":
@@ -3032,8 +3307,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     $("voteTarget").focus({ preventScroll: true });
   });
   $("tableJump").addEventListener("click", () => {
-    $("liveTools").scrollIntoView({ block: "start" });
-    document.querySelector("#liveTools .tool-group:not([hidden]) button").focus({ preventScroll: true });
+    if (LIVE.mode !== "expert") {
+      $("casualPanel").scrollIntoView({ block: "start" });
+      $("casualContinue").focus({ preventScroll: true });
+    } else {
+      $("liveTools").scrollIntoView({ block: "start" });
+      document.querySelector("#liveTools .tool-group:not([hidden]) button").focus({ preventScroll: true });
+    }
   });
   $("voteTarget").addEventListener("change", () => {
     voteTarget = $("voteTarget").value === "" ? null : +$("voteTarget").value;
@@ -3088,6 +3368,15 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   $("mCardAdvanced").addEventListener("click", () => show("advanced"));
   $("advToEfir").addEventListener("click", () => show("live"));
   $("advUndo").addEventListener("click", liveUndo);
+  var casualUI = setupCasual({ getLive: () => LIVE, act: liveAct, refresh: renderLive });
+  $("liveMode").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-mode]");
+    if (!b) return;
+    LIVE.mode = b.dataset.mode;
+    liveSel = null;
+    livePersist();
+    renderLive();
+  });
   syncSettings();
   renderMenu();
 })();
