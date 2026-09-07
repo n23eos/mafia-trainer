@@ -1932,7 +1932,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   }
 
   // app/js/ui/host-view.js
-  var roleIcons = { "Не назначена": "?", "Мирный": "●", "Мафия": "♠", "Дон": "♛", "Шериф": "★" };
+  var roleIcons = {
+    "Не назначена": "?",
+    "Мирный": "●",
+    "Мафия": '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5h18v5h-7v3h-3l-2 7H4l3-10H3V5zm9 5v1h1v-1h-1z"/></svg>',
+    "Дон": '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 15 8 5h8l2 10H6zm-4 1h20v3H2v-3z"/><path d="M7 12h10" stroke="#d8cbb6" stroke-width="2"/></svg>',
+    "Шериф": "★"
+  };
   var hostMarkup = `
   <header class="hd-header">
     <button id="hostBack" class="hd-quiet">← Меню</button>
@@ -2023,6 +2029,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 #screen-host [data-role-team]{display:inline-grid;place-items:center;min-width:26px;height:28px;border-radius:6px;background:#f4ead6;color:#76694e;line-height:1;vertical-align:middle}
 #screen-host [data-role-team="red"]{color:#c52232}
 #screen-host [data-role-team="black"]{color:#111111}
+#screen-host [data-role-team="unknown"]{background:transparent;color:#82958a;font-size:14px;font-weight:400;opacity:.65}
+#screen-host [data-role-team] svg{display:block;width:24px;height:24px}
 #screen-host .hd-role-choices b{display:grid;width:30px;margin:0 auto 5px}
 #screen-host .hd-selected-role{width:38px;height:38px}
 #screen-host .hd-clock{top:27%}#hostSpeakerNumber{display:block;font:800 36px/1 'PT Mono',monospace;color:#f5d89b;margin-bottom:4px}.hd-speech-toolbar{display:flex;align-items:center;gap:8px;margin-top:12px}.hd-speech-toolbar button{flex:1}.hd-speech-toolbar .hd-duration select{margin:0;min-height:44px!important}
@@ -2074,13 +2082,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     function renderRoles() {
       root.querySelectorAll("[data-host-role]").forEach((node) => {
         const p = state.players[Number(node.dataset.hostRole)], role2 = roleKey(p.role);
-        node.textContent = rolesVisible ? roleIcons[role2] : "?";
+        node.innerHTML = rolesVisible ? roleIcons[role2] : "?";
         node.dataset.roleTeam = rolesVisible ? roleTeam(role2) : "unknown";
         node.setAttribute("aria-label", rolesVisible ? role2 : "Роль скрыта");
         node.title = rolesVisible ? role2 : "Роль скрыта";
       });
       const role = roleKey(state.players[selected].role);
-      $2("hostSelectedRole").textContent = rolesVisible ? roleIcons[role] : "?";
+      $2("hostSelectedRole").innerHTML = rolesVisible ? roleIcons[role] : "?";
       $2("hostSelectedRole").dataset.roleTeam = rolesVisible ? roleTeam(role) : "unknown";
       $2("hostSelectedRole").setAttribute("aria-label", rolesVisible ? role : "Роль скрыта");
       $2("hostRoleChoices").querySelectorAll("[data-role]").forEach((b) => {
