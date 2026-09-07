@@ -1,0 +1,3097 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12271c">
+<title>Протокол — головоломка на дедукцию</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;600;800&family=PT+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --felt:#193426; --felt-dark:#0b1d14; --surface:#10271b; --surface-2:#163023;
+  --cream:#f4ecdc; --cream-dim:#cfc6b3; --ink:#211e18;
+  --wax:#c5493f; --wax-dark:#9f312a; --brass:#d5ad61; --brass-dim:#95763d;
+  --chip-black:#1b1917; --line:rgba(244,236,220,.14); --gold:#f0cf7e;
+  --focus:#f2d38a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Manrope',system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(213,173,97,.08), transparent 28rem),
+    radial-gradient(circle at 85% 12%, rgba(41,92,64,.34), transparent 32rem),
+    var(--felt-dark);
+  color:var(--cream); min-height:100vh; padding:20px 18px 64px;
+}
+.wrap{max-width:1180px;margin:0 auto}
+button{font-family:inherit}
+button:focus-visible,[role=button]:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--focus);outline-offset:3px
+}
+.screen{display:none}
+.screen.on{display:block;animation:fadein .25s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1,h2.disp,h3.disp{font-family:'Prata',serif;font-weight:400;letter-spacing:.5px}
+.mono{font-family:'PT Mono',monospace}
+
+/* ---------- шапка ---------- */
+.tophead{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+.tophead h1{font-size:clamp(22px,4vw,34px)}
+.tophead .num{color:var(--brass)}
+.sub{font-family:'PT Mono',monospace;font-size:12px;color:var(--cream-dim);opacity:.85}
+.backbtn{background:none;border:1px solid var(--line);color:var(--cream-dim);border-radius:4px;padding:7px 14px;font-size:13px;cursor:pointer}
+.backbtn:hover{border-color:var(--brass);color:var(--cream)}
+
+/* ---------- главная ---------- */
+.menu-hero{text-align:left;margin:22px 0 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,480px);gap:36px;align-items:end}
+.menu-hero h1{font-size:clamp(42px,7vw,72px);line-height:1}
+.menu-hero .tag{font-family:'PT Mono',monospace;font-size:12px;color:var(--brass);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em}
+.menu-hero .rulebrief{font-size:15px;line-height:1.65;color:var(--cream-dim)}
+.home-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:18px}
+.home-column{display:flex;flex-direction:column;gap:18px}
+.section-label{font-family:'PT Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-dim);opacity:.8}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{position:relative;text-align:left;border:1px solid var(--line);border-radius:14px;padding:20px;background:rgba(16,39,27,.86);cursor:pointer;color:var(--cream);transition:border-color .15s, transform .15s, background .15s;min-height:132px}
+.card:hover{border-color:rgba(213,173,97,.72);background:var(--surface-2);transform:translateY(-2px)}
+.card h3{font-family:'Prata',serif;font-weight:400;font-size:19px;margin-bottom:5px}
+.card p{font-size:13px;color:var(--cream-dim);line-height:1.5}
+.card .badge{position:absolute;top:14px;right:14px;font-family:'PT Mono',monospace;font-size:11px;color:var(--brass)}
+.card.primary{min-height:250px;padding:28px;background:linear-gradient(145deg,rgba(29,67,47,.96),rgba(13,34,23,.96))}
+.card.primary h3{font-size:clamp(25px,4vw,36px);margin:22px 0 10px}
+.card.primary p{font-size:15px;max-width:520px}
+.card.primary .card-kicker{font-family:'PT Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em}
+.card-cta{display:inline-flex;align-items:center;gap:8px;margin-top:26px;color:var(--ink);background:var(--brass);padding:10px 14px;border-radius:8px;font-size:13px;font-weight:800}
+.card.practice{min-height:250px;cursor:default}
+.card.practice:hover{transform:none}
+.card.practice .card-cta{cursor:pointer}
+.card.small{padding:14px 16px;min-height:86px}
+.card.small h3{font-size:16px;margin-bottom:4px}
+.cards.aux{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:12px}
+.utility-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.utility-nav .backbtn{min-height:42px}
+.menu-foot{text-align:center;margin-top:26px;font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);opacity:.7}
+
+/* ---------- селекторы свободной игры ---------- */
+.pickrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.pickrow .lbl{font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);width:100%}
+.pick{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;flex-wrap:wrap}
+.pick button{font-family:'PT Mono',monospace;font-size:12px;padding:7px 11px;background:transparent;color:var(--cream-dim);border:0;cursor:pointer}
+.pick button.on{background:var(--brass);color:var(--ink);font-weight:700}
+
+/* ---------- игра ---------- */
+.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.9fr);gap:22px;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+.gamebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.gamebar .mode-badge{font-family:'PT Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--brass);border:1px solid var(--brass-dim);border-radius:3px;padding:4px 9px;text-transform:uppercase}
+.gamebar .spacer{flex:1}
+.gamebar .stat{font-family:'PT Mono',monospace;font-size:12px;color:var(--cream-dim)}
+.table-card{position:relative}
+.table-svg{width:100%;height:auto;display:block}
+.seat{cursor:pointer}
+.seat .plate{fill:#0e2015;stroke:var(--line);stroke-width:1;transition:stroke .2s}
+.seat:hover .plate{stroke:var(--brass)}
+.seat.dead{cursor:default;opacity:.92}
+.seat text{font-family:'Manrope';fill:var(--cream);pointer-events:none}
+.seat .pnum{font-weight:800;font-size:17px}
+.seat .pname{font-size:9px;opacity:.7;letter-spacing:.4px}
+.seat .claimtag{font-family:'PT Mono';font-size:8px;fill:var(--gold)}
+.mark-black .plate{fill:var(--chip-black);stroke:var(--brass)}
+.mark-red .plate{fill:var(--wax-dark);stroke:var(--cream-dim)}
+.mark-badge{font-family:'PT Mono';font-size:9px;letter-spacing:1px}
+.seat.sel .plate{stroke:var(--gold);stroke-width:2.5}
+.chord{fill:none;stroke:var(--brass);stroke-width:1.6;opacity:.4;marker-end:url(#arrow)}
+.chord.to-elim{stroke:var(--wax);stroke-width:2.2;opacity:.4}
+.linkline{fill:none;stroke:var(--cream-dim);stroke-width:1.7;stroke-dasharray:6 4;opacity:.85}
+.hatchfade{animation:hatchin .9s ease .15s both;pointer-events:none}
+@keyframes hatchin{from{opacity:0}to{opacity:.95}}
+.host-slot text{font-family:'PT Mono',monospace;fill:var(--cream-dim);pointer-events:none}
+.tooltray{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:8px;font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim)}
+.legend{display:flex;gap:16px;justify-content:center;font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);margin-top:6px;flex-wrap:wrap}
+.legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend .l-mark-b::before{background:var(--chip-black);border:1px solid var(--brass)}
+.legend .l-mark-r::before{background:var(--wax-dark)}
+.legend .l-vote::before{background:transparent;border-top:2px solid var(--brass);border-radius:0;height:0;width:16px;vertical-align:3px}
+.legend .l-link::before{background:transparent;border-top:2px dashed var(--cream-dim);border-radius:0;height:0;width:16px;vertical-align:3px}
+.hint-click{text-align:center;font-size:12px;color:var(--cream-dim);margin-top:10px}
+
+/* ---------- протокол ---------- */
+.protocol{background:var(--cream);color:var(--ink);border-radius:6px;padding:18px 18px 20px;box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(34,31,25,.15)}
+.protocol h2{font-family:'Prata',serif;font-weight:400;font-size:18px;margin-bottom:2px}
+.protocol .ph-sub{font-family:'PT Mono',monospace;font-size:11px;color:#6d6252;margin-bottom:12px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{font-family:'PT Mono',monospace;font-size:12px;padding:6px 12px;border:1px solid #b9ab8e;background:transparent;color:var(--ink);cursor:pointer;border-radius:3px}
+.tab.active{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.tab.lost{opacity:.65;text-decoration:line-through}
+.vote-groups{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.vg{padding:8px 10px;border-left:3px solid #b9ab8e;background:rgba(34,31,25,.04)}
+.vg.elim{border-left-color:var(--wax);background:rgba(179,55,46,.08)}
+.vg b{font-weight:800}
+.vg .voters{font-family:'PT Mono',monospace;font-size:13px}
+.lost-note{font-family:'PT Mono',monospace;font-size:13px;padding:14px 10px;border:1px dashed #b9ab8e;color:#6d6252;text-align:center;background:repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(34,31,25,.03) 8px,rgba(34,31,25,.03) 16px)}
+.reveal{margin-top:10px;font-family:'PT Mono',monospace;font-size:13px;padding:8px 10px;border:1px dashed #b9ab8e;border-radius:3px}
+.reveal .team-red{color:var(--wax);font-weight:700}
+.reveal .team-black{color:var(--ink);font-weight:800}
+.claims-box{margin-top:12px;padding:10px 12px;border:1px solid #b9ab8e;border-radius:3px;background:rgba(201,164,92,.1)}
+.claims-box h4{font-family:'Prata',serif;font-weight:400;font-size:14px;margin-bottom:6px}
+.claims-box .cl{font-size:13px;margin-top:4px;line-height:1.45}
+.claims-box .cl .who{font-weight:800}
+.rules{margin-top:14px;border-top:1px solid #d8cdb3;padding-top:10px;font-size:12.5px;line-height:1.55;color:#4d463a}
+.rules b{color:var(--ink)}
+.rules li{margin-left:18px;margin-top:3px}
+.rules li.extra{color:#8a6d2f}
+
+/* ---------- контролы ---------- */
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.btn{font-family:'Manrope';font-weight:800;font-size:14px;letter-spacing:.3px;padding:11px 20px;border-radius:4px;border:1px solid var(--brass);background:transparent;color:var(--cream);cursor:pointer;transition:background .15s}
+.btn:hover{background:rgba(201,164,92,.12)}
+.btn.primary{background:var(--wax);border-color:var(--wax);color:var(--cream)}
+.btn.primary:hover{background:var(--wax-dark)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.slim{padding:8px 14px;font-size:13px;font-weight:600}
+
+/* ---------- вердикт / печать ---------- */
+.verdict{margin-top:14px;padding:14px 16px;border-radius:4px;font-size:14.5px;line-height:1.5;display:none}
+.verdict.show{display:block;animation:pop .25s ease}
+.verdict.bad{background:rgba(179,55,46,.15);border:1px solid var(--wax)}
+.verdict.good{background:rgba(201,164,92,.14);border:1px solid var(--brass)}
+.verdict h3{font-family:'Prata',serif;font-weight:400;font-size:18px;margin-bottom:4px}
+.verdict .stars{font-size:20px;letter-spacing:4px;color:var(--gold);margin:4px 0}
+@keyframes pop{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
+.seal{
+  position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) rotate(-14deg) scale(0);
+  font-family:'Prata',serif;font-size:clamp(26px,5vw,44px);color:var(--wax);
+  border:4px double var(--wax);border-radius:8px;padding:8px 26px;letter-spacing:4px;
+  pointer-events:none;text-transform:uppercase;background:rgba(18,39,28,.55);backdrop-filter:blur(1px);
+}
+.seal.stamp{animation:stamp .45s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes stamp{to{transform:translate(-50%,-50%) rotate(-14deg) scale(1)}}
+
+/* ---------- кампания ---------- */
+.chapter{border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:16px;background:rgba(14,32,21,.55)}
+.chapter.locked{opacity:.55}
+.chapter h3{font-family:'Prata',serif;font-weight:400;font-size:20px}
+.chapter .ch-sub{font-family:'PT Mono',monospace;font-size:11.5px;color:var(--cream-dim);margin:3px 0 12px}
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}
+.case-cell{border:1px solid var(--line);border-radius:6px;padding:9px 4px 7px;background:transparent;color:var(--cream);cursor:pointer;text-align:center;transition:border-color .15s}
+.case-cell:hover:not(:disabled){border-color:var(--brass)}
+.case-cell:disabled{opacity:.4;cursor:default}
+.case-cell .cnum{font-family:'PT Mono',monospace;font-size:13px;font-weight:700}
+.case-cell .cstars{font-size:11px;color:var(--gold);letter-spacing:1px;margin-top:2px;min-height:13px}
+.case-cell.done{border-color:var(--brass-dim);background:rgba(201,164,92,.08)}
+
+/* ---------- разбор ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(10,20,14,.8);display:none;z-index:50;padding:20px 12px;overflow:auto}
+.modal-bg.on{display:block}
+.modal{max-width:640px;margin:30px auto;background:var(--cream);color:var(--ink);border-radius:8px;padding:22px 22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.modal h2{font-family:'Prata',serif;font-weight:400;font-size:22px;margin-bottom:2px}
+.modal .m-sub{font-family:'PT Mono',monospace;font-size:11px;color:#6d6252;margin-bottom:14px}
+.dstep{border-left:3px solid var(--brass-dim);padding:8px 12px;margin-bottom:10px;background:rgba(34,31,25,.04)}
+.dstep .ds-title{font-weight:800;font-size:13.5px}
+.dstep .ds-count{font-family:'PT Mono',monospace;font-size:12px;color:#6d6252;margin-top:2px}
+.dstep .ds-count b{color:var(--wax)}
+.dstep ul{margin:5px 0 0 18px;font-size:13px;line-height:1.5}
+.dstep .fact-m{color:var(--wax);font-weight:700}
+.dstep .fact-t{color:#2f5d3f;font-weight:700}
+.dstep.final{border-left-color:var(--wax);background:rgba(179,55,46,.07)}
+.modal .closebar{margin-top:16px;text-align:right}
+.modal .btn{color:var(--ink);border-color:var(--brass-dim)}
+.modal .btn:hover{background:rgba(201,164,92,.2)}
+.help-body{font-size:14px;line-height:1.6}
+.help-body h3{font-family:'Prata',serif;font-weight:400;font-size:16px;margin:14px 0 4px}
+.help-body li{margin-left:18px;margin-top:4px}
+.help-body .ex{font-family:'PT Mono',monospace;font-size:12.5px;background:rgba(34,31,25,.05);padding:8px 10px;margin-top:6px;border-left:3px solid var(--brass-dim)}
+
+/* ---------- статистика / настройки ---------- */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+.stat-box{border:1px solid var(--line);border-radius:8px;padding:16px;text-align:center;background:rgba(14,32,21,.55)}
+.stat-box .sv{font-family:'Prata',serif;font-size:32px;color:var(--gold)}
+.stat-box .sl{font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);margin-top:4px}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding:14px 2px}
+.set-row .sr-t{font-weight:600;font-size:15px}
+.set-row .sr-d{font-size:12.5px;color:var(--cream-dim);margin-top:2px}
+.toggle{position:relative;width:46px;height:26px;border-radius:20px;border:1px solid var(--line);background:transparent;cursor:pointer;flex:none}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--cream-dim);transition:transform .18s,background .18s}
+.toggle.on{border-color:var(--brass);background:rgba(201,164,92,.2)}
+.toggle.on::after{transform:translateX(20px);background:var(--brass)}
+.danger{color:var(--wax);border-color:var(--wax)}
+
+/* ---------- прямой эфир ---------- */
+.live-toolbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.tool-group{border:1px solid var(--line);border-radius:10px;padding:10px;background:rgba(16,39,27,.62)}
+.tool-group-label{display:block;font-family:'PT Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream-dim);margin:0 0 8px 3px}
+.live-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0}
+.live-tools button{font-family:'PT Mono',monospace;font-size:13px;padding:10px 16px;border:1.5px solid var(--line);background:rgba(14,32,21,.5);color:var(--cream-dim);border-radius:5px;cursor:pointer;transition:transform .1s}
+.live-tools button:hover{transform:translateY(-1px)}
+.live-tools button.on{font-weight:700;box-shadow:0 0 0 2px rgba(243,234,215,.15)}
+/* каждая кнопка — в цвет своего вектора */
+#liveTools [data-tool=suspect]{border-color:#8f9489;color:var(--cream)}
+#liveTools [data-tool=suspect].on{background:var(--cream);color:var(--ink)}
+#liveTools [data-tool=team]{border-color:#b48ce0;color:#b48ce0}
+#liveTools [data-tool=team].on{background:#b48ce0;color:var(--ink)}
+.rolebtn circle{transition:stroke .15s}
+.rolebtn:hover circle{stroke:var(--cream)}
+#liveTools [data-tool=vote]{border-color:var(--brass);color:var(--brass)}
+#liveTools [data-tool=vote].on{background:var(--brass);color:var(--ink)}
+#liveTools [data-tool=attack]{border-color:var(--wax);color:#e08a80}
+#liveTools [data-tool=attack].on{background:var(--wax);color:#fff}
+#liveTools [data-tool=support]{border-color:#3f7d4e;color:#7fc98f}
+#liveTools [data-tool=support].on{background:#3f7d4e;color:#fff}
+#liveTools [data-tool=nom]{border-color:#4a7fae;color:#6ea8d8}
+#liveTools [data-tool=nom].on{background:#4a7fae;color:#fff}
+#liveTools [data-tool=cw]{border-color:#b39543;color:var(--gold)}
+#liveTools [data-tool=cw].on{background:var(--gold);color:var(--ink)}
+#liveTools [data-tool=plus]{border-color:#3f7d4e;color:#9fd0a8;font-weight:800;min-width:46px}
+#liveTools [data-tool=plus].on{background:#9fd0a8;color:var(--ink)}
+#liveTools [data-tool=minus]{border-color:var(--wax);color:#e08a80;font-weight:800;min-width:46px}
+#liveTools [data-tool=minus].on{background:#e08a80;color:var(--ink)}
+#liveTools [data-tool=check1],#liveTools [data-tool=check2]{border-color:#9a7c40;color:var(--gold)}
+#liveTools [data-tool=check1].on,#liveTools [data-tool=check2].on{background:var(--gold);color:var(--ink)}
+#liveTools [data-tool=voteout]{border-color:#b39543;color:var(--gold)}
+#liveTools [data-tool=voteout].on{background:var(--gold);color:var(--ink)}
+#liveTools [data-tool=shot]{border-color:var(--wax);color:#e08a80}
+#liveTools [data-tool=shot].on{background:var(--wax);color:#fff}
+#liveTools [data-tool=erase]{border-color:#8f9489;color:#cfcabb}
+#liveTools [data-tool=erase].on{background:#cfcabb;color:var(--ink)}
+.seat.sel .plate{stroke:var(--gold);stroke-width:3}
+.seat .scoretag{font-family:'PT Mono';font-size:11px;font-weight:700}
+.mark-sheriff .plate{fill:#4a3d15;stroke:var(--gold);stroke-width:2}
+.mark-don .plate{fill:#0b0908;stroke:var(--wax);stroke-width:2}
+.chord.atk{stroke:var(--wax);stroke-dasharray:6 4;opacity:.65;stroke-width:1.5}
+.chord.sup{stroke:#7fc98f;stroke-dasharray:6 4;opacity:.7;stroke-width:1.5}
+.linkn{font-family:'PT Mono';font-size:11px;font-weight:700}
+.dimfade{opacity:.06 !important}
+.checkchip{font-family:'PT Mono';font-size:10px;font-weight:800;pointer-events:none}
+.chord.nom{stroke:#6ea8d8;opacity:.9;stroke-width:2}
+#liveSvg .chord,#liveSvg .cwline{stroke-linecap:round}
+.live-notes-row{display:flex;gap:8px;margin-bottom:10px}
+.live-notes-row input{flex:1;font-family:'Manrope',system-ui,sans-serif;font-size:14px;padding:9px 12px;border:1px solid #b9ab8e;border-radius:4px;background:transparent;color:var(--ink)}
+.note-row{display:flex;align-items:center;gap:8px;font-size:13.5px;border-bottom:1px dashed #d8cdb3;padding:4px 0}
+.note-row .nr-k{font-family:'PT Mono';font-size:11px;color:#6d6252;flex:none}
+.note-row button{margin-left:auto;border:0;background:none;color:var(--wax);cursor:pointer;font-size:15px;flex:none}
+.tech-log{font-family:'PT Mono',monospace;font-size:12.5px;line-height:1.7;color:#4d463a;max-height:280px;overflow:auto;margin-left:22px}
+.games-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid #d8cdb3;padding:9px 0;font-size:14px}
+.games-row .gr-d{font-family:'PT Mono';font-size:11px;color:#6d6252}
+.cwline{fill:none;stroke:var(--gold);stroke-width:1.4;stroke-dasharray:2 5;opacity:.85}
+.live-log{margin-top:12px;max-height:320px;overflow:auto;font-family:'PT Mono',monospace;font-size:12.5px;line-height:1.7}
+.live-log .le{border-bottom:1px dashed #d8cdb3;padding:2px 0}
+.live-log .le .lr{color:#6d6252;margin-right:6px}
+.live-log .plus{color:#2f5d3f;font-weight:700}
+.live-log .minus{color:var(--wax);font-weight:700}
+.tab.addr{border-style:dashed}
+
+/* ---- Advanced-анализ: матрица игрок × круг ---- */
+.adv-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-family:'PT Mono',monospace;font-size:11.5px;color:var(--cream-dim);margin-bottom:12px}
+.adv-legend .lg{display:inline-flex;align-items:center;gap:5px}
+.adv-legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.adv-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:rgba(14,32,21,.5)}
+.adv-table{border-collapse:collapse;font-family:'PT Mono',monospace;font-size:11.5px;color:var(--cream);min-width:100%}
+.adv-table th,.adv-table td{border:1px solid var(--line);padding:0;vertical-align:top}
+.adv-table thead th{position:sticky;top:0;z-index:3;background:#132a1d;padding:8px 6px;text-align:center;font-size:12px}
+.adv-table thead th .pnum{color:var(--brass);font-weight:700;font-size:14px}
+.adv-table thead th .pbadge{display:block;margin-top:3px;font-size:9.5px;letter-spacing:.5px}
+.adv-table thead th .pglob{display:block;margin-top:3px;font-size:10px;color:var(--cream-dim)}
+.adv-table .rndcol{position:sticky;left:0;z-index:2;background:#132a1d;color:var(--gold);font-weight:700;text-align:center;padding:8px 10px;white-space:nowrap;min-width:64px}
+.adv-table thead th.corner{position:sticky;left:0;z-index:4;background:#0f2417}
+.adv-table td.cell{min-width:132px;padding:6px 7px}
+.adv-table td.cell.out{background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(179,55,46,.09) 6px,rgba(179,55,46,.09) 12px)}
+.adv-auto{display:flex;flex-direction:column;gap:2px;margin-bottom:6px;line-height:1.35}
+.adv-auto .ln{color:var(--cream-dim)}
+.adv-auto .ln b{color:var(--cream)}
+.adv-auto .ln.dim{opacity:.4}
+.adv-chips{display:flex;flex-wrap:wrap;gap:3px}
+.adv-chip{font-family:'PT Mono',monospace;font-size:10px;line-height:1;padding:4px 5px;border:1px solid var(--line);border-radius:4px;background:rgba(14,32,21,.4);color:var(--cream-dim);cursor:pointer;user-select:none;transition:transform .08s}
+.adv-chip:hover{transform:translateY(-1px);border-color:var(--brass)}
+.adv-chip.town{background:#2c5a38;border-color:#3f7d4e;color:#dff3e2;font-weight:700}
+.adv-chip.maf{background:#7a231c;border-color:#b3372e;color:#ffe0db;font-weight:700}
+.adv-chip.mix{background:#6a5220;border-color:#9a7c40;color:#f6e9c8;font-weight:700}
+.adv-verdicts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:6px}
+.adv-vd{border:1px solid var(--line);border-radius:6px;padding:10px;background:rgba(14,32,21,.5)}
+.adv-vd .vh{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.adv-vd .vh .vn{color:var(--brass);font-weight:700;font-size:15px;font-family:'PT Mono',monospace}
+.adv-vd .vbar{height:8px;border-radius:4px;overflow:hidden;display:flex;background:rgba(0,0,0,.25);margin-bottom:6px}
+.adv-vd .vbar .vt{background:#3f7d4e}
+.adv-vd .vbar .vm{background:#b3372e}
+.adv-vd .vbar .vx{background:#9a7c40}
+.adv-vd .vrow{font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);display:flex;justify-content:space-between}
+.adv-vd .vlean{margin-top:5px;font-family:'PT Mono',monospace;font-size:11.5px;font-weight:700}
+.adv-empty{padding:26px;text-align:center;color:var(--cream-dim);font-family:'PT Mono',monospace;font-size:13px}
+.args-block{display:flex;flex-direction:column;gap:8px}
+.args-row{display:grid;grid-template-columns:44px 1fr 1fr;gap:8px;align-items:stretch}
+.args-row .anum{display:flex;align-items:center;justify-content:center;font-family:'PT Mono',monospace;font-weight:700;font-size:15px;color:var(--brass);border:1px solid var(--line);border-radius:6px;background:rgba(14,32,21,.5)}
+.args-row textarea{font-family:'Manrope',system-ui,sans-serif;font-size:13px;line-height:1.4;padding:8px 10px;border-radius:6px;border:1px solid #b9ab8e;background:transparent;color:var(--ink);resize:vertical;min-height:44px}
+.args-row textarea.maf{border-color:#c98a84;background:rgba(179,55,46,.05)}
+.args-row textarea.town{border-color:#8fb79b;background:rgba(63,125,78,.05)}
+.args-row textarea::placeholder{color:#9a8f78}
+.args-head{display:grid;grid-template-columns:44px 1fr 1fr;gap:8px;font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);margin-bottom:2px}
+.args-head span:nth-child(2){color:#e08a80}
+.args-head span:nth-child(3){color:#7fc98f}
+.args-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.args-tools .btn{color:var(--ink);border-color:var(--brass-dim)}
+.args-status{font-family:'PT Mono',monospace;font-size:12px;color:#3f7d4e;opacity:0;transition:opacity .2s}
+.args-status.show{opacity:1}
+.args-fallback{display:none;width:100%;margin-top:10px;min-height:180px;font-family:'PT Mono',monospace;font-size:12px;line-height:1.5;padding:10px 12px;border:1px solid var(--brass-dim);border-radius:6px;background:#fbf6ea;color:var(--ink);resize:vertical}
+.args-fallback.show{display:block}
+
+body.no-motion *, body.no-motion *::after, body.no-motion *::before{animation:none !important;transition:none !important}
+@media(max-width:840px){
+  .menu-hero{grid-template-columns:1fr;gap:16px}
+  .home-grid{grid-template-columns:1fr}
+  .live-toolbox{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  body{padding:14px 12px 44px}
+  .cards,.cards.aux{grid-template-columns:1fr}
+  .card.primary,.card.practice{min-height:0}
+  .live-toolbox{grid-template-columns:1fr}
+  .gamebar .spacer{display:none}
+  .gamebar{align-items:stretch}
+  .gamebar .btn,.gamebar .backbtn{flex:1}
+}
+@media (prefers-reduced-motion: reduce){
+  .seal.stamp{animation:none;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}
+  .verdict.show,.screen.on{animation:none}
+  .hatchfade{animation:none;opacity:.95}
+}
+/* Быстрый ввод: стабильные крупные цели и компактная панель. */
+[hidden]{display:none!important}
+.live-summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0;font-size:13px}
+.live-summary strong{overflow-wrap:anywhere}
+#liveSaveStatus{color:#a4d9b2;font-size:12px}.save-error{color:#ffb2a7!important}
+#toolCategories{gap:6px;flex-wrap:wrap}
+#toolCategories [aria-pressed=true]{background:var(--cream);color:var(--ink)}
+#liveTools{display:block;margin:8px 0}.live-tools button{min-height:44px}
+.table-help{font-size:12px;color:var(--cream-dim)}
+#voteJump{min-height:44px}#tableJump{padding:6px 12px}
+.vote-entry{margin:12px 0;padding:12px;border:1px solid #aa9877;border-radius:8px}
+summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
+.vote-entry p{font-size:12px;line-height:1.6;margin:8px 0}
+.vote-entry select,#gamesFilter,#gamesSearch{min-height:44px;padding:8px;max-width:100%;font:inherit;border:1px solid #aa9877;border-radius:5px;background:#fff9eb;color:var(--ink)}
+.vote-entry label{display:block;margin:8px 0}
+.voter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.voter{min-height:44px;border:1px solid #85724e;border-radius:6px;background:#fff9eb;color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.voter[aria-pressed=true]{background:#234d34;color:#fff;border-color:#234d34}
+.voter:disabled{opacity:.5;cursor:default}
+.games-row{flex-wrap:wrap;overflow-wrap:anywhere}.games-row b{width:100%}
+.games-row .btn{color:var(--ink);border-color:#85724e;min-height:44px}
+#gamesList{margin-top:16px}.layout>*{min-width:0}
+#liveSvg [role=button]:focus-visible .plate{stroke:var(--focus);stroke-width:5}
+@media(max-width:600px){
+  #screen-live .gamebar{gap:6px}#screen-live .gamebar .btn{min-height:44px}
+  #toolCategories .btn{flex:1 1 42%;min-height:44px;font-size:12px}
+  #liveTools .live-tools button{flex:1 1 auto;padding:10px}
+  .live-notes-row{flex-wrap:wrap}.live-notes-row input{min-width:0;width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= МЕНЮ ================= -->
+<section class="screen on" id="screen-menu">
+  <div class="menu-hero">
+    <div>
+      <div class="tag">интерактивный стол · v1.7</div>
+      <h1>Протокол</h1>
+    </div>
+    <div class="rulebrief">Веди живую партию или тренируй дедукцию на игровых задачах.
+      Голоса, связи и аргументы остаются перед глазами — без лишней математики и шума.</div>
+  </div>
+  <div class="home-grid">
+    <div class="home-column">
+      <div class="section-label">Во время игры</div>
+      <button class="card primary" id="mCardLive">
+        <span class="card-kicker">главный режим</span>
+        <h3>Открыть стол</h3>
+        <p>Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.</p>
+        <span class="card-cta">Начать отслеживание <span aria-hidden="true">→</span></span>
+      </button>
+      <div class="cards aux">
+        <button class="card small" id="mCardAdvanced"><h3>Разбор игроков</h3><p>сигналы и аргументы по каждому</p></button>
+        <button class="card small" id="mCardStats"><h3>Прогресс</h3><p>результаты тренировок</p></button>
+        <button class="card small" id="mCardHelp"><h3>Правила</h3><p>короткая памятка</p></button>
+      </div>
+    </div>
+
+    <div class="home-column">
+      <div class="section-label">Тренировка</div>
+      <div class="card practice" id="mCardFree" role="button" tabindex="0" aria-label="Начать свободную головоломку">
+        <h3>Решить задачу</h3>
+        <p>Вычисли трёх мафиози по протоколу голосований.</p>
+        <div class="pickrow" id="freePicks">
+          <span class="lbl">сложность</span>
+          <div class="pick" id="pickDiff">
+            <button data-v="novice">новичок</button>
+            <button data-v="easy" class="on">лёгкая</button>
+            <button data-v="medium">средняя</button>
+            <button data-v="hard">сложная</button>
+          </div>
+          <span class="lbl">набор правил</span>
+          <div class="pick" id="pickRules">
+            <button data-v="classic" class="on">классика</button>
+            <button data-v="claims">заявки</button>
+            <button data-v="discord">разлад</button>
+            <button data-v="stmts">сбивание</button>
+          </div>
+        </div>
+        <span class="card-cta">Начать задачу <span aria-hidden="true">→</span></span>
+      </div>
+      <div class="cards">
+        <button class="card small" id="mCardDaily">
+          <h3>Задача дня</h3>
+          <p id="dailyDesc">Новая задача каждый день.</p>
+          <span class="badge" id="dailyBadge"></span>
+        </button>
+        <button class="card small" id="mCardCampaign">
+          <h3>Курс</h3>
+          <p>Постепенное усложнение механик.</p>
+          <span class="badge" id="campBadge"></span>
+        </button>
+      </div>
+      <div class="card small" id="mCardExam" role="button" tabindex="0">
+        <h3>Режим на время</h3>
+        <p>Без подсказок, с личным рекордом.</p>
+        <div class="pickrow"><div class="pick" id="pickExam">
+          <button data-v="easy">лёгкая</button>
+          <button data-v="medium" class="on">средняя</button>
+          <button data-v="hard">сложная</button>
+        </div></div>
+      </div>
+    </div>
+  </div>
+  <div class="utility-nav">
+    <button class="backbtn" id="mCardSettings">Настройки</button>
+  </div>
+  <div class="menu-foot" id="menuFoot"></div>
+</section>
+
+<!-- ================= ИГРА ================= -->
+<section class="screen" id="screen-game">
+  <div class="gamebar">
+    <button class="backbtn" id="gameBack">← меню</button>
+    <span class="mode-badge" id="modeBadge">свободная игра</span>
+    <h1 style="font-size:clamp(18px,3vw,26px)">Протокол <span class="num" id="caseNum">№1</span></h1>
+    <span class="spacer"></span>
+    <span class="stat" id="timerBox" style="display:none">⏱ <span id="timerV">0:00</span></span>
+    <span class="stat" id="stat"></span>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="table-card">
+        <svg class="table-svg" id="tableSvg" viewBox="0 0 560 560" role="img" aria-label="Круглый стол с игроками и стрелками голосов"></svg>
+        <div class="seal" id="seal">Дело раскрыто</div>
+      </div>
+      <div class="tooltray">
+        инструмент:
+        <div class="pick" id="pickTool">
+          <button data-v="mark" class="on">метки</button>
+          <button data-v="link">связи</button>
+        </div>
+      </div>
+      <div class="legend">
+        <span class="l-vote">голос (выбранный раунд)</span>
+        <span class="l-mark-b">метка: мафия</span>
+        <span class="l-mark-r">метка: мирный</span>
+        <span class="l-link">связь: одна команда</span>
+      </div>
+      <div class="hint-click" id="hintClick">Кликай по игроку: пусто → <b>мафия</b> → <b>мирный</b> → пусто</div>
+      <div class="controls">
+        <button class="btn primary" id="checkBtn">Обвинить троих</button>
+        <button class="btn" id="hintBtn">Осведомитель</button>
+        <button class="btn slim" id="newBtn">Новое дело</button>
+        <button class="btn slim" id="reviewBtn" style="display:none">Разбор</button>
+        <button class="btn slim" id="nextBtn" style="display:none">Дальше →</button>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+
+    <aside class="protocol">
+      <h2>Протокол голосований</h2>
+      <div class="ph-sub" id="phSub">запись секретаря клуба</div>
+      <div class="tabs" id="tabs"></div>
+      <div class="vote-groups" id="voteGroups"></div>
+      <div class="reveal" id="reveal"></div>
+      <div class="claims-box" id="claimsBox" style="display:none"></div>
+      <div class="rules" id="rulesBox"></div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= ПРЯМОЙ ЭФИР ================= -->
+<section class="screen" id="screen-live">
+  <div class="gamebar">
+    <button class="backbtn" data-nav="menu">← меню</button>
+    <span class="mode-badge">прямой эфир</span>
+    <h1 style="font-size:clamp(18px,3vw,26px)">Трекер игры</h1>
+    <span class="spacer"></span>
+    <button class="btn slim" id="liveSave">Название</button>
+    <button class="btn slim" id="liveFinish">Завершить</button>
+    <button class="btn slim" id="liveGames">📂 игры</button>
+    <button class="btn slim" id="liveUndo">↩ отменить</button>
+    <button class="btn slim danger" id="liveReset">Новая игра</button>
+  </div>
+
+  <div class="live-summary">
+    <strong id="liveName"></strong><span id="liveRoundLabel"></span>
+    <span id="liveSaveStatus" role="status" aria-live="polite"></span>
+  </div>
+  <div class="pickrow" id="toolCategories" aria-label="Группы инструментов">
+    <button class="btn slim" data-category="0">Основное</button>
+    <button class="btn slim" data-category="1">Отношения</button>
+    <button class="btn slim" data-category="2">Оценки и проверки</button>
+    <button class="btn slim" data-category="3">Выбывание и ластик</button>
+  </div>
+  <div class="live-toolbox" id="liveTools">
+    <div class="tool-group">
+      <span class="tool-group-label">основное</span>
+      <div class="live-tools">
+        <button data-tool="suspect" class="on">метка</button>
+        <button data-tool="vote">голос</button>
+        <button data-tool="nom">выставил</button>
+      </div>
+    </div>
+    <div class="tool-group">
+      <span class="tool-group-label">отношения</span>
+      <div class="live-tools">
+        <button data-tool="team">команда</button>
+        <button data-tool="attack">атака</button>
+        <button data-tool="support">поддержка</button>
+        <button data-tool="cw">противовес</button>
+      </div>
+    </div>
+    <div class="tool-group">
+      <span class="tool-group-label">оценка</span>
+      <div class="live-tools">
+        <button data-tool="plus">+ доверие</button>
+        <button data-tool="minus">− доверие</button>
+        <button data-tool="check1">проверка Ш1</button>
+        <button data-tool="check2">проверка Ш2</button>
+      </div>
+    </div>
+    <div class="tool-group">
+      <span class="tool-group-label">состояние</span>
+      <div class="live-tools">
+        <button data-tool="voteout">заголосован</button>
+        <button data-tool="shot">застрелен</button>
+        <button data-tool="erase">ластик</button>
+      </div>
+    </div>
+  </div>
+  <div class="hint-click" role="status" aria-live="polite" id="liveHint" style="text-align:left;margin:0 0 8px"></div>
+  <button class="btn slim" id="voteJump">Записать голосование ↓</button>
+  <div class="pickrow" style="margin:8px 0 12px">
+    <span class="lbl">просмотр векторов и действий</span>
+    <div class="pick" id="pickView">
+      <button data-v="cur" class="on">текущий круг</button>
+      <button data-v="cum">накопительно</button>
+      <button data-v="all">все круги</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div>
+      <div class="table-card">
+        <svg class="table-svg" id="liveSvg" viewBox="0 0 560 560" role="img" aria-label="Стол наблюдателя: 10 игроков"></svg>
+      </div>
+      <div class="legend">
+        <span class="l-vote">👍 голос (текущий круг)</span>
+        <span class="l-mark-b">метка: мафия / дон</span>
+        <span class="l-mark-r">метка: мирный</span>
+      </div>
+      <details class="table-help"><summary>Обозначения на столе</summary>
+      <div class="legend"><span style="opacity:.8">⚔ красный пунктир — атака · 🤝 зелёный пунктир — поддержка (повторы утолщают, ×N) · ⚖ золото — противовес · обводка: золотая ✕ заголосован, красная 🔫 застрелен · +N и −N отдельно, ластик 🧹 стирает по одному</span></div>
+      <div class="legend"><span style="opacity:.8">чипы «1»/«2» — проверки шерифов: красный или чёрный · наведи курсор на игрока — останутся только его векторы</span></div>
+      </details>
+    </div>
+
+    <aside class="protocol">
+      <h2>Журнал наблюдателя</h2>
+      <div class="ph-sub">твои записи по ходу игры · сохраняется автоматически</div>
+      <div class="tabs" id="liveTabs"></div>
+      <details class="vote-entry" id="voteEntry">
+        <summary>Записать голосование</summary>
+        <button class="voter" id="tableJump">К столу ↑</button>
+        <label for="voteTarget">Кандидат</label>
+        <select id="voteTarget"><option value="">Выбери номер</option></select>
+        <p>Нажми номера голосующих. Повторное нажатие снимает голос; выбор другого кандидата переносит его.</p>
+        <div id="voterButtons" class="voter-grid"></div>
+        <p id="votePending" role="status"></p>
+      </details>
+      <div class="vote-groups" id="liveVotes"></div>
+      <div class="live-log" id="liveLog"></div>
+    </aside>
+  </div>
+
+  <div class="protocol" style="margin-top:18px">
+    <h2>Заметки</h2>
+    <div class="ph-sub">короткие однострочные пометки по ходу игры</div>
+    <div class="live-notes-row">
+      <input id="noteInp" maxlength="140" placeholder="например: №3 путается в показаниях…">
+      <button class="btn slim" id="noteAdd" style="color:var(--ink);border-color:var(--brass-dim)">записать</button>
+    </div>
+    <div id="notesList"></div>
+  </div>
+
+  <details class="protocol" style="margin-top:18px">
+    <summary>Хронология и копирование</summary>
+    <div class="ph-sub">пронумерованные события игры в хронологическом порядке</div>
+    <ol class="tech-log" id="techLog"></ol>
+    <div style="margin-top:10px"><button class="btn slim" id="techCopy" style="color:var(--ink);border-color:var(--brass-dim)">скопировать хронологию</button></div>
+  </details>
+</section>
+
+<!-- ================= ADVANCED-АНАЛИЗ ================= -->
+<section class="screen" id="screen-advanced">
+  <div class="gamebar">
+    <button class="backbtn" data-nav="menu">← меню</button>
+    <span class="mode-badge">advanced</span>
+    <h1 style="font-size:clamp(18px,3vw,26px)">Анализ игроков</h1>
+    <span class="spacer"></span>
+    <button class="btn slim" id="advToEfir">📡 в эфир</button>
+    <button class="btn slim" id="advUndo">↩ отменить</button>
+  </div>
+
+  <div class="ph-sub" style="margin:2px 0 10px">
+    Столбцы — игроки, строки — круги. Авто-данные (кого выставил, голос, атаки, поддержка, доверие, проверки)
+    берутся из «Прямого эфира». Ручные оценки — тап по чипу: пусто → <b style="color:#7fc98f">мирный сигнал</b>
+    → <b style="color:#e08a80">мафский сигнал</b> → <b style="color:var(--gold)">спорно</b> → пусто.
+  </div>
+
+  <div class="adv-legend" id="advLegend"></div>
+
+  <div class="adv-wrap">
+    <table class="adv-table" id="advTable"></table>
+  </div>
+
+  <div class="protocol" style="margin-top:18px">
+    <h2>Итоговое чтение</h2>
+    <div class="ph-sub">сводка по каждому игроку: баланс сигналов за все круги</div>
+    <div class="adv-verdicts" id="advVerdicts"></div>
+  </div>
+
+  <div class="protocol" style="margin-top:18px">
+    <h2>Аргументы по игрокам</h2>
+    <div class="ph-sub">по каждому из 10: слева — за то, что он мафия, справа — за то, что мирный · сохраняется автоматически</div>
+    <div class="args-block" id="argsBlock"></div>
+    <div class="args-tools">
+      <button class="btn slim" id="argsCopy">📋 скопировать (Markdown)</button>
+      <button class="btn slim" id="argsExport">⬇ экспорт .md</button>
+      <span class="args-status" id="argsStatus"></span>
+    </div>
+    <textarea id="argsFallback" class="args-fallback" readonly placeholder="выдели текст и нажми Ctrl/Cmd+C"></textarea>
+  </div>
+</section>
+
+<!-- ================= КАМПАНИЯ ================= -->
+<section class="screen" id="screen-campaign">
+  <div class="tophead">
+    <h1>Кампания</h1>
+    <button class="backbtn" data-nav="menu">← меню</button>
+  </div>
+  <div id="chapters"></div>
+</section>
+
+<!-- ================= СТАТИСТИКА ================= -->
+<section class="screen" id="screen-stats">
+  <div class="tophead">
+    <h1>Статистика</h1>
+    <button class="backbtn" data-nav="menu">← меню</button>
+  </div>
+  <div class="stat-grid" id="statGrid"></div>
+</section>
+
+<!-- ================= НАСТРОЙКИ ================= -->
+<section class="screen" id="screen-settings">
+  <div class="tophead">
+    <h1>Настройки</h1>
+    <button class="backbtn" data-nav="menu">← меню</button>
+  </div>
+  <div class="set-row">
+    <div><div class="sr-t">Отключить анимацию</div><div class="sr-d">Печать и переходы без движения</div></div>
+    <button class="toggle" id="tglMotion" aria-label="Отключить анимацию"></button>
+  </div>
+  <div class="set-row">
+    <div><div class="sr-t">Сброс прогресса</div><div class="sr-d">Стереть кампанию, стрики и статистику. Безвозвратно.</div></div>
+    <button class="btn slim danger" id="resetBtn">Стереть</button>
+  </div>
+</section>
+
+</div>
+
+<!-- ================= МОДАЛКИ ================= -->
+<div class="modal-bg" id="reviewModal">
+  <div class="modal">
+    <h2>Разбор дела</h2>
+    <div class="m-sub">пошаговая логика решения</div>
+    <div id="reviewBody"></div>
+    <div class="closebar"><button class="btn slim" data-close="reviewModal">Закрыть</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="gamesModal">
+  <div class="modal">
+    <h2>Сохранённые игры</h2>
+    <div class="m-sub">хранятся локально в этом браузере</div>
+    <label for="gamesSearch">Поиск по названию</label>
+    <input id="gamesSearch" type="search" placeholder="Найти партию">
+    <label for="gamesFilter">Статус</label>
+    <select id="gamesFilter"><option value="all">Все партии</option><option value="active">В процессе</option><option value="done">Завершённые</option></select>
+    <div id="gamesList"></div>
+    <div class="closebar"><button class="btn slim" data-close="gamesModal">Закрыть</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="helpModal">
+  <div class="modal">
+    <h2>Как играть</h2>
+    <div class="m-sub">памятка начинающего детектива</div>
+    <div class="help-body" id="helpBody"></div>
+    <div class="closebar"><button class="btn slim" data-close="helpModal">Закрыть</button></div>
+  </div>
+</div>
+
+<script>
+/* СГЕНЕРИРОВАНО build.mjs — не редактируй тут; правь app/js и index.dev.html */
+(() => {
+  // app/js/core/constants.js
+  var N = 10;
+  var MAF = 3;
+  var NAMES = ["Луи", "Соня", "Крест", "Ада", "Молчун", "Вера", "Туз", "Марго", "Феликс", "Ирма"];
+  var P = (i) => "№" + (i + 1) + " " + NAMES[i];
+  var ALL_CANDIDATES = (function() {
+    const out = [];
+    for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) for (let k = j + 1; k < N; k++) out.push([i, j, k]);
+    return out;
+  })();
+  var DIFFS = {
+    novice: { rounds: 5, hidden: 0, minDepth: 2, hints: 2, label: "новичок" },
+    easy: { rounds: 4, hidden: 0, minDepth: 2, hints: 1, label: "лёгкая" },
+    medium: { rounds: 3, hidden: 0, minDepth: 3, hints: 1, label: "средняя" },
+    hard: { rounds: 4, hidden: 1, minDepth: 3, hints: 1, label: "сложная" }
+  };
+  var CAMPAIGN = [
+    {
+      id: "ch1",
+      title: "Глава I · Академия",
+      sub: "классические правила R1–R4: от пяти раундов к трём и утерянным листам",
+      cases: [...Array(12).keys()].map((i) => {
+        const c = {
+          seedStr: "c1-" + i,
+          claims: false,
+          discord: false,
+          hidden: 0,
+          hints: i < 4 ? 2 : 1,
+          minDepth: i < 6 ? 2 : 3,
+          rounds: i < 3 ? 5 : i < 7 ? 4 : 3
+        };
+        if (i >= 10) {
+          c.rounds = 4;
+          c.hidden = 1;
+        }
+        return c;
+      })
+    },
+    {
+      id: "ch2",
+      title: "Глава II · Заявки",
+      sub: "правило R5: двое кричат «я шериф» — и один из них лжёт",
+      cases: [...Array(12).keys()].map((i) => ({ seedStr: "c2-" + i, claims: true, discord: false, hidden: 0, hints: 1, minDepth: i < 6 ? 2 : 3, rounds: i < 6 ? 4 : 3 }))
+    },
+    {
+      id: "ch3",
+      title: "Глава III · Разлад",
+      sub: "правило R6: мафия может один раз разойтись в голосах — единая рука больше не аксиома",
+      cases: [...Array(12).keys()].map((i) => {
+        const c = { seedStr: "c3-" + i, claims: false, discord: true, hidden: 0, hints: 1, minDepth: i < 6 ? 2 : 3, rounds: i < 6 ? 4 : 3 };
+        if (i >= 8) {
+          c.claims = true;
+          c.rounds = 4;
+        }
+        return c;
+      })
+    },
+    {
+      id: "ch4",
+      title: "Глава IV · Балаган",
+      sub: "правило R7: стол кричит — «он мафия!», «я красный!», «ручаюсь!» — мирные не врут, мафия не сдаёт своих",
+      cases: [...Array(12).keys()].map((i) => {
+        const c = { seedStr: "c4-" + i, claims: false, discord: false, stmts: true, hidden: 0, hints: 1, minDepth: i < 6 ? 2 : 3, rounds: i < 6 ? 4 : 3 };
+        if (i >= 8) {
+          c.discord = true;
+          c.rounds = 4;
+        }
+        return c;
+      })
+    }
+  ];
+
+  // app/js/core/random.js
+  function hash32(str) {
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+  function mulberry32(a) {
+    return function() {
+      a |= 0;
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function makeRng(seed) {
+    const f = mulberry32(seed);
+    return { f, i: (n) => Math.floor(f() * n), pick: (a) => a[Math.floor(f() * a.length)] };
+  }
+
+  // app/js/core/simulate.js
+  function simulate(cfg, rng) {
+    const ids = [...Array(N).keys()];
+    const pool = [...ids], mafia = [];
+    for (let i = 0; i < MAF; i++) mafia.push(pool.splice(rng.i(pool.length), 1)[0]);
+    mafia.sort((a, b) => a - b);
+    const isM = (id) => mafia.includes(id);
+    let claims = null;
+    if (cfg.claims) {
+      const towns = ids.filter((id) => !isM(id));
+      const sheriff = rng.pick(towns);
+      const t1 = rng.pick(ids.filter((x) => x !== sheriff));
+      const liar = rng.pick(mafia);
+      let t2, says2;
+      if (rng.f() < 0.5) {
+        t2 = rng.pick(ids.filter((x) => !isM(x) && x !== liar));
+        says2 = "black";
+      } else {
+        t2 = rng.pick(mafia.filter((x) => x !== liar));
+        says2 = "red";
+      }
+      claims = [{ by: sheriff, target: t1, says: isM(t1) ? "black" : "red" }, { by: liar, target: t2, says: says2 }];
+      if (rng.f() < 0.5) claims.reverse();
+    }
+    let stmts = null;
+    if (cfg.stmts) {
+      const towns = ids.filter((id) => !isM(id));
+      stmts = [];
+      const a1 = rng.pick(mafia);
+      stmts.push({ kind: "accuse", by: a1, target: rng.pick(towns) });
+      if (rng.f() < 0.6) {
+        const b = rng.pick(mafia);
+        stmts.push({ kind: "clear", by: b, target: rng.pick(mafia.filter((x) => x !== b)) });
+      } else {
+        const b = rng.pick(towns);
+        stmts.push({ kind: "clear", by: b, target: rng.pick(towns.filter((x) => x !== b)) });
+      }
+      if (rng.f() < 0.25) stmts.push({ kind: "accuse", by: rng.pick(towns), target: rng.pick(mafia) });
+      stmts.push({ kind: "imtown", by: rng.pick(ids) });
+      for (let i = stmts.length - 1; i > 0; i--) {
+        const j = rng.i(i + 1);
+        const t = stmts[i];
+        stmts[i] = stmts[j];
+        stmts[j] = t;
+      }
+    }
+    const splitRound = cfg.discord ? rng.i(cfg.rounds) : -1;
+    let alive = [...ids];
+    const log = [];
+    for (let r = 0; r < cfg.rounds; r++) {
+      const aliveTown = alive.filter((id) => !isM(id));
+      const aliveMaf = alive.filter(isM);
+      if (aliveTown.length < 2 || aliveMaf.length === 0) return null;
+      const votes = {};
+      if (r === splitRound && aliveMaf.length >= 2 && aliveTown.length >= 2) {
+        const t1 = rng.pick(aliveTown);
+        const t2 = rng.pick(aliveTown.filter((x) => x !== t1));
+        aliveMaf.forEach((m, idx) => {
+          votes[m] = idx === 0 ? t1 : idx === 1 ? t2 : rng.pick([t1, t2]);
+        });
+      } else {
+        const mt = rng.pick(aliveTown);
+        for (const m of aliveMaf) votes[m] = mt;
+      }
+      for (const v of aliveTown) {
+        const opts = alive.filter((x) => x !== v);
+        votes[v] = opts[rng.i(opts.length)];
+      }
+      const tally = {};
+      for (const v of alive) tally[votes[v]] = (tally[votes[v]] || 0) + 1;
+      let best = -1, who = -1;
+      for (const t of alive) {
+        const c = tally[t] || 0;
+        if (c > best) {
+          best = c;
+          who = t;
+        }
+      }
+      log.push({ votes, eliminated: who, revealedTeam: isM(who) ? "black" : "red", aliveBefore: [...alive], hidden: false });
+      alive = alive.filter((x) => x !== who);
+      if (alive.filter(isM).length === 0) return null;
+    }
+    if (cfg.hidden > 0) {
+      const idxs = [...Array(cfg.rounds).keys()];
+      for (let k = 0; k < cfg.hidden && idxs.length > 0; k++) {
+        const j = rng.i(idxs.length);
+        log[idxs[j]].hidden = true;
+        idxs.splice(j, 1);
+      }
+    }
+    return { mafia, log, claims, stmts };
+  }
+  function stmtText(s) {
+    if (s.kind === "accuse") return P(s.by) + ": «" + NAMES[s.target] + " — мафия, я уверен!»";
+    if (s.kind === "clear") return P(s.by) + ": «за " + NAMES[s.target] + " ручаюсь, он мирный»";
+    return P(s.by) + ": «я красный, кого угодно спросите!»";
+  }
+
+  // app/js/core/solver.js
+  function stmtsOk(w, stmts) {
+    const inW = (id) => w.includes(id);
+    for (const s of stmts) {
+      if (s.kind === "accuse" && inW(s.by) === inW(s.target)) return false;
+      if (s.kind === "clear" && !inW(s.by) && inW(s.target)) return false;
+    }
+    return true;
+  }
+  function candidateOk(w, pz) {
+    const inW = (id) => w.includes(id);
+    if (pz.claims) {
+      const townClaimants = pz.claims.filter((c) => !inW(c.by));
+      if (townClaimants.length > 1) return false;
+      for (const c of townClaimants) if (c.says === "black" !== inW(c.target)) return false;
+    }
+    if (pz.stmts && !stmtsOk(w, pz.stmts)) return false;
+    let splits = 0;
+    for (const round of pz.log) {
+      if (round.revealedTeam === "black" !== inW(round.eliminated)) return false;
+      if (round.hidden) continue;
+      let target = null, split = false;
+      for (const v of round.aliveBefore) {
+        if (!inW(v)) continue;
+        const t = round.votes[v];
+        if (inW(t)) return false;
+        if (target === null) target = t;
+        else if (t !== target) split = true;
+      }
+      if (split) {
+        if (!pz.discord) return false;
+        if (++splits > 1) return false;
+      }
+    }
+    return true;
+  }
+  function solve(pz, marks) {
+    return ALL_CANDIDATES.filter((w) => {
+      if (marks) for (const k in marks) {
+        const id = +k;
+        if (marks[k] === "black" && !w.includes(id)) return false;
+        if (marks[k] === "red" && w.includes(id)) return false;
+      }
+      return candidateOk(w, pz);
+    });
+  }
+  function provenFacts(candidates) {
+    const m = [], t = [];
+    for (let i = 0; i < N; i++) {
+      let all = true, none = true;
+      for (const w of candidates) {
+        if (w.includes(i)) none = false;
+        else all = false;
+      }
+      if (candidates.length && all) m.push(i);
+      if (candidates.length && none) t.push(i);
+    }
+    return { m, t };
+  }
+  function analyze(pz) {
+    const steps = [];
+    let cur = [...ALL_CANDIDATES];
+    let known = { m: [], t: [] };
+    function apply(title, filter, notes, isRoundStep) {
+      const next = cur.filter(filter);
+      const f = provenFacts(next);
+      const newM = f.m.filter((x) => !known.m.includes(x));
+      const newT = f.t.filter((x) => !known.t.includes(x));
+      steps.push({ title, before: cur.length, after: next.length, newM, newT, notes: notes || [], isRound: !!isRoundStep });
+      cur = next;
+      known = f;
+    }
+    if (pz.claims) {
+      const notes = pz.claims.map((c) => P(c.by) + " заявляет: «я шериф, " + P(c.target) + " — " + (c.says === "black" ? "мафия" : "мирный") + "»");
+      notes.push("Настоящий шериф один и не врёт; фальшивый шериф — всегда мафия. Значит, хотя бы один из заявителей — мафия.");
+      apply("Заявки шерифа", (w) => {
+        const inW = (id) => w.includes(id);
+        const tc = pz.claims.filter((c) => !inW(c.by));
+        if (tc.length > 1) return false;
+        for (const c of tc) if (c.says === "black" !== inW(c.target)) return false;
+        return true;
+      }, notes, false);
+    }
+    if (pz.stmts) {
+      const notes = pz.stmts.map(stmtText);
+      notes.push("Мирные не врут; мафия кричит что угодно, но никогда не называет мафию (и себя) мафией. Значит: в паре «обвинитель—обвинённый» мафия ровно один; ручательство мирного обеляет цель; «я красный» не значит ничего.");
+      apply("Выкрики за столом", (w) => stmtsOk(w, pz.stmts), notes, false);
+    }
+    pz.log.forEach((round, idx) => {
+      const rn = "Раунд " + (idx + 1);
+      const inCur = (id) => known.m.includes(id);
+      apply(
+        rn + ": вскрытие — выбыл " + P(round.eliminated) + ", он " + (round.revealedTeam === "black" ? "МАФИЯ" : "мирный"),
+        (w) => round.revealedTeam === "black" === w.includes(round.eliminated),
+        [],
+        true
+      );
+      if (round.hidden) {
+        steps.push({ title: rn + ": руки не записаны (лист утерян)", before: cur.length, after: cur.length, newM: [], newT: [], notes: ["Из этого раунда известен только итог вскрытия."], isRound: true });
+        return;
+      }
+      const notes = [];
+      if (round.revealedTeam === "black") {
+        const voters = round.aliveBefore.filter((v) => round.votes[v] === round.eliminated && v !== round.eliminated);
+        if (voters.length) notes.push("В раскрытую мафию " + P(round.eliminated) + " голосовали: " + voters.map((v) => "№" + (v + 1)).join(", ") + ". Мафия не топит своих (R1)" + (pz.discord ? "" : " — эти руки принадлежат мирным либо требуют проверки по R2"));
+      }
+      for (const km of known.m) {
+        if (round.aliveBefore.includes(km) && round.votes[km] !== void 0)
+          notes.push(P(km) + " (доказанная мафия) голосовал в " + P(round.votes[km]) + " → по R1 цель мирная, а по R2 туда же голосует вся мафия раунда.");
+      }
+      notes.push("Исключаем невозможные тройки: голос в «своего» запрещён (R1), живая мафия голосует единой целью (R2" + (pz.discord ? ", допускается 1 разлад за партию" : "") + ").");
+      apply(rn + ": голоса", (w) => {
+        const inW = (id) => w.includes(id);
+        let target = null, split = false;
+        for (const v of round.aliveBefore) {
+          if (!inW(v)) continue;
+          const t = round.votes[v];
+          if (inW(t)) return false;
+          if (target === null) target = t;
+          else if (t !== target) split = true;
+        }
+        if (split && !pz.discord) return false;
+        if (split && pz.discord) {
+          let s = 0;
+          for (const r2 of pz.log) {
+            if (r2.hidden) continue;
+            let tg = null, sp = false;
+            for (const v of r2.aliveBefore) {
+              if (!inW(v)) continue;
+              const t = r2.votes[v];
+              if (tg === null) tg = t;
+              else if (t !== tg) sp = true;
+            }
+            if (sp) s++;
+          }
+          if (s > 1) return false;
+        }
+        return true;
+      }, notes, true);
+    });
+    const depth = steps.filter((s) => s.after < s.before).length;
+    const perRound = {};
+    steps.forEach((s) => {
+      if (s.isRound) {
+        const m = s.title.match(/Раунд (\d+)/);
+        if (m) {
+          perRound[m[1]] = (perRound[m[1]] || 0) + (s.before - s.after);
+        }
+      }
+    });
+    const deadRounds = Object.values(perRound).filter((x) => x === 0).length;
+    return { steps, depth, deadRounds, final: cur };
+  }
+  function worldFailReason(w, pz) {
+    const inW = (id) => w.includes(id);
+    for (let i = 0; i < pz.log.length; i++) if (pz.log[i].revealedTeam === "black" !== inW(pz.log[i].eliminated)) return { rule: "вскрытие", round: i };
+    if (pz.claims) {
+      const tc = pz.claims.filter((c) => !inW(c.by));
+      if (tc.length > 1) return { rule: "заявки" };
+      for (const c of tc) if (c.says === "black" !== inW(c.target)) return { rule: "заявки" };
+    }
+    if (pz.stmts && !stmtsOk(w, pz.stmts)) return { rule: "выкрики" };
+    let splits = 0;
+    for (let i = 0; i < pz.log.length; i++) {
+      const round = pz.log[i];
+      if (round.hidden) continue;
+      let target = null, split = false;
+      for (const v of round.aliveBefore) {
+        if (!inW(v)) continue;
+        const t = round.votes[v];
+        if (inW(t)) return { rule: "R1", round: i };
+        if (target === null) target = t;
+        else if (t !== target) split = true;
+      }
+      if (split) {
+        if (!pz.discord) return { rule: "R2", round: i };
+        if (++splits > 1) return { rule: "R6", round: i };
+      }
+    }
+    return null;
+  }
+  function explainFact(pz, x, team) {
+    for (let i = 0; i < pz.log.length; i++) {
+      const r = pz.log[i];
+      if (r.eliminated === x) return "его вскрыли при выбытии в раунде " + (i + 1) + " — тут и думать нечего.";
+      if (r.hidden) continue;
+      if (team === "red" && r.revealedTeam === "black") {
+        if (r.aliveBefore.includes(x) && r.votes[x] === r.eliminated)
+          return "в раунде " + (i + 1) + " он голосовал в " + P(r.eliminated) + ", который вскрылся мафией. Мафия никогда не топит своих (R1) — значит, " + NAMES[x] + " чист.";
+        if (r.aliveBefore.includes(r.eliminated) && r.votes[r.eliminated] === x)
+          return "в раунде " + (i + 1) + " вскрытая мафия " + P(r.eliminated) + " голосовала в него, а в своих мафия не голосует (R1).";
+      }
+    }
+    if (pz.stmts) for (const s of pz.stmts) {
+      if (s.kind === "accuse" && s.target === x && team === (pz.mafia.includes(s.by) ? "red" : "black"))
+        return "его выкрикнул " + P(s.by) + ", а в паре «обвинитель—обвинённый» мафия ровно один (мирные не врут, мафия не сдаёт своих).";
+    }
+    function directOk(w) {
+      const fr = worldFailReason(w, pz);
+      return !fr || fr.rule === "R1" || fr.rule === "R2" || fr.rule === "R6";
+    }
+    const wrong = ALL_CANDIDATES.filter((w) => team === "red" === w.includes(x));
+    let pool = wrong.filter(directOk), directKill = false;
+    if (pool.length === 0) {
+      pool = wrong;
+      directKill = true;
+    }
+    const counts = {};
+    let total = 0;
+    for (const w of pool) {
+      const fr = worldFailReason(w, pz);
+      if (!fr) continue;
+      total++;
+      const key = fr.rule + (fr.round != null ? "|" + fr.round : "");
+      counts[key] = (counts[key] || 0) + 1;
+    }
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    if (!top) return "все допустимые составы, согласованные с уликами, сходятся на этом.";
+    const parts = top[0].split("|");
+    const rTxt = parts[1] !== void 0 ? " в раунде " + (+parts[1] + 1) : "";
+    const why = {
+      "вскрытие": "такая тройка противоречит вскрытым командам выбывших",
+      "заявки": "такая тройка противоречит заявкам шерифа: настоящий один и не врёт",
+      "выкрики": "такая тройка противоречит выкрикам за столом: мирные не врут, мафия не сдаёт своих",
+      "R1": "кому-то из тройки пришлось бы голосовать в своего" + rTxt + " — R1 запрещает",
+      "R2": "мафии пришлось бы разойтись в целях" + rTxt + " — R2 требует единой руки",
+      "R6": "мафии пришлось бы расходиться в голосах больше одного раза — R6 разрешает лишь один разлад"
+    };
+    return (team === "red" ? "предположи, что " + NAMES[x] + " мафия" : "предположи, что " + NAMES[x] + " мирный") + " — и " + (directKill ? "уже прямые улики (вскрытия" + (pz.claims ? ", заявки" : "") + (pz.stmts ? ", выкрики" : "") + ") не оставляют ни одного такого расклада; чаще всего " + (why[parts[0]] || "улики не сходятся") : why[parts[0]] || "улики не сходятся") + " (так рассыпаются " + top[1] + " из " + total + " неподходящих раскладов" + (top[1] < total ? "; остальные ломаются об другие правила" : "") + ").";
+  }
+
+  // app/js/core/generator.js
+  function generate(cfg) {
+    for (let k = 0; k < 8e3; k++) {
+      const rng = makeRng(hash32(cfg.seedStr + "#" + k));
+      const sim = simulate(cfg, rng);
+      if (!sim) continue;
+      const blacks = sim.log.filter((r) => r.revealedTeam === "black").length;
+      if (blacks > 1) continue;
+      const pz = { log: sim.log, claims: sim.claims, stmts: sim.stmts, discord: !!cfg.discord };
+      if (solve(pz).length !== 1) continue;
+      const an = analyze(pz);
+      if (an.deadRounds > (cfg.rounds >= 5 ? 2 : 1)) continue;
+      if (an.depth < (cfg.minDepth || 2)) continue;
+      return { log: sim.log, claims: sim.claims, stmts: sim.stmts, discord: !!cfg.discord, mafia: sim.mafia, cfg, attempt: k };
+    }
+    return null;
+  }
+
+  // app/js/core/scoring.js
+  function starsFor(errors, hintsUsed) {
+    if (errors === 0 && hintsUsed === 0) return 3;
+    if (errors + hintsUsed <= 1) return 2;
+    return 1;
+  }
+
+  // app/js/core/daily.js
+  function dailyKey(d) {
+    const dt = d || /* @__PURE__ */ new Date();
+    return dt.getUTCFullYear() + "-" + String(dt.getUTCMonth() + 1).padStart(2, "0") + "-" + String(dt.getUTCDate()).padStart(2, "0");
+  }
+  function dailyCfg(key) {
+    const dow = (/* @__PURE__ */ new Date(key + "T00:00:00Z")).getUTCDay();
+    const base = { ...DIFFS.medium, seedStr: "daily-" + key, claims: false, discord: false, stmts: false, hidden: 0 };
+    if (dow === 3) {
+      base.claims = true;
+      base.rounds = 3;
+    } else if (dow === 5) {
+      base.stmts = true;
+      base.rounds = 3;
+    } else if (dow === 6) {
+      base.discord = true;
+      base.rounds = 4;
+    } else if (dow === 0) {
+      base.rounds = 4;
+      base.hidden = 1;
+    }
+    return base;
+  }
+
+  // app/js/state/live-actions.js
+  function toggleVote(live, voter, target) {
+    if (![voter, target].every((i) => Number.isInteger(i) && i >= 0 && i < 10)) return null;
+    const votes = live.rounds[live.cur].votes;
+    const prev = votes[voter] ?? null;
+    const next = prev === target ? null : target;
+    if (next === null) delete votes[voter];
+    else votes[voter] = next;
+    return {
+      t: "vote",
+      r: live.cur,
+      round: live.cur,
+      v: voter,
+      prev,
+      next,
+      txt: `№${voter + 1}: ${next === null ? "голос снят" : `голос → №${next + 1}`}`
+    };
+  }
+  function addRound(live) {
+    const prev = live.cur;
+    live.rounds.push({ votes: {}, noms: [] });
+    live.cur = live.rounds.length - 1;
+    return { t: "round", prev, round: live.cur, txt: `Начат круг ${live.cur + 1}` };
+  }
+  function undoVoteOrRound(live, entry) {
+    if (entry.t === "vote") {
+      const votes = live.rounds[entry.r].votes;
+      if (entry.prev === null) delete votes[entry.v];
+      else votes[entry.v] = entry.prev;
+      return true;
+    }
+    if (entry.t === "round") {
+      live.rounds.pop();
+      live.cur = entry.prev;
+      return true;
+    }
+    return false;
+  }
+
+  // app/js/util/escape.js
+  var escH = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  // app/js/state/storage.js
+  var SCHEMA_VERSION = 2;
+  var SAVE_KEY = "protokol-save-v1";
+  var LIVE_KEY = "protokol-live-v2";
+  var GAMES_KEY = "protokol-live-games-v1";
+  function defaultSave() {
+    return {
+      schemaVersion: SCHEMA_VERSION,
+      settings: { noMotion: false },
+      campaign: {},
+      // "c1-0": {stars:3}
+      daily: { streak: 0, last: null, history: {} },
+      // history: {"2026-07-11":stars}
+      stats: { solved: 0, firstTry: 0, byDiff: {}, hints: 0, examBest: null, freeCase: 0 }
+    };
+  }
+  function defaultLive() {
+    return {
+      schemaVersion: SCHEMA_VERSION,
+      rounds: [{ votes: {}, noms: [] }],
+      cur: 0,
+      view: "cur",
+      marks: {},
+      team: {},
+      plus: {},
+      minus: {},
+      meta: { id: null, name: "", createdAt: null, status: "active", result: "" },
+      out: {},
+      attacks: [],
+      sup: [],
+      cw: [],
+      checks: {},
+      notes: [],
+      journal: [],
+      eval: {},
+      args: {}
+    };
+  }
+  var isPlainObj = (x) => x !== null && typeof x === "object" && !Array.isArray(x);
+  function mergeShape(def, data) {
+    if (!isPlainObj(def)) return data === void 0 ? def : data;
+    if (!isPlainObj(data)) return def;
+    const out = { ...def };
+    for (const k in def) if (k in data) out[k] = mergeShape(def[k], data[k]);
+    for (const k in data) if (!(k in def)) out[k] = data[k];
+    return out;
+  }
+  function migrateSave(parsed) {
+    if (!isPlainObj(parsed)) return defaultSave();
+    return { ...mergeShape(defaultSave(), parsed), schemaVersion: SCHEMA_VERSION };
+  }
+  function migrateLive(parsed) {
+    if (!isPlainObj(parsed)) return defaultLive();
+    return { ...mergeShape(defaultLive(), parsed), schemaVersion: SCHEMA_VERSION };
+  }
+  function readJSON(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  function writeJSON(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+  function loadSave() {
+    return migrateSave(readJSON(SAVE_KEY));
+  }
+  function writeSave(save2) {
+    writeJSON(SAVE_KEY, save2);
+  }
+  function loadLive() {
+    return migrateLive(readJSON(LIVE_KEY));
+  }
+  function writeLive(live) {
+    return writeJSON(LIVE_KEY, live);
+  }
+  function loadGames() {
+    const g = readJSON(GAMES_KEY);
+    return isPlainObj(g) ? g : {};
+  }
+  function saveGames(g) {
+    return writeJSON(GAMES_KEY, g);
+  }
+  function persistLiveGame(live) {
+    if (!live.meta) live.meta = defaultLive().meta;
+    if (!live.meta.id) live.meta.id = globalThis.crypto?.randomUUID?.() || `game-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    if (!live.meta.createdAt) live.meta.createdAt = Date.now();
+    if (!live.meta.name) live.meta.name = "Игра " + new Date(live.meta.createdAt).toLocaleString("ru-RU");
+    const games = loadGames();
+    games[live.meta.id] = { name: live.meta.name, ts: Date.now(), state: live };
+    const archiveOK = saveGames(games);
+    const currentOK = writeLive(live);
+    return archiveOK && currentOK;
+  }
+
+  // app/inline-entry.js
+  var save = loadSave();
+  function persist() {
+    writeSave(save);
+  }
+  var $ = (id) => document.getElementById(id);
+  function show(name) {
+    document.querySelectorAll(".screen").forEach((s) => s.classList.remove("on"));
+    $("screen-" + name).classList.add("on");
+    if (name === "menu") renderMenu();
+    if (name === "campaign") renderCampaign();
+    if (name === "stats") renderStats();
+    if (name === "live") {
+      livePersist();
+      renderLive();
+    }
+    if (name === "advanced") {
+      renderAdvanced();
+      renderArgs();
+    }
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll("[data-nav]").forEach((b) => b.addEventListener("click", () => show(b.dataset.nav)));
+  document.querySelectorAll("[data-close]").forEach((b) => b.addEventListener("click", () => $(b.dataset.close).classList.remove("on")));
+  document.querySelectorAll(".modal-bg").forEach((m) => m.addEventListener("click", (e) => {
+    if (e.target === m) m.classList.remove("on");
+  }));
+  var G = null;
+  function stopTimer() {
+    if (G && G.timerId) {
+      clearInterval(G.timerId);
+      G.timerId = null;
+    }
+  }
+  function fmtTime(ms) {
+    const s = Math.floor(ms / 1e3);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+  function startGame(cfg, mode, meta) {
+    stopTimer();
+    const pz = generate(cfg);
+    if (!pz) {
+      alert("Секретарь не смог собрать дело на этом сиде — попробуй ещё раз.");
+      show("menu");
+      return;
+    }
+    G = {
+      pz,
+      mode,
+      cfg,
+      meta: meta || {},
+      marks: {},
+      curRound: 0,
+      errors: 0,
+      hintsUsed: 0,
+      hintsLeft: cfg.hints != null ? cfg.hints : 1,
+      solved: false,
+      startT: Date.now(),
+      timerId: null,
+      analysis: null,
+      tool: "mark",
+      linkSel: null,
+      links: []
+    };
+    document.querySelectorAll("#pickTool button").forEach((x) => x.classList.toggle("on", x.dataset.v === "mark"));
+    updateHintClick();
+    if (mode === "exam") G.hintsLeft = 0;
+    for (const r of pz.log) G.marks[r.eliminated] = r.revealedTeam;
+    const labels = { free: "задача · " + DIFFS_LABEL(cfg), daily: "задача дня · " + G.meta.dailyKey, exam: "на время", camp: G.meta.campLabel || "курс" };
+    $("modeBadge").textContent = labels[mode] || mode;
+    $("caseNum").textContent = "№" + (G.meta.caseNo != null ? G.meta.caseNo : "?");
+    $("seal").classList.remove("stamp");
+    const v = $("verdict");
+    v.className = "verdict";
+    v.innerHTML = "";
+    $("checkBtn").disabled = false;
+    $("reviewBtn").style.display = "none";
+    $("nextBtn").style.display = "none";
+    $("newBtn").style.display = mode === "free" ? "" : "none";
+    $("hintBtn").style.display = mode === "exam" ? "none" : "";
+    $("timerBox").style.display = mode === "exam" ? "" : "none";
+    if (mode === "exam") {
+      $("timerV").textContent = "0:00";
+      G.timerId = setInterval(() => {
+        $("timerV").textContent = fmtTime(Date.now() - G.startT);
+      }, 500);
+    }
+    $("phSub").textContent = "запись секретаря клуба · сид " + cfg.seedStr + "#" + pz.attempt;
+    renderRulesBox();
+    renderClaims();
+    renderAll();
+    show("game");
+  }
+  function DIFFS_LABEL(cfg) {
+    for (const k in DIFFS) if (DIFFS[k].rounds === cfg.rounds && (DIFFS[k].hidden || 0) === (cfg.hidden || 0)) return DIFFS[k].label;
+    return cfg.rounds + " раунда";
+  }
+  var SVG_NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs) {
+    const e = document.createElementNS(SVG_NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  var SEATS = N + 1;
+  function seatPos(i) {
+    const cx = 280, cy = 278, R = 218;
+    const a = Math.PI / 2 + (i + 1) * (2 * Math.PI / SEATS);
+    return { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) };
+  }
+  function hostPos() {
+    const cx = 280, cy = 278, R = 218;
+    return { x: cx, y: cy + R };
+  }
+  function hatchPattern(id, base, line) {
+    const p = el("pattern", { id, width: "7", height: "7", patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+    p.appendChild(el("rect", { width: "7", height: "7", fill: base }));
+    p.appendChild(el("line", { x1: "0", y1: "0", x2: "0", y2: "7", stroke: line, "stroke-width": "2.4" }));
+    return p;
+  }
+  function renderTable() {
+    const svg = $("tableSvg");
+    svg.innerHTML = "";
+    const defs = el("defs", {});
+    const marker = el("marker", { id: "arrow", viewBox: "0 0 10 10", refX: "9", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" });
+    marker.appendChild(el("path", { d: "M0,0 L10,5 L0,10 z", fill: "currentColor" }));
+    defs.appendChild(marker);
+    defs.appendChild(hatchPattern("hatchBlack", "#211d1c", "rgba(201,164,92,.55)"));
+    defs.appendChild(hatchPattern("hatchRed", "#8c2721", "rgba(243,234,215,.45)"));
+    defs.appendChild(hatchPattern("hatchOver", "transparent", "rgba(243,234,215,.6)"));
+    svg.appendChild(defs);
+    svg.appendChild(el("circle", { cx: 280, cy: 278, r: 250, fill: "#16301f", stroke: "rgba(201,164,92,.35)", "stroke-width": 2 }));
+    svg.appendChild(el("circle", { cx: 280, cy: 278, r: 164, fill: "none", stroke: "rgba(243,234,215,.07)", "stroke-width": 1 }));
+    const round = G.pz.log[G.curRound];
+    for (const l of G.links) {
+      const p1 = seatPos(l[0]), p2 = seatPos(l[1]);
+      const dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.hypot(dx, dy) || 1, off = 42;
+      const x1 = p1.x + dx / len * off, y1 = p1.y + dy / len * off, x2 = p2.x - dx / len * off, y2 = p2.y - dy / len * off;
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      const cxm = mx + (280 - mx) * 0.25, cym = my + (278 - my) * 0.25;
+      svg.appendChild(el("path", { d: "M" + x1 + "," + y1 + " Q" + cxm + "," + cym + " " + x2 + "," + y2, class: "linkline" }));
+    }
+    if (!round.hidden) {
+      for (const v of round.aliveBefore) {
+        const t = round.votes[v];
+        const p1 = seatPos(v), p2 = seatPos(t);
+        const dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.hypot(dx, dy), off = 44;
+        const x1 = p1.x + dx / len * off, y1 = p1.y + dy / len * off, x2 = p2.x - dx / len * off, y2 = p2.y - dy / len * off;
+        const path = el("path", { d: "M" + x1 + "," + y1 + " L" + x2 + "," + y2, class: "chord" + (t === round.eliminated ? " to-elim" : "") });
+        path.style.color = t === round.eliminated ? "var(--wax)" : "var(--brass)";
+        svg.appendChild(path);
+      }
+    } else {
+      const txt = el("text", { x: 280, y: 284, "text-anchor": "middle", fill: "rgba(243,234,215,.4)", "font-size": "15px" });
+      txt.style.fontFamily = "'PT Mono',monospace";
+      txt.textContent = "лист с руками утерян";
+      svg.appendChild(txt);
+    }
+    const tableTags = {};
+    if (G.pz.claims) G.pz.claims.forEach((c) => {
+      tableTags[c.by] = "«шериф»";
+    });
+    if (G.pz.stmts) G.pz.stmts.forEach((s) => {
+      if (!tableTags[s.by]) tableTags[s.by] = s.kind === "accuse" ? "«он мафия!»" : s.kind === "clear" ? "«ручаюсь»" : "«я красный»";
+    });
+    {
+      const hp = hostPos();
+      const g = el("g", { class: "host-slot", transform: "translate(" + hp.x + "," + hp.y + ")" });
+      g.appendChild(el("circle", { r: 38, fill: "#122a1b", stroke: "rgba(243,234,215,.25)", "stroke-width": 1.5, "stroke-dasharray": "3 3" }));
+      const t1 = el("text", { y: -1, "text-anchor": "middle", "font-size": "11" });
+      t1.textContent = "ведущий";
+      g.appendChild(t1);
+      const t2 = el("text", { y: 13, "text-anchor": "middle", "font-size": "8", opacity: ".6" });
+      t2.textContent = "нейтрален";
+      g.appendChild(t2);
+      svg.appendChild(g);
+    }
+    for (let i = 0; i < N; i++) {
+      const p = seatPos(i);
+      const g = el("g", { class: "seat", transform: "translate(" + p.x + "," + p.y + ")" });
+      const elimInfo = G.pz.log.find((r) => r.eliminated === i);
+      const mark = G.marks[i];
+      if (mark === "black") g.classList.add("mark-black");
+      if (mark === "red") g.classList.add("mark-red");
+      if (elimInfo) g.classList.add("dead");
+      if (G.linkSel === i) g.classList.add("sel");
+      const plate = el("circle", { class: "plate", r: 38 });
+      const outAlready = !round.aliveBefore.includes(i);
+      if (outAlready) plate.style.fill = elimInfo && elimInfo.revealedTeam === "red" ? "url(#hatchRed)" : "url(#hatchBlack)";
+      g.appendChild(plate);
+      if (i === round.eliminated) {
+        g.appendChild(el("circle", { class: "hatchfade", r: 38, fill: "url(#hatchOver)" }));
+      }
+      const num = el("text", { class: "pnum", y: -2, "text-anchor": "middle" });
+      num.textContent = i + 1;
+      g.appendChild(num);
+      const nm = el("text", { class: "pname", y: 13, "text-anchor": "middle" });
+      nm.textContent = NAMES[i];
+      g.appendChild(nm);
+      if (tableTags[i]) {
+        const c = el("text", { class: "claimtag", y: -22, "text-anchor": "middle" });
+        c.textContent = tableTags[i];
+        g.appendChild(c);
+      }
+      if (mark) {
+        const b = el("text", { class: "mark-badge", y: 27, "text-anchor": "middle", fill: "var(--cream)" });
+        b.textContent = mark === "black" ? "МАФИЯ" : "МИРНЫЙ";
+        g.appendChild(b);
+      }
+      if (!G.solved) {
+        g.addEventListener("click", () => {
+          if (G.tool === "link") {
+            if (G.linkSel == null) {
+              G.linkSel = i;
+            } else if (G.linkSel === i) {
+              G.linkSel = null;
+            } else {
+              const pair = [Math.min(G.linkSel, i), Math.max(G.linkSel, i)];
+              const idx = G.links.findIndex((l) => l[0] === pair[0] && l[1] === pair[1]);
+              if (idx >= 0) G.links.splice(idx, 1);
+              else G.links.push(pair);
+              G.linkSel = null;
+            }
+            renderAll();
+            return;
+          }
+          if (elimInfo) return;
+          const cur = G.marks[i];
+          G.marks[i] = cur === void 0 ? "black" : cur === "black" ? "red" : void 0;
+          if (G.marks[i] === void 0) delete G.marks[i];
+          renderAll();
+        });
+      }
+      svg.appendChild(g);
+    }
+  }
+  function renderProtocol() {
+    const tabs = $("tabs");
+    tabs.innerHTML = "";
+    G.pz.log.forEach((r, idx) => {
+      const b = document.createElement("button");
+      b.className = "tab" + (idx === G.curRound ? " active" : "") + (r.hidden ? " lost" : "");
+      b.textContent = "Раунд " + (idx + 1);
+      b.onclick = () => {
+        G.curRound = idx;
+        renderAll();
+      };
+      tabs.appendChild(b);
+    });
+    const round = G.pz.log[G.curRound];
+    const vg = $("voteGroups");
+    vg.innerHTML = "";
+    if (round.hidden) {
+      const d = document.createElement("div");
+      d.className = "lost-note";
+      d.textContent = "лист с записями рук утерян — известен только итог";
+      vg.appendChild(d);
+    } else {
+      const groups = {};
+      for (const v of round.aliveBefore) {
+        const t = round.votes[v];
+        (groups[t] = groups[t] || []).push(v);
+      }
+      Object.keys(groups).map(Number).sort((a, b) => groups[b].length - groups[a].length || a - b).forEach((t) => {
+        const d = document.createElement("div");
+        d.className = "vg" + (t === round.eliminated ? " elim" : "");
+        d.innerHTML = "<b>" + P(t) + "</b> — " + groups[t].length + ' гол.<br><span class="voters">руки: ' + groups[t].map((v) => "№" + (v + 1)).join(", ") + "</span>";
+        vg.appendChild(d);
+      });
+    }
+    const teamHtml = round.revealedTeam === "black" ? '<span class="team-black">МАФИЯ ◼</span>' : '<span class="team-red">мирный ◆</span>';
+    $("reveal").innerHTML = "Выбыл " + P(round.eliminated) + " — вскрытие: " + teamHtml;
+    const hintsTxt = G.mode === "exam" ? "" : " · осведомитель: " + G.hintsLeft;
+    $("stat").textContent = "ошибок: " + G.errors + hintsTxt;
+    if (G.hintBtnUpdate !== false) {
+      $("hintBtn").textContent = "Осведомитель (" + G.hintsLeft + ")";
+      $("hintBtn").disabled = G.hintsLeft <= 0 || G.solved;
+    }
+  }
+  function renderClaims() {
+    const box = $("claimsBox");
+    if (!G.pz.claims && !G.pz.stmts) {
+      box.style.display = "none";
+      return;
+    }
+    box.style.display = "";
+    let html = "<h4>За столом до голосования</h4>";
+    const foot = [];
+    if (G.pz.claims) {
+      html += G.pz.claims.map((c) => '<div class="cl"><span class="who">' + P(c.by) + ":</span> «я шериф, проверил " + P(c.target) + " — " + (c.says === "black" ? "<b>мафия</b>" : "мирный") + "»</div>").join("");
+      foot.push("настоящий шериф не врёт; фальшивый шериф — мафия");
+    }
+    if (G.pz.stmts) {
+      html += G.pz.stmts.map((s) => {
+        const t = stmtText(s);
+        const i = t.indexOf(":");
+        return '<div class="cl"><span class="who">' + t.slice(0, i) + ":</span>" + t.slice(i + 1) + "</div>";
+      }).join("");
+      foot.push("мирные не врут; мафия кричит что угодно, но никогда не называет мафию (и себя) мафией");
+    }
+    box.innerHTML = html + '<div class="cl" style="color:#6d6252;font-size:12px;margin-top:6px">' + foot.join(" · ") + "</div>";
+  }
+  function renderRulesBox() {
+    const extra = [];
+    if (G.pz.claims) extra.push('<li class="extra"><b>R5</b>: настоящий шериф — мирный и говорит правду; заявивший «я шериф» ложно — мафия.</li>');
+    if (G.pz.stmts) extra.push('<li class="extra"><b>R7</b>: мирные за столом не врут; мафия кричит что угодно, но никогда не называет мафию (и себя) мафией.</li>');
+    if (G.pz.discord) extra.push('<li class="extra"><b>R6</b>: мафия может разойтись в голосах, но не более одного раза за партию.</li>');
+    if (G.pz.log.some((r) => r.hidden)) extra.push('<li class="extra">По утерянным листам известен только итог вскрытия.</li>');
+    $("rulesBox").innerHTML = "<b>Что известно наверняка:</b><li>Мафия <b>никогда</b> не голосует против своих.</li><li>" + (G.pz.discord ? "Живые мафиози голосуют в одну цель (кроме, возможно, одного раунда — см. R6)." : "В каждом раунде все живые мафиози голосуют <b>в одну и ту же цель</b>.") + "</li><li>Выбывает набравший больше всех голосов (при равенстве — меньший номер), его команда раскрывается.</li><li>Мирные голосуют как попало — на них логика не строится.</li>" + extra.join("");
+  }
+  function renderAll() {
+    renderTable();
+    renderProtocol();
+  }
+  function updateHintClick() {
+    $("hintClick").innerHTML = G && G.tool === "link" ? "Соедини двоих, кого считаешь <b>одной командой</b>: клик по первому, клик по второму. Повторно — разорвать связь." : "Кликай по игроку: пусто → <b>мафия</b> → <b>мирный</b> → пусто";
+  }
+  $("pickTool").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b || !G) return;
+    G.tool = b.dataset.v;
+    G.linkSel = null;
+    document.querySelectorAll("#pickTool button").forEach((x) => x.classList.toggle("on", x === b));
+    updateHintClick();
+    renderAll();
+  });
+  $("checkBtn").addEventListener("click", () => {
+    if (!G || G.solved) return;
+    const accused = Object.keys(G.marks).filter((k) => G.marks[k] === "black").map(Number);
+    const v = $("verdict");
+    if (accused.length !== MAF) {
+      v.className = "verdict bad show";
+      v.innerHTML = "<h3>Прокурору нужны ровно трое</h3>Сейчас меткой «мафия» отмечено: " + accused.length + ". Отметь троих подозреваемых.";
+      return;
+    }
+    const correct = accused.filter((a) => G.pz.mafia.includes(a)).length;
+    if (correct === MAF) onSolved();
+    else {
+      G.errors++;
+      v.className = "verdict bad show";
+      v.innerHTML = "<h3>Дело развалилось в суде</h3>Из троих обвинённых мафией оказались: <b>" + correct + " из 3</b>. Пересмотри улики — вспомни, кто голосовал во вскрытых.";
+      renderProtocol();
+    }
+  });
+  function onSolved() {
+    G.solved = true;
+    stopTimer();
+    const elapsed = Date.now() - G.startT;
+    const stars = starsFor(G.errors, G.hintsUsed);
+    save.stats.solved++;
+    if (G.errors === 0 && G.hintsUsed === 0) save.stats.firstTry++;
+    const dl = DIFFS_LABEL(G.cfg);
+    save.stats.byDiff[dl] = (save.stats.byDiff[dl] || 0) + 1;
+    let extraLine = "";
+    if (G.mode === "camp") {
+      const prev = save.campaign[G.cfg.seedStr];
+      if (!prev || prev.stars < stars) save.campaign[G.cfg.seedStr] = { stars };
+      extraLine = G.meta.nextCfg ? "Следующее дело главы открыто." : "Глава пройдена!";
+    }
+    if (G.mode === "daily") {
+      const key = G.meta.dailyKey;
+      if (!save.daily.history[key]) {
+        const yest = dailyKey(new Date(Date.now() - 864e5));
+        save.daily.streak = save.daily.last === yest || save.daily.last === key ? save.daily.streak + 1 : 1;
+        save.daily.last = key;
+      }
+      save.daily.history[key] = Math.max(save.daily.history[key] || 0, stars);
+      extraLine = "Стрик: " + save.daily.streak + " 🔥";
+    }
+    if (G.mode === "exam") {
+      if (save.stats.examBest == null || elapsed < save.stats.examBest) {
+        save.stats.examBest = elapsed;
+        extraLine = "Новый рекорд экзамена!";
+      } else extraLine = "Лучшее время: " + fmtTime(save.stats.examBest);
+    }
+    if (G.mode === "free") save.stats.freeCase++;
+    persist();
+    const v = $("verdict");
+    v.className = "verdict good show";
+    v.innerHTML = '<h3>Дело раскрыто</h3><div class="stars">' + "★".repeat(stars) + "☆".repeat(3 - stars) + "</div>Мафия: " + G.pz.mafia.map(P).join(", ") + ".<br>Ошибок: " + G.errors + ", подсказок: " + G.hintsUsed + (G.mode === "exam" ? ", время: " + fmtTime(elapsed) : "") + (extraLine ? "<br>" + extraLine : "");
+    $("seal").classList.add("stamp");
+    $("checkBtn").disabled = true;
+    $("hintBtn").disabled = true;
+    $("reviewBtn").style.display = "";
+    $("nextBtn").style.display = "";
+    $("nextBtn").textContent = G.mode === "daily" ? "В меню" : G.mode === "camp" ? G.meta.nextCfg ? "Следующее дело →" : "К главам" : "Новое дело →";
+    renderTable();
+  }
+  $("hintBtn").addEventListener("click", () => {
+    if (!G || G.hintsLeft <= 0 || G.solved) return;
+    const rng = makeRng(hash32(G.cfg.seedStr + "-hint-" + G.hintsUsed + Date.now() % 1e3));
+    const ids = [...Array(N).keys()];
+    const unknownMafia = G.pz.mafia.filter((m) => G.marks[m] !== "black");
+    const unknownTown = ids.filter((i) => !G.pz.mafia.includes(i) && G.marks[i] === void 0);
+    let target, team;
+    if (unknownTown.length > 0 && (unknownMafia.length === 0 || rng.f() < 0.6)) {
+      target = rng.pick(unknownTown);
+      team = "red";
+    } else if (unknownMafia.length > 0) {
+      target = rng.pick(unknownMafia);
+      team = "black";
+    } else return;
+    G.marks[target] = team;
+    G.hintsLeft--;
+    G.hintsUsed++;
+    save.stats.hints++;
+    persist();
+    const v = $("verdict");
+    v.className = "verdict good show";
+    v.innerHTML = "<h3>Шепнули на ухо</h3>" + P(target) + " — " + (team === "black" ? "<b>мафия</b>" : "мирный") + ".<br><b>Почему:</b> " + explainFact(G.pz, target, team) + '<br><span style="opacity:.75;font-size:12.5px">Осведомитель берёт плату звёздами.</span>';
+    renderAll();
+  });
+  $("reviewBtn").addEventListener("click", () => {
+    if (!G) return;
+    if (!G.analysis) G.analysis = analyze(G.pz);
+    const body = $("reviewBody");
+    body.innerHTML = "";
+    const intro = document.createElement("div");
+    intro.className = "dstep";
+    intro.innerHTML = '<div class="ds-title">Отправная точка</div><div class="ds-count">возможных троек среди 10 игроков: <b>120</b></div>';
+    body.appendChild(intro);
+    G.analysis.steps.forEach((s) => {
+      const d = document.createElement("div");
+      d.className = "dstep";
+      let facts = "";
+      if (s.newM.length || s.newT.length) {
+        facts = "<ul>" + s.newM.map((i) => '<li>доказано: <span class="fact-m">' + P(i) + " — мафия</span></li>").join("") + s.newT.map((i) => '<li>доказано: <span class="fact-t">' + P(i) + " — мирный</span></li>").join("") + "</ul>";
+      }
+      const notes = s.notes.length ? "<ul>" + s.notes.map((n) => "<li>" + n + "</li>").join("") + "</ul>" : "";
+      d.innerHTML = '<div class="ds-title">' + s.title + '</div><div class="ds-count">кандидатов: ' + s.before + " → <b>" + s.after + "</b>" + (s.before === s.after ? " (раунд ничего не исключил)" : "") + "</div>" + notes + facts;
+      body.appendChild(d);
+    });
+    const fin = document.createElement("div");
+    fin.className = "dstep final";
+    fin.innerHTML = '<div class="ds-title">Единственный выживший мир</div><ul><li>Мафия: <span class="fact-m">' + G.pz.mafia.map(P).join(", ") + "</span></li></ul>";
+    body.appendChild(fin);
+    $("reviewModal").classList.add("on");
+  });
+  $("gameBack").addEventListener("click", () => {
+    stopTimer();
+    show("menu");
+  });
+  $("newBtn").addEventListener("click", () => {
+    if (G && (G.mode === "free" || G.mode === "zen")) startFree(G.mode);
+  });
+  $("nextBtn").addEventListener("click", () => {
+    if (!G) return;
+    if (G.mode === "daily") {
+      show("menu");
+      return;
+    }
+    if (G.mode === "camp") {
+      if (G.meta.nextCfg) startCampCase(G.meta.nextChapter, G.meta.nextIdx);
+      else show("campaign");
+      return;
+    }
+    if (G.mode === "exam") {
+      startExam();
+      return;
+    }
+    startFree(G.mode);
+  });
+  var freeDiff = "easy";
+  var freeRules = "classic";
+  $("pickDiff").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    e.stopPropagation();
+    freeDiff = b.dataset.v;
+    document.querySelectorAll("#pickDiff button").forEach((x) => x.classList.toggle("on", x === b));
+  });
+  $("pickRules").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    e.stopPropagation();
+    freeRules = b.dataset.v;
+    document.querySelectorAll("#pickRules button").forEach((x) => x.classList.toggle("on", x === b));
+  });
+  function freeCfg() {
+    const d = DIFFS[freeDiff];
+    return {
+      rounds: d.rounds,
+      hidden: d.hidden,
+      minDepth: d.minDepth,
+      hints: d.hints,
+      claims: freeRules === "claims",
+      discord: freeRules === "discord",
+      stmts: freeRules === "stmts",
+      seedStr: "free-" + freeDiff + "-" + freeRules + "-" + Date.now() + "-" + Math.floor(Math.random() * 1e6)
+    };
+  }
+  var examDiff = "medium";
+  $("pickExam").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    e.stopPropagation();
+    examDiff = b.dataset.v;
+    document.querySelectorAll("#pickExam button").forEach((x) => x.classList.toggle("on", x === b));
+  });
+  function startFree(mode) {
+    save.stats.freeCase = save.stats.freeCase || 0;
+    startGame(freeCfg(), mode, { caseNo: save.stats.freeCase + 1 });
+  }
+  function startExam() {
+    const d = DIFFS[examDiff];
+    startGame({
+      rounds: d.rounds,
+      hidden: d.hidden,
+      minDepth: d.minDepth,
+      hints: 0,
+      claims: false,
+      discord: false,
+      stmts: false,
+      seedStr: "exam-" + Date.now() + "-" + Math.floor(Math.random() * 1e6)
+    }, "exam", { caseNo: "Э" });
+  }
+  function startDaily() {
+    const key = dailyKey();
+    startGame(dailyCfg(key), "daily", { dailyKey: key, caseNo: key.slice(5) });
+  }
+  function startCampCase(chIdx, caseIdx) {
+    const ch = CAMPAIGN[chIdx];
+    const cfg = ch.cases[caseIdx];
+    const hasNext = caseIdx + 1 < ch.cases.length;
+    startGame(cfg, "camp", {
+      caseNo: chIdx + 1 + "." + (caseIdx + 1),
+      campLabel: ch.title.split("·")[0].trim().toLowerCase() + " · дело " + (caseIdx + 1),
+      nextCfg: hasNext ? ch.cases[caseIdx + 1] : null,
+      nextChapter: chIdx,
+      nextIdx: caseIdx + 1
+    });
+  }
+  $("mCardDaily").addEventListener("click", startDaily);
+  $("mCardCampaign").addEventListener("click", () => show("campaign"));
+  $("mCardFree").addEventListener("click", (e) => {
+    if (e.target.closest(".pick")) return;
+    startFree("free");
+  });
+  $("mCardFree").addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && !e.target.closest(".pick")) {
+      e.preventDefault();
+      startFree("free");
+    }
+  });
+  $("mCardExam").addEventListener("click", (e) => {
+    if (e.target.closest(".pick")) return;
+    startExam();
+  });
+  $("mCardExam").addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && !e.target.closest(".pick")) {
+      e.preventDefault();
+      startExam();
+    }
+  });
+  $("mCardStats").addEventListener("click", () => show("stats"));
+  $("mCardSettings").addEventListener("click", () => show("settings"));
+  $("mCardHelp").addEventListener("click", () => {
+    renderHelp();
+    $("helpModal").classList.add("on");
+  });
+  function chapterSolved(chIdx) {
+    return CAMPAIGN[chIdx].cases.filter((c) => save.campaign[c.seedStr]).length;
+  }
+  function chapterUnlocked(chIdx) {
+    return chIdx === 0 || chapterSolved(chIdx - 1) >= 8;
+  }
+  function renderMenu() {
+    const key = dailyKey();
+    const done = save.daily.history[key];
+    $("dailyBadge").textContent = (save.daily.streak > 0 ? "🔥 " + save.daily.streak + " " : "") + (done ? "★".repeat(done) : "");
+    $("dailyDesc").textContent = done ? "Сегодняшнее дело раскрыто. Возвращайся завтра — или перерешай." : "Одна головоломка на всех. Сегодняшняя дата — сегодняшний сид.";
+    const total = CAMPAIGN.reduce((a, ch) => a + ch.cases.length, 0);
+    const solved = CAMPAIGN.reduce((a, ch, i) => a + chapterSolved(i), 0);
+    $("campBadge").textContent = solved + "/" + total;
+    const quips = [
+      "мафия голосует одной рукой — в этом её сила и её слабость",
+      "хороший детектив не угадывает — он исключает",
+      "каждое дело имеет ровно одно решение; всё остальное — шум",
+      "голос во вскрытую мафию — лучшая справка о невиновности",
+      "сначала выпиши, чего быть не может"
+    ];
+    $("menuFoot").textContent = "— " + quips[Math.floor(Math.random() * quips.length)] + " —";
+  }
+  function renderCampaign() {
+    const root = $("chapters");
+    root.innerHTML = "";
+    CAMPAIGN.forEach((ch, chIdx) => {
+      const unlocked = chapterUnlocked(chIdx);
+      const div = document.createElement("div");
+      div.className = "chapter" + (unlocked ? "" : " locked");
+      const solved = chapterSolved(chIdx);
+      const stars = ch.cases.reduce((a, c) => a + ((save.campaign[c.seedStr] || {}).stars || 0), 0);
+      div.innerHTML = "<h3>" + ch.title + '</h3><div class="ch-sub">' + ch.sub + " · раскрыто " + solved + "/12 · ★ " + stars + "/36" + (unlocked ? "" : " · откроется после 8 дел предыдущей главы") + "</div>";
+      const grid = document.createElement("div");
+      grid.className = "case-grid";
+      ch.cases.forEach((c, i) => {
+        const rec = save.campaign[c.seedStr];
+        const open = unlocked && (i === 0 || save.campaign[ch.cases[i - 1].seedStr]);
+        const b = document.createElement("button");
+        b.className = "case-cell" + (rec ? " done" : "");
+        b.disabled = !open;
+        b.innerHTML = '<div class="cnum">' + (rec ? "" : open ? "" : "🔒") + (open || rec ? i + 1 : "") + '</div><div class="cstars">' + (rec ? "★".repeat(rec.stars) : "") + "</div>";
+        if (open) b.addEventListener("click", () => startCampCase(chIdx, i));
+        grid.appendChild(b);
+      });
+      div.appendChild(grid);
+      root.appendChild(div);
+    });
+  }
+  function renderStats() {
+    const s = save.stats;
+    const boxes = [
+      [s.solved, "дел раскрыто"],
+      [s.firstTry, "без ошибок и подсказок"],
+      [save.daily.streak, "стрик «дела дня»"],
+      [Object.keys(save.daily.history).length, "ежедневных решено"],
+      [s.examBest != null ? fmtTime(s.examBest) : "—", "рекорд экзамена"],
+      [s.hints, "звонков осведомителю"]
+    ];
+    for (const k in s.byDiff) boxes.push([s.byDiff[k], "сложность: " + k]);
+    $("statGrid").innerHTML = boxes.map((b) => '<div class="stat-box"><div class="sv">' + b[0] + '</div><div class="sl">' + b[1] + "</div></div>").join("");
+  }
+  function syncSettings() {
+    $("tglMotion").classList.toggle("on", save.settings.noMotion);
+    document.body.classList.toggle("no-motion", save.settings.noMotion);
+  }
+  $("tglMotion").addEventListener("click", () => {
+    save.settings.noMotion = !save.settings.noMotion;
+    persist();
+    syncSettings();
+  });
+  $("resetBtn").addEventListener("click", () => {
+    if (confirm("Точно стереть весь прогресс?")) {
+      save = defaultSave();
+      persist();
+      syncSettings();
+      show("menu");
+    }
+  });
+  function renderHelp() {
+    $("helpBody").innerHTML = '<h3>Задача</h3>За столом 10 игроков, трое — мафия. Тебе дан протокол голосований: кто в кого голосовал, кто выбыл и кем оказался. Вычисли тройку и обвини её. Решение всегда ровно одно — и выводится логикой, без угадайки.<h3>Железные правила</h3><li><b>R1.</b> Мафия никогда не голосует в своих.</li><li><b>R2.</b> Все живые мафиози в раунде голосуют в одну цель.</li><li><b>R3.</b> Выбывает большинством (при равенстве — меньший номер); его команда раскрывается.</li><li><b>R4.</b> Мирные голосуют произвольно.</li><h3>Приёмы детектива</h3><li><b>Голос во вскрытую мафию — оправдание.</b> По R1 голосовавший не может быть её напарником.</li><div class="ex">Выбыл №7, вскрытие: мафия. В него голосовали №2 и №5 → №2 и №5 не могут быть в одной команде с №7. Если мафия голосует единой рукой (R2), а №2 и №5 голосовали в №7... они чисты.</div><li><b>Разные цели — не напарники.</b> По R2 двое, голосовавшие в раунде в разные цели, не могут быть мафией одновременно.</li><li><b>Куда смотрела вскрытая мафия.</b> Цель голосования раскрытого мафиозо — мирная (R1), и туда же голосовала вся его команда (R2): ищи, кто поднимал руку вместе с ним.</li><li><b>Фиксируй невозможное.</b> Отмечай пары, которые не могут быть мафией вместе, и проверяй вывод на следующем раунде.</li><h3>Поздние правила</h3><li><b>R5 · Заявки:</b> двое кричат «я шериф» и предъявляют проверку. Настоящий шериф — мирный и не врёт; фальшивый — мафия. Минимум один из заявителей лжёт.</li><li><b>R6 · Разлад:</b> мафия может один раз за партию разойтись в голосах. R1 действует всегда.</li><li><b>R7 · Сбивание:</b> стол кричит. Мирные не врут; мафия говорит что угодно, но никогда не называет мафию (и себя) мафией. Следствия: «X — мафия!» делит пару «крикун—цель» так, что мафия там <b>ровно один</b>; «ручаюсь за X» от мирного обеляет X (а мафия ручается за кого угодно — чаще за своего); «я красный!» не значит ничего.</li><div class="ex">№2 кричит: «№5 — мафия!». Позже №2 вскрылся мирным → он не врал → №5 мафия. А вскрылся бы мафией — №5 был бы чист.</div><h3>Оценка</h3><li>★★★ — без ошибок и подсказок</li><li>★★ — одна ошибка или подсказка</li><li>★ — дело раскрыто</li>';
+  }
+  var LIVE = loadLive();
+  function livePersist() {
+    const ok = persistLiveGame(LIVE);
+    $("liveSaveStatus").textContent = ok ? "Сохранено в этом браузере" : "Не удалось сохранить — не закрывай страницу. Освободи место и повтори.";
+    $("liveSaveStatus").classList.toggle("save-error", !ok);
+    return ok;
+  }
+  function seatPosLive(i) {
+    return seatPos(i);
+  }
+  var liveTool = "suspect";
+  var liveSel = null;
+  var toolCategory = 0;
+  var voteTarget = null;
+  var LIVE_HINTS = {
+    suspect: "Тап по игроку (или по <b>кружочку слева сверху</b> в любом режиме): пусто → <b>мафия</b> → <b>мирный</b> → <b>шериф</b> → <b>дон</b> → пусто",
+    team: "Тап по игроку — цветная <b>обводка команды</b> по кругу: синяя → зелёная → золотая → фиолетовая → красная → снять. Одинаковый цвет = одна команда",
+    vote: "Тап: сначала <b>кто</b> голосует 👍, потом <b>в кого</b>. Повторный тап по той же цели — снять голос",
+    attack: "Тап: <b>кто</b> атакует ⚔, потом <b>кого</b>. Повтор пары — <b>усилить</b>: линия толще, ×N. Убрать — ластиком 🧹",
+    support: "Тап: <b>кто</b> поддерживает 🤝, потом <b>кого</b>. Повтор пары — <b>усилить</b>. Убрать — ластиком 🧹",
+    nom: "Тап: <b>кто</b> выставляет ☝, потом <b>кого</b> — синяя стрелка (в этом круге). Повтор пары — снять",
+    cw: "Тап: <b>кто</b> идёт в противовес ⚖, потом <b>кому</b> — золотая стрелка. Повтор пары — убрать",
+    plus: "Тап по игроку — <b>+1</b> в сторону «он мирный». Плюсы и минусы копятся отдельно",
+    minus: "Тап по игроку — <b>−1</b> в сторону «он мафия». Плюсы и минусы копятся отдельно",
+    check1: "Проверка <b>шерифа №1</b>: тап по игроку — пусто → <b>красный</b> → <b>чёрный</b> → пусто (значок «1» у игрока)",
+    check2: "Проверка <b>шерифа №2</b>: тап по игроку — пусто → <b>красный</b> → <b>чёрный</b> → пусто (значок «2» у игрока)",
+    voteout: "Тап по игроку — <b>заголосован</b> ✕ (золотая штриховка кружка). Повтор — вернуть в игру",
+    shot: "Тап по игроку — <b>застрелен ночью</b> 🔫 (красная штриховка кружка). Повтор — вернуть в игру",
+    erase: "Тап по стрелке/линии — удалить её. Тап по значку <b>+N</b> или <b>−N</b> — убрать один плюс/минус"
+  };
+  var LN = (i) => "№" + (i + 1);
+  var MARK_CYCLE = [null, "black", "red", "sheriff", "don"];
+  var MARK_TXT = { black: "метка: мафия", red: "метка: мирный", sheriff: "метка: ШЕРИФ", don: "метка: ДОН" };
+  var MARK_MINI = { null: ["?", "#122a1b", "#8f9489"], black: ["М", "#211d1c", "var(--brass)"], red: ["К", "#8c2721", "var(--cream-dim)"], sheriff: ["Ш", "#4a3d15", "var(--gold)"], don: ["Д", "#0b0908", "var(--wax)"] };
+  var TEAM_COLORS = ["#6ea8d8", "#7fc98f", "#e7c877", "#b48ce0", "#e08a80"];
+  var TEAM_NAMES = ["синяя", "зелёная", "золотая", "фиолетовая", "красная"];
+  function liveCycleMark(i) {
+    const prev = LIVE.marks[i] || null;
+    const next = MARK_CYCLE[(MARK_CYCLE.indexOf(prev) + 1) % MARK_CYCLE.length];
+    if (next === null) delete LIVE.marks[i];
+    else LIVE.marks[i] = next;
+    liveAct({ t: "mark", id: i, prev, next, txt: LN(i) + ": " + (next ? MARK_TXT[next] : "метка снята") });
+  }
+  var MARK_BADGE = { black: "МАФИЯ?", red: "МИРНЫЙ", sheriff: "ШЕРИФ", don: "ДОН" };
+  function liveAct(entry) {
+    if (entry.round == null) entry.round = LIVE.cur;
+    LIVE.journal.push(entry);
+    livePersist();
+    renderLive();
+  }
+  function cwIndex(a, b) {
+    return LIVE.cw.findIndex((p) => p[0] === a && p[1] === b || p[0] === b && p[1] === a);
+  }
+  function atkIndex(f, t) {
+    return LIVE.attacks.findIndex((p) => p.from === f && p.to === t);
+  }
+  function supIndex(f, t) {
+    return LIVE.sup.findIndex((p) => p.from === f && p.to === t);
+  }
+  function bumpLink(arr, idxFn, v, i, type, icon, verb) {
+    const idx = idxFn(v, i);
+    let n;
+    if (idx >= 0) {
+      arr[idx].n = (arr[idx].n || 1) + 1;
+      n = arr[idx].n;
+    } else {
+      arr.push({ from: v, to: i, n: 1, r: LIVE.cur });
+      n = 1;
+    }
+    liveAct({ t: type, from: v, to: i, added: true, txt: LN(v) + " " + icon + " " + verb + " " + LN(i) + (n > 1 ? " ×" + n : "") });
+  }
+  function liveTap(i) {
+    const r = LIVE.rounds[LIVE.cur];
+    if (liveTool === "erase") return;
+    if (liveTool === "suspect") {
+      liveCycleMark(i);
+      return;
+    }
+    if (liveTool === "team") {
+      const prev = LIVE.team[i] || 0;
+      const next = (prev + 1) % (TEAM_COLORS.length + 1);
+      if (next === 0) delete LIVE.team[i];
+      else LIVE.team[i] = next;
+      liveAct({
+        t: "team",
+        id: i,
+        prev,
+        next,
+        txt: LN(i) + ": " + (next ? "команда — " + TEAM_NAMES[next - 1] + " ⭕" : "обводка команды снята")
+      });
+      return;
+    }
+    if (liveTool === "plus") {
+      LIVE.plus[i] = (LIVE.plus[i] || 0) + 1;
+      liveAct({ t: "plus", id: i, d: 1, txt: LN(i) + ': <span class="plus">+1</span> (всего +' + LIVE.plus[i] + ")" });
+      return;
+    }
+    if (liveTool === "minus") {
+      LIVE.minus[i] = (LIVE.minus[i] || 0) + 1;
+      liveAct({ t: "minus", id: i, d: 1, txt: LN(i) + ': <span class="minus">−1</span> (всего −' + LIVE.minus[i] + ")" });
+      return;
+    }
+    if (liveTool === "check1" || liveTool === "check2") {
+      const sh = liveTool === "check1" ? "s1" : "s2";
+      const cur = (LIVE.checks[i] || {})[sh] || null;
+      const next = cur === null ? "red" : cur === "red" ? "black" : null;
+      if (!LIVE.checks[i]) LIVE.checks[i] = {};
+      if (next === null) {
+        delete LIVE.checks[i][sh];
+        if (!Object.keys(LIVE.checks[i]).length) delete LIVE.checks[i];
+      } else LIVE.checks[i][sh] = next;
+      liveAct({
+        t: "check",
+        id: i,
+        sh,
+        prev: cur,
+        next,
+        txt: LN(i) + ": проверка Ш" + (sh === "s1" ? "1" : "2") + " — " + (next === "red" ? "КРАСНЫЙ" : next === "black" ? "ЧЁРНЫЙ" : "снята")
+      });
+      return;
+    }
+    if (liveTool === "voteout" || liveTool === "shot") {
+      const type = liveTool === "voteout" ? "vote" : "shot";
+      const prev = LIVE.out[i] || null;
+      const next = prev && prev.type === type ? null : { type, round: LIVE.cur };
+      if (next === null) delete LIVE.out[i];
+      else LIVE.out[i] = next;
+      liveAct({
+        t: "out",
+        id: i,
+        prev,
+        next,
+        txt: LN(i) + ": " + (next ? type === "vote" ? "заголосован ✕" : "застрелен ночью 🔫" : "снова в игре")
+      });
+      return;
+    }
+    if (liveSel === null) {
+      liveSel = i;
+      renderLive();
+      return;
+    }
+    if (liveSel === i) {
+      liveSel = null;
+      renderLive();
+      return;
+    }
+    const v = liveSel;
+    liveSel = null;
+    if (liveTool === "attack") {
+      bumpLink(LIVE.attacks, atkIndex, v, i, "atk", "⚔", "атакует");
+      return;
+    }
+    if (liveTool === "support") {
+      bumpLink(LIVE.sup, supIndex, v, i, "sup", "🤝", "поддерживает");
+      return;
+    }
+    if (liveTool === "nom") {
+      const noms = r.noms = r.noms || [];
+      const idx = noms.findIndex((p) => p.from === v && p.to === i);
+      if (idx >= 0) {
+        noms.splice(idx, 1);
+        liveAct({ t: "nom", r: LIVE.cur, from: v, to: i, added: false, txt: "выставление " + LN(v) + " → " + LN(i) + " снято" });
+      } else {
+        noms.push({ from: v, to: i });
+        liveAct({ t: "nom", r: LIVE.cur, from: v, to: i, added: true, txt: LN(v) + " ☝ выставил " + LN(i) });
+      }
+      return;
+    }
+    if (liveTool === "cw") {
+      const idx = cwIndex(v, i);
+      if (idx >= 0) {
+        LIVE.cw.splice(idx, 1);
+        liveAct({ t: "cw", a: v, b: i, added: false, txt: "противовес " + LN(v) + " ⚖ " + LN(i) + " убран" });
+      } else {
+        LIVE.cw.push([v, i]);
+        liveAct({ t: "cw", a: v, b: i, added: true, txt: LN(v) + " ⚖ " + LN(i) + " — противовес" });
+      }
+      return;
+    }
+    const entry = toggleVote(LIVE, v, i);
+    if (entry) liveAct(entry);
+  }
+  function liveUndo() {
+    const e = LIVE.journal.pop();
+    if (!e) return;
+    if (undoVoteOrRound(LIVE, e)) {
+    } else if (e.t === "mark") {
+      if (e.prev === null) delete LIVE.marks[e.id];
+      else LIVE.marks[e.id] = e.prev;
+    } else if (e.t === "plus") {
+      LIVE.plus[e.id] = (LIVE.plus[e.id] || 0) - (e.d || 1);
+      if (LIVE.plus[e.id] <= 0) delete LIVE.plus[e.id];
+    } else if (e.t === "minus") {
+      LIVE.minus[e.id] = (LIVE.minus[e.id] || 0) - (e.d || 1);
+      if (LIVE.minus[e.id] <= 0) delete LIVE.minus[e.id];
+    } else if (e.t === "out") {
+      if (e.prev === null) delete LIVE.out[e.id];
+      else LIVE.out[e.id] = e.prev;
+    } else if (e.t === "team") {
+      if (!e.prev) delete LIVE.team[e.id];
+      else LIVE.team[e.id] = e.prev;
+    } else if (e.t === "check") {
+      if (!LIVE.checks[e.id]) LIVE.checks[e.id] = {};
+      if (e.prev === null) {
+        delete LIVE.checks[e.id][e.sh];
+        if (!Object.keys(LIVE.checks[e.id]).length) delete LIVE.checks[e.id];
+      } else LIVE.checks[e.id][e.sh] = e.prev;
+    } else if (e.t === "atk" || e.t === "sup") {
+      const arr = e.t === "atk" ? LIVE.attacks : LIVE.sup;
+      const idx = arr.findIndex((p) => p.from === e.from && p.to === e.to);
+      if (e.added) {
+        if (idx >= 0) {
+          if ((arr[idx].n || 1) > 1) arr[idx].n--;
+          else arr.splice(idx, 1);
+        }
+      } else {
+        arr.push({ from: e.from, to: e.to, n: e.n || 1 });
+      }
+    } else if (e.t === "cw") {
+      if (e.added) {
+        const idx = cwIndex(e.a, e.b);
+        if (idx >= 0) LIVE.cw.splice(idx, 1);
+      } else LIVE.cw.push([e.a, e.b]);
+    } else if (e.t === "nom") {
+      const rr = LIVE.rounds[e.r];
+      if (rr) {
+        rr.noms = rr.noms || [];
+        const idx = rr.noms.findIndex((p) => p.from === e.from && p.to === e.to);
+        if (e.added) {
+          if (idx >= 0) rr.noms.splice(idx, 1);
+        } else if (idx < 0) rr.noms.push({ from: e.from, to: e.to });
+      }
+    } else if (e.t === "eval") {
+      if (!LIVE.eval[e.id]) LIVE.eval[e.id] = {};
+      if (!LIVE.eval[e.id][e.r]) LIVE.eval[e.id][e.r] = {};
+      if (e.prev === null) {
+        delete LIVE.eval[e.id][e.r][e.k];
+        if (!Object.keys(LIVE.eval[e.id][e.r]).length) delete LIVE.eval[e.id][e.r];
+      } else LIVE.eval[e.id][e.r][e.k] = e.prev;
+    } else if (e.t === "note") {
+      LIVE.notes.pop();
+    } else if (e.t === "notedel") {
+      LIVE.notes.splice(e.idx, 0, e.note);
+    }
+    liveSel = null;
+    livePersist();
+    renderLive();
+    if ($("screen-advanced") && $("screen-advanced").classList.contains("on")) renderAdvanced();
+  }
+  function liveChord(svg, v, t, cls, color, bend, arrow) {
+    const p1 = seatPosLive(v), p2 = seatPosLive(t);
+    const dx0 = p2.x - p1.x, dy0 = p2.y - p1.y, len0 = Math.hypot(dx0, dy0) || 1;
+    const sh = (bend == null ? 22 : bend) * 0.3;
+    const ox = -dy0 / len0 * sh, oy = dx0 / len0 * sh;
+    const q1 = { x: p1.x + ox, y: p1.y + oy }, q2 = { x: p2.x + ox, y: p2.y + oy };
+    const dx = q2.x - q1.x, dy = q2.y - q1.y, len = Math.hypot(dx, dy) || 1, off = 45;
+    const x1 = q1.x + dx / len * off, y1 = q1.y + dy / len * off, x2 = q2.x - dx / len * off, y2 = q2.y - dy / len * off;
+    const nx = dx / len, ny = dy / len;
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    const ex = arrow ? x2 - nx * 8 : x2, ey = arrow ? y2 - ny * 8 : y2;
+    const d = "M" + x1 + "," + y1 + " L" + ex + "," + ey;
+    const g = el("g", { "data-a": v, "data-b": t });
+    g.style.opacity = ".4";
+    const casing = el("path", { d, fill: "none", stroke: "rgba(8,18,12,.75)", "stroke-linecap": "round" });
+    casing.style.strokeWidth = "5";
+    g.appendChild(casing);
+    const path = el("path", { d, class: cls });
+    path.style.color = color;
+    path.style.opacity = "1";
+    g.appendChild(path);
+    if (arrow) {
+      const px = -ny, py = nx, L = 14, W = 5.5;
+      const head = el("path", {
+        d: "M" + x2 + "," + y2 + " L" + (x2 - nx * L + px * W) + "," + (y2 - ny * L + py * W) + " L" + (x2 - nx * L * 0.72) + "," + (y2 - ny * L * 0.72) + " L" + (x2 - nx * L - px * W) + "," + (y2 - ny * L - py * W) + " Z",
+        fill: color,
+        stroke: "rgba(8,18,12,.75)",
+        "stroke-width": "1"
+      });
+      g.appendChild(head);
+    }
+    svg.appendChild(g);
+    return {
+      mx,
+      my,
+      path,
+      g,
+      d,
+      setWidth: (w) => {
+        path.style.strokeWidth = w;
+        casing.style.strokeWidth = w + 3;
+      }
+    };
+  }
+  function liveHit(svg, d, onErase) {
+    const h = el("path", { d, fill: "none", stroke: "rgba(0,0,0,0)", "stroke-width": "20" });
+    h.style.cursor = liveTool === "erase" ? "pointer" : "default";
+    h.addEventListener("click", (e) => {
+      if (liveTool !== "erase") return;
+      e.stopPropagation();
+      onErase();
+    });
+    svg.appendChild(h);
+  }
+  function renderLiveTable() {
+    const svg = $("liveSvg");
+    svg.innerHTML = "";
+    const view = LIVE.view || "cur";
+    const inView = (r) => view === "all" || (view === "cum" ? r <= LIVE.cur : r === LIVE.cur);
+    const defs = el("defs", {});
+    defs.appendChild(hatchPattern("hatchGoldL", "#0e2015", "rgba(231,200,119,.5)"));
+    defs.appendChild(hatchPattern("hatchWaxL", "#0e2015", "rgba(179,55,46,.75)"));
+    svg.appendChild(defs);
+    svg.appendChild(el("circle", { cx: 280, cy: 278, r: 250, fill: "#16301f", stroke: "rgba(201,164,92,.35)", "stroke-width": 2 }));
+    svg.appendChild(el("circle", { cx: 280, cy: 278, r: 164, fill: "none", stroke: "rgba(243,234,215,.07)", "stroke-width": 1 }));
+    {
+      const hp = hostPos();
+      const g = el("g", { class: "host-slot", transform: "translate(" + hp.x + "," + hp.y + ")" });
+      g.appendChild(el("circle", { r: 38, fill: "#122a1b", stroke: "rgba(243,234,215,.25)", "stroke-width": 1.5, "stroke-dasharray": "3 3" }));
+      const t1 = el("text", { y: -1, "text-anchor": "middle", "font-size": "11" });
+      t1.textContent = "ведущий";
+      g.appendChild(t1);
+      const t2 = el("text", { y: 13, "text-anchor": "middle", "font-size": "8", opacity: ".6" });
+      t2.textContent = "нейтрален";
+      g.appendChild(t2);
+      svg.appendChild(g);
+    }
+    function linkData(node, a, b) {
+      node.setAttribute("data-a", a);
+      node.setAttribute("data-b", b);
+    }
+    for (const p of LIVE.cw) {
+      const c = liveChord(svg, p[0], p[1], "cwline", "var(--gold)", 6, true);
+      const s = el("text", { x: c.mx, y: c.my + 4, "text-anchor": "middle", "font-size": "13px", fill: "var(--gold)" });
+      s.textContent = "⚖";
+      linkData(s, p[0], p[1]);
+      svg.appendChild(s);
+      liveHit(svg, c.d, () => {
+        const idx = cwIndex(p[0], p[1]);
+        if (idx < 0) return;
+        LIVE.cw.splice(idx, 1);
+        liveAct({ t: "cw", a: p[0], b: p[1], added: false, txt: "противовес " + LN(p[0]) + " ⚖ " + LN(p[1]) + " стёрт 🧹" });
+      });
+    }
+    function drawLinks(arr, idxFn, cls, color, bend, type, word) {
+      for (const a of arr) {
+        if (!inView(a.r || 0)) continue;
+        const n = a.n || 1;
+        const c = liveChord(svg, a.from, a.to, cls, color, bend, true);
+        c.setWidth(Math.min(1.5 + (n - 1) * 1.3, 7));
+        if (n > 1) {
+          const t = el("text", { x: c.mx, y: c.my + 4, "text-anchor": "middle", class: "linkn", fill: color });
+          t.textContent = "×" + n;
+          linkData(t, a.from, a.to);
+          svg.appendChild(t);
+        }
+        liveHit(svg, c.d, () => {
+          const idx = idxFn(a.from, a.to);
+          if (idx < 0) return;
+          const removedN = arr[idx].n || 1;
+          arr.splice(idx, 1);
+          liveAct({
+            t: type,
+            from: a.from,
+            to: a.to,
+            added: false,
+            n: removedN,
+            txt: word + " " + LN(a.from) + " → " + LN(a.to) + (removedN > 1 ? " ×" + removedN : "") + " стёрта 🧹"
+          });
+        });
+      }
+    }
+    drawLinks(LIVE.attacks, atkIndex, "chord atk", "var(--wax)", 42, "atk", "атака");
+    drawLinks(LIVE.sup, supIndex, "chord sup", "#7fc98f", -42, "sup", "поддержка");
+    for (let ri = 0; ri < LIVE.rounds.length; ri++) {
+      if (!inView(ri)) continue;
+      const faded = ri !== LIVE.cur;
+      const noms = LIVE.rounds[ri].noms || [];
+      for (const nm of noms) {
+        const c = liveChord(svg, nm.from, nm.to, "chord nom", "#6ea8d8", 12, true);
+        if (faded) c.g.style.opacity = 0.3;
+        liveHit(svg, c.d, () => {
+          const list = LIVE.rounds[ri].noms || [];
+          const idx = list.findIndex((p) => p.from === nm.from && p.to === nm.to);
+          if (idx < 0) return;
+          list.splice(idx, 1);
+          liveAct({ t: "nom", r: ri, from: nm.from, to: nm.to, added: false, txt: "выставление " + LN(nm.from) + " → " + LN(nm.to) + " стёрто 🧹" });
+        });
+      }
+      const votes = LIVE.rounds[ri].votes;
+      const tally = {};
+      for (const v in votes) tally[votes[v]] = (tally[votes[v]] || 0) + 1;
+      let max = 0;
+      for (const t in tally) if (tally[t] > max) max = tally[t];
+      for (const vk in votes) {
+        const v = +vk, t = votes[vk];
+        const lead = !faded && max > 1 && tally[t] === max;
+        const c = liveChord(svg, v, t, "chord" + (lead ? " to-elim" : ""), lead ? "var(--wax)" : "var(--brass)", 22, true);
+        if (faded) c.g.style.opacity = 0.25;
+        liveHit(svg, c.d, () => {
+          const rr = LIVE.rounds[ri];
+          if (rr.votes[v] !== t) return;
+          delete rr.votes[v];
+          liveAct({ t: "vote", r: ri, v, prev: t, next: null, txt: LN(v) + ": голос стёрт 🧹" });
+        });
+      }
+    }
+    for (let i = 0; i < N; i++) {
+      let scoreBadge = function(x, txt, color, kind, store) {
+        if (liveTool === "erase") {
+          const hit = el("circle", { cx: x, cy: -23, r: 13, fill: "rgba(0,0,0,0)" });
+          hit.style.cursor = "pointer";
+          hit.addEventListener("click", (e) => {
+            e.stopPropagation();
+            store[i] = (store[i] || 0) - 1;
+            if (store[i] <= 0) delete store[i];
+            const left = store[i] || 0;
+            liveAct({
+              t: kind,
+              id: i,
+              d: -1,
+              txt: LN(i) + ": 🧹 убран один " + (kind === "plus" ? "плюс (осталось +" : "минус (осталось −") + left + ")"
+            });
+          });
+          g.appendChild(hit);
+        }
+        const s = el("text", { class: "scoretag", x, y: -20, "text-anchor": "middle", fill: color });
+        s.textContent = txt;
+        s.style.pointerEvents = "none";
+        g.appendChild(s);
+      };
+      const p = seatPosLive(i);
+      const g = el("g", { class: "seat", transform: "translate(" + p.x + "," + p.y + ")" });
+      const mark = LIVE.marks[i], out = LIVE.out[i];
+      const plus = LIVE.plus[i] || 0, minus = LIVE.minus[i] || 0;
+      if (mark) g.classList.add("mark-" + mark);
+      if (out) g.classList.add("dead");
+      if (liveSel === i) g.classList.add("sel");
+      if (LIVE.team[i]) {
+        const ring = el("circle", { r: 44, fill: "none", stroke: TEAM_COLORS[LIVE.team[i] - 1], "stroke-width": 3.2 });
+        ring.style.pointerEvents = "none";
+        g.appendChild(ring);
+      }
+      const plate = el("circle", { class: "plate", r: 38 });
+      if (out) {
+        plate.style.fill = out.type === "vote" ? "url(#hatchGoldL)" : "url(#hatchWaxL)";
+      }
+      g.appendChild(plate);
+      {
+        const mm = MARK_MINI[mark || null] || MARK_MINI[null];
+        const btn = el("g", { class: "rolebtn", transform: "translate(-28,-28)" });
+        const c = el("circle", { r: 10, fill: mm[1], stroke: mm[2], "stroke-width": 1.6 });
+        btn.appendChild(c);
+        const t = el("text", { y: 4, "text-anchor": "middle", "font-size": "11", "font-weight": "800" });
+        t.textContent = mm[0];
+        t.setAttribute("fill", mark ? "var(--cream)" : "#8f9489");
+        t.style.pointerEvents = "none";
+        btn.appendChild(t);
+        btn.style.cursor = "pointer";
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          liveCycleMark(i);
+        });
+        g.appendChild(btn);
+      }
+      const num = el("text", { class: "pnum", y: 6, "text-anchor": "middle" });
+      num.textContent = i + 1;
+      g.appendChild(num);
+      if (plus > 0) scoreBadge(-6, "+" + plus, "#9fd0a8", "plus", LIVE.plus);
+      if (minus > 0) scoreBadge(plus > 0 ? 14 : -6, "−" + minus, "#e08a80", "minus", LIVE.minus);
+      if (mark) {
+        const b = el("text", {
+          class: "mark-badge",
+          y: 27,
+          "text-anchor": "middle",
+          fill: mark === "sheriff" ? "var(--gold)" : mark === "don" ? "#e08a80" : "var(--cream)"
+        });
+        b.textContent = MARK_BADGE[mark];
+        g.appendChild(b);
+      }
+      const ch = LIVE.checks[i] || {};
+      [["s1", 26, "1"], ["s2", 42, "2"]].forEach((cc) => {
+        const res = ch[cc[0]];
+        if (!res) return;
+        const dot = el("circle", {
+          cx: cc[1],
+          cy: cc[0] === "s1" ? -30 : -12,
+          r: 9,
+          fill: res === "red" ? "var(--wax)" : "#0b0908",
+          stroke: res === "red" ? "var(--cream-dim)" : "var(--brass)",
+          "stroke-width": 1.4
+        });
+        dot.style.pointerEvents = "none";
+        g.appendChild(dot);
+        const t = el("text", { class: "checkchip", x: cc[1], y: cc[0] === "s1" ? -26 : -8, "text-anchor": "middle", fill: "var(--cream)" });
+        t.textContent = cc[2];
+        g.appendChild(t);
+      });
+      g.style.cursor = "pointer";
+      g.setAttribute("tabindex", "0");
+      g.setAttribute("role", "button");
+      g.setAttribute("aria-label", LN(i) + (mark ? ", моя версия: " + MARK_BADGE[mark] : "") + (out ? ", выбыл" : ""));
+      g.addEventListener("keydown", (e) => {
+        if (e.target === g && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          liveTap(i);
+          $("liveSvg").querySelectorAll("g.seat")[i]?.focus();
+        }
+      });
+      g.addEventListener("click", () => liveTap(i));
+      g.addEventListener("mouseenter", () => liveFocus(i));
+      g.addEventListener("mouseleave", () => liveFocus(null));
+      svg.appendChild(g);
+    }
+  }
+  function liveFocus(f) {
+    document.querySelectorAll("#liveSvg [data-a]").forEach((p) => {
+      const a = +p.getAttribute("data-a"), b = +p.getAttribute("data-b");
+      p.classList.toggle("dimfade", f !== null && a !== f && b !== f);
+    });
+  }
+  function renderLive() {
+    $("liveName").textContent = LIVE.meta.name || "Новая партия";
+    $("liveRoundLabel").textContent = "Круг " + (LIVE.cur + 1) + " из " + LIVE.rounds.length + (LIVE.meta.status === "done" ? " · Завершена" : " · В процессе");
+    $("liveFinish").textContent = LIVE.meta.status === "done" ? "Возобновить" : "Завершить";
+    document.querySelectorAll("#toolCategories button").forEach((b) => {
+      b.setAttribute("aria-pressed", String(+b.dataset.category === toolCategory));
+    });
+    document.querySelectorAll("#liveTools .tool-group").forEach((group, i) => {
+      group.hidden = i !== toolCategory;
+    });
+    renderVoteEntry();
+    document.querySelectorAll("#liveTools button").forEach((b) => {
+      const active = b.dataset.tool === liveTool;
+      b.classList.toggle("on", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    const selTxt = { vote: "Голосует", attack: "Атакует", support: "Поддерживает", nom: "Выставляет", cw: "Противовес от" };
+    $("liveHint").innerHTML = LIVE_HINTS[liveTool] + (selTxt[liveTool] && liveSel !== null ? " · <b>" + selTxt[liveTool] + " " + LN(liveSel) + "</b> — выбери второго" : "");
+    const tabs = $("liveTabs");
+    tabs.innerHTML = "";
+    LIVE.rounds.forEach((r, idx) => {
+      const b = document.createElement("button");
+      b.className = "tab" + (idx === LIVE.cur ? " active" : "");
+      b.textContent = "Круг " + (idx + 1);
+      b.setAttribute("aria-pressed", String(idx === LIVE.cur));
+      b.onclick = () => {
+        LIVE.cur = idx;
+        liveSel = null;
+        voteTarget = null;
+        livePersist();
+        renderLive();
+      };
+      tabs.appendChild(b);
+    });
+    const add = document.createElement("button");
+    add.className = "tab addr";
+    add.textContent = "+ круг";
+    add.onclick = () => {
+      liveSel = null;
+      voteTarget = null;
+      liveAct(addRound(LIVE));
+    };
+    tabs.appendChild(add);
+    document.querySelectorAll("#pickView button").forEach((b) => b.classList.toggle("on", b.dataset.v === (LIVE.view || "cur")));
+    const vg = $("liveVotes");
+    vg.innerHTML = "";
+    const votes = LIVE.rounds[LIVE.cur].votes;
+    const groups = {};
+    for (const v in votes) {
+      const t = votes[v];
+      (groups[t] = groups[t] || []).push(+v);
+    }
+    const keys = Object.keys(groups).map(Number).sort((a, b) => groups[b].length - groups[a].length || a - b);
+    let maxV = 0;
+    keys.forEach((t) => {
+      if (groups[t].length > maxV) maxV = groups[t].length;
+    });
+    if (!keys.length) {
+      const d = document.createElement("div");
+      d.className = "lost-note";
+      d.textContent = "голосов в этом круге пока нет";
+      vg.appendChild(d);
+    } else keys.forEach((t) => {
+      const d = document.createElement("div");
+      d.className = "vg" + (maxV > 1 && groups[t].length === maxV ? " elim" : "");
+      d.innerHTML = "<b>" + LN(t) + "</b> — " + groups[t].length + ' гол.<br><span class="voters">руки: ' + groups[t].sort((a, b) => a - b).map(LN).join(", ") + "</span>";
+      vg.appendChild(d);
+    });
+    $("liveLog").innerHTML = LIVE.journal.slice().reverse().map(
+      (e) => '<div class="le"><span class="lr">К' + ((e.round || 0) + 1) + "</span>" + e.txt + "</div>"
+    ).join("") || '<div class="le" style="color:#6d6252">журнал пуст — отмечай происходящее за столом</div>';
+    $("liveUndo").disabled = LIVE.journal.length === 0;
+    const last = LIVE.journal.at(-1);
+    $("liveUndo").title = last ? "Отменить: " + (techLine(last) || last.txt).replace(/<[^>]*>/g, "") : "Нет действий для отмены";
+    renderNotes();
+    renderTech();
+    renderLiveTable();
+  }
+  var EVAL_METRICS = [
+    { k: "speech", label: "Реч", title: "как поговорил — логика и структура речи" },
+    { k: "nonverbal", label: "Нев", title: "невербалика — мимика, взгляд, поза" },
+    { k: "gesture", label: "Жес", title: "жестикуляция и общая активность" },
+    { k: "motiv", label: "Мот", title: "мотивация — зачем он это говорит" },
+    { k: "intent", label: "Нам", title: "намерение — куда ведёт стол" }
+  ];
+  var EVAL_CYCLE = [null, "town", "maf", "mix"];
+  var EVAL_TXT = { town: "мирный сигнал", maf: "мафский сигнал", mix: "спорно" };
+  function advCycle(i, r, k) {
+    if (!LIVE.eval[i]) LIVE.eval[i] = {};
+    if (!LIVE.eval[i][r]) LIVE.eval[i][r] = {};
+    const prev = LIVE.eval[i][r][k] || null;
+    const next = EVAL_CYCLE[(EVAL_CYCLE.indexOf(prev) + 1) % EVAL_CYCLE.length];
+    if (next === null) {
+      delete LIVE.eval[i][r][k];
+      if (!Object.keys(LIVE.eval[i][r]).length) delete LIVE.eval[i][r];
+    } else LIVE.eval[i][r][k] = next;
+    const mt = EVAL_METRICS.find((m) => m.k === k);
+    LIVE.journal.push({
+      t: "eval",
+      id: i,
+      r,
+      k,
+      prev,
+      next,
+      round: r,
+      txt: LN(i) + " · К" + (r + 1) + " · " + (mt ? mt.title.split(" —")[0] : k) + ": " + (next ? EVAL_TXT[next] : "снято")
+    });
+    livePersist();
+    renderAdvanced();
+  }
+  function renderAdvanced() {
+    const ids = [...Array(N).keys()];
+    const nR = LIVE.rounds.length;
+    $("advUndo").disabled = LIVE.journal.length === 0;
+    $("advLegend").innerHTML = '<span class="lg"><span class="sw" style="background:#3f7d4e"></span>мирный сигнал</span><span class="lg"><span class="sw" style="background:#b3372e"></span>мафский сигнал</span><span class="lg"><span class="sw" style="background:#9a7c40"></span>спорно</span><span class="lg">☝ выставил · 👍 голос · ⚔ атака · 🤝 поддержка · ⚖ противовес · +/− доверие · ✓ проверка</span>';
+    const marks = { black: "МАФ?", red: "МИР", sheriff: "ШЕР", don: "ДОН" };
+    const markCol = { black: "var(--brass)", red: "var(--cream-dim)", sheriff: "var(--gold)", don: "#e08a80" };
+    let head = '<thead><tr><th class="corner">круг ↓ / игрок →</th>';
+    ids.forEach((i) => {
+      const mk = LIVE.marks[i];
+      const p = LIVE.plus[i] || 0, m = LIVE.minus[i] || 0;
+      const ch = LIVE.checks[i] || {};
+      const chTxt = Object.keys(ch).map((sh) => "✓" + sh + (ch[sh] === "black" ? "■" : "□")).join(" ");
+      const glob = [];
+      if (p) glob.push('<span style="color:#7fc98f">+' + p + "</span>");
+      if (m) glob.push('<span style="color:#e08a80">−' + m + "</span>");
+      if (chTxt) glob.push('<span style="color:var(--gold)">' + chTxt + "</span>");
+      head += '<th><span class="pnum">' + LN(i) + "</span>" + (mk ? '<span class="pbadge" style="color:' + markCol[mk] + '">' + marks[mk] + "</span>" : "") + (glob.length ? '<span class="pglob">' + glob.join(" ") + "</span>" : "") + "</th>";
+    });
+    head += "</tr></thead>";
+    let body = "<tbody>";
+    for (let r = 0; r < nR; r++) {
+      body += '<tr><td class="rndcol">Круг ' + (r + 1) + "</td>";
+      const rd = LIVE.rounds[r];
+      ids.forEach((i) => {
+        const outHere = LIVE.out[i] && LIVE.out[i].round <= r;
+        const noms = (rd.noms || []).filter((x) => x.from === i).map((x) => LN(x.to));
+        const vote = rd.votes[i] != null ? LN(rd.votes[i]) : null;
+        const atk = LIVE.attacks.filter((a) => a.from === i && a.r === r).map((a) => LN(a.to) + (a.n > 1 ? "×" + a.n : ""));
+        const sup = LIVE.sup.filter((a) => a.from === i && a.r === r).map((a) => LN(a.to) + (a.n > 1 ? "×" + a.n : ""));
+        let auto = "";
+        auto += '<span class="ln' + (noms.length ? "" : " dim") + '">☝ ' + (noms.length ? "<b>" + noms.join(", ") + "</b>" : "—") + "</span>";
+        auto += '<span class="ln' + (vote ? "" : " dim") + '">👍 ' + (vote ? "<b>" + vote + "</b>" : "—") + "</span>";
+        if (atk.length) auto += '<span class="ln">⚔ ' + atk.join(", ") + "</span>";
+        if (sup.length) auto += '<span class="ln">🤝 ' + sup.join(", ") + "</span>";
+        const ev = LIVE.eval[i] && LIVE.eval[i][r] || {};
+        let chips = "";
+        EVAL_METRICS.forEach((mt) => {
+          const st = ev[mt.k] || null;
+          chips += '<span class="adv-chip' + (st ? " " + st : "") + '" title="' + mt.title + (st ? " — " + EVAL_TXT[st] : "") + '" data-i="' + i + '" data-r="' + r + '" data-k="' + mt.k + '">' + mt.label + "</span>";
+        });
+        body += '<td class="cell' + (outHere ? " out" : "") + '"><div class="adv-auto">' + auto + '</div><div class="adv-chips">' + chips + "</div></td>";
+      });
+      body += "</tr>";
+    }
+    body += "</tbody>";
+    const tbl = $("advTable");
+    tbl.innerHTML = head + body;
+    tbl.querySelectorAll(".adv-chip").forEach((c) => {
+      c.addEventListener("click", () => advCycle(+c.dataset.i, +c.dataset.r, c.dataset.k));
+    });
+    const vc = $("advVerdicts");
+    vc.innerHTML = "";
+    ids.forEach((i) => {
+      let town = 0, maf = 0, mix = 0;
+      const rounds = LIVE.eval[i] || {};
+      for (const r in rounds) for (const k in rounds[r]) {
+        const s = rounds[r][k];
+        if (s === "town") town++;
+        else if (s === "maf") maf++;
+        else if (s === "mix") mix++;
+      }
+      town += LIVE.plus[i] || 0;
+      maf += LIVE.minus[i] || 0;
+      const total = town + maf + mix;
+      const lean = town - maf;
+      const leanTxt = lean > 1 ? '<span style="color:#7fc98f">склоняется к мирному</span>' : lean < -1 ? '<span style="color:#e08a80">склоняется к мафии</span>' : '<span style="color:var(--cream-dim)">нейтрально</span>';
+      const pct = (x) => total ? Math.round(x / total * 100) : 0;
+      const d = document.createElement("div");
+      d.className = "adv-vd";
+      d.innerHTML = '<div class="vh"><span class="vn">' + LN(i) + "</span>" + (LIVE.marks[i] ? '<span style="font-size:10px;color:' + markCol[LIVE.marks[i]] + '">' + marks[LIVE.marks[i]] + "</span>" : "") + '</div><div class="vbar"><span class="vt" style="width:' + pct(town) + '%"></span><span class="vm" style="width:' + pct(maf) + '%"></span><span class="vx" style="width:' + pct(mix) + '%"></span></div><div class="vrow"><span style="color:#7fc98f">+' + town + ' мир</span><span style="color:#e08a80">−' + maf + ' маф</span><span style="color:var(--gold)">' + mix + ' спор</span></div><div class="vlean">' + leanTxt + "</div>";
+      vc.appendChild(d);
+    });
+    if (!nR) {
+      $("advTable").innerHTML = '<tbody><tr><td class="adv-empty">Нет кругов. Открой «Прямой эфир» и отметь партию.</td></tr></tbody>';
+    }
+  }
+  function renderArgs() {
+    const box = $("argsBlock");
+    if (!box) return;
+    box.innerHTML = '<div class="args-head"><span></span><span>▸ за то, что мафия</span><span>▸ за то, что мирный</span></div>';
+    for (let i = 0; i < N; i++) {
+      const a = LIVE.args[i] || {};
+      const row = document.createElement("div");
+      row.className = "args-row";
+      row.innerHTML = '<div class="anum">' + LN(i) + '</div><textarea class="maf" data-i="' + i + '" data-side="maf" rows="2" placeholder="аргументы за мафию…"></textarea><textarea class="town" data-i="' + i + '" data-side="town" rows="2" placeholder="аргументы за мирного…"></textarea>';
+      row.querySelector("textarea.maf").value = a.maf || "";
+      row.querySelector("textarea.town").value = a.town || "";
+      box.appendChild(row);
+    }
+    box.querySelectorAll("textarea").forEach((t) => {
+      t.addEventListener("input", () => {
+        const i = +t.dataset.i, side = t.dataset.side;
+        if (!LIVE.args[i]) LIVE.args[i] = {};
+        const v = t.value;
+        if (v) LIVE.args[i][side] = v;
+        else {
+          delete LIVE.args[i][side];
+          if (!Object.keys(LIVE.args[i]).length) delete LIVE.args[i];
+        }
+        livePersist();
+      });
+    });
+  }
+  function argSignals(i) {
+    let town = 0, maf = 0, mix = 0;
+    const rounds = LIVE.eval[i] || {};
+    for (const r in rounds) for (const k in rounds[r]) {
+      const s = rounds[r][k];
+      if (s === "town") town++;
+      else if (s === "maf") maf++;
+      else if (s === "mix") mix++;
+    }
+    town += LIVE.plus[i] || 0;
+    maf += LIVE.minus[i] || 0;
+    return { town, maf, mix };
+  }
+  var MARK_MD = { black: "метка: мафия?", red: "метка: мирный", sheriff: "метка: шериф", don: "метка: дон" };
+  function buildArgsMD() {
+    const d = /* @__PURE__ */ new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const stamp = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+    let md = "# Аргументы по игрокам — Протокол\n\n_Круг " + (LIVE.cur + 1) + " из " + LIVE.rounds.length + " · выгружено " + stamp + "_\n";
+    for (let i = 0; i < N; i++) {
+      const a = LIVE.args[i] || {};
+      const s = argSignals(i);
+      const lean = s.town - s.maf;
+      const leanTxt = lean > 1 ? "склоняется к мирному" : lean < -1 ? "склоняется к мафии" : "нейтрально";
+      md += "\n## " + LN(i) + (LIVE.marks[i] ? " — " + MARK_MD[LIVE.marks[i]] : "") + "\n";
+      md += "- **За то, что мафия:** " + (a.maf ? a.maf : "—") + "\n";
+      md += "- **За то, что мирный:** " + (a.town ? a.town : "—") + "\n";
+      md += "- **Баланс сигналов:** +" + s.town + " мир · −" + s.maf + " маф · " + s.mix + " спорно → " + leanTxt + "\n";
+    }
+    return md;
+  }
+  function argsFlash(txt) {
+    const el2 = $("argsStatus");
+    if (!el2) return;
+    el2.textContent = txt;
+    el2.classList.add("show");
+    clearTimeout(el2._t);
+    el2._t = setTimeout(() => el2.classList.remove("show"), 2200);
+  }
+  function showArgsFallback(md) {
+    const fb = $("argsFallback");
+    fb.value = md;
+    fb.classList.add("show");
+    fb.focus();
+    fb.setSelectionRange(0, md.length);
+    argsFlash("выдели и нажми Ctrl/Cmd+C");
+  }
+  async function copyArgsMD() {
+    const md = buildArgsMD();
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(md);
+        $("argsFallback").classList.remove("show");
+        argsFlash("✓ скопировано в буфер");
+        return;
+      }
+    } catch (e) {
+    }
+    try {
+      const fb = $("argsFallback");
+      fb.value = md;
+      fb.classList.add("show");
+      fb.focus();
+      fb.setSelectionRange(0, md.length);
+      const ok = document.execCommand && document.execCommand("copy");
+      if (ok) {
+        fb.classList.remove("show");
+        argsFlash("✓ скопировано в буфер");
+        return;
+      }
+      showArgsFallback(md);
+    } catch (e) {
+      showArgsFallback(md);
+    }
+  }
+  function exportArgsMD() {
+    const md = buildArgsMD();
+    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "protokol-argumenty.md";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1e3);
+    argsFlash("✓ файл .md выгружен");
+  }
+  $("argsCopy").addEventListener("click", copyArgsMD);
+  $("argsExport").addEventListener("click", exportArgsMD);
+  function renderNotes() {
+    const list = $("notesList");
+    list.innerHTML = "";
+    if (!LIVE.notes.length) {
+      list.innerHTML = '<div class="note-row" style="color:#6d6252;border:0">заметок пока нет</div>';
+      return;
+    }
+    LIVE.notes.forEach((n, idx) => {
+      const d = document.createElement("div");
+      d.className = "note-row";
+      d.innerHTML = '<span class="nr-k">К' + (n.r + 1) + "</span><span>" + escH(n.txt) + "</span>";
+      const del = document.createElement("button");
+      del.textContent = "✕";
+      del.title = "удалить заметку";
+      del.onclick = () => {
+        const removed = LIVE.notes.splice(idx, 1)[0];
+        liveAct({ t: "notedel", idx, note: removed, txt: "📝 заметка удалена: " + escH(removed.txt) });
+      };
+      d.appendChild(del);
+      list.appendChild(d);
+    });
+  }
+  function addNote() {
+    const t = $("noteInp").value.trim();
+    if (!t) return;
+    $("noteInp").value = "";
+    LIVE.notes.push({ r: LIVE.cur, txt: t });
+    liveAct({ t: "note", noteTxt: t, txt: "📝 " + escH(t) });
+  }
+  $("noteAdd").addEventListener("click", addNote);
+  $("noteInp").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addNote();
+  });
+  function techLine(e) {
+    const nm = (id) => "Игрок " + (id + 1);
+    const K = " (круг " + ((e.round || 0) + 1) + ")";
+    const sh = e.sh === "s1" ? "1" : "2";
+    switch (e.t) {
+      case "round":
+        return "Начат круг " + (e.round + 1) + ".";
+      case "vote":
+        return e.next != null ? nm(e.v) + " проголосовал за " + nm(e.next) + K + "." : nm(e.v) + " снял голос" + K + ".";
+      case "nom":
+        return e.added ? nm(e.from) + " выставил на голосование " + nm(e.to) + K + "." : "Снято выставление " + nm(e.from) + " против " + nm(e.to) + K + ".";
+      case "atk":
+        return e.added ? nm(e.from) + " атаковал " + nm(e.to) + K + "." : "Снята атака " + nm(e.from) + " на " + nm(e.to) + K + ".";
+      case "sup":
+        return e.added ? nm(e.from) + " поддержал " + nm(e.to) + K + "." : "Снята поддержка " + nm(e.from) + " к " + nm(e.to) + K + ".";
+      case "cw":
+        return e.added ? "Зафиксирован противовес между " + nm(e.a) + " и " + nm(e.b) + K + "." : "Убран противовес между " + nm(e.a) + " и " + nm(e.b) + K + ".";
+      case "mark":
+        return e.next ? "Наблюдатель пометил " + nm(e.id) + " как «" + { black: "мафия", red: "мирный", sheriff: "шериф", don: "дон" }[e.next] + "»" + K + "." : "Наблюдатель снял метку с " + nm(e.id) + K + ".";
+      case "plus":
+        return (e.d === -1 ? "Наблюдатель убрал один плюс у " : "Наблюдатель поставил плюс (в сторону мирного) ") + nm(e.id) + K + ".";
+      case "minus":
+        return (e.d === -1 ? "Наблюдатель убрал один минус у " : "Наблюдатель поставил минус (в сторону мафии) ") + nm(e.id) + K + ".";
+      case "out":
+        return e.next ? nm(e.id) + (e.next.type === "vote" ? " выбыл: заголосован" : " выбыл: застрелен ночью") + K + "." : nm(e.id) + " возвращён в игру" + K + ".";
+      case "check":
+        return e.next ? "Шериф " + sh + " проверил " + nm(e.id) + ": " + (e.next === "red" ? "красный (мирный)" : "чёрный (мафия)") + K + "." : "Снята проверка шерифа " + sh + " с " + nm(e.id) + K + ".";
+      case "note":
+        return "Заметка наблюдателя" + K + ": «" + (e.noteTxt || "") + "».";
+      case "notedel":
+        return "Удалена заметка: «" + ((e.note || {}).txt || "") + "».";
+      default:
+        return null;
+    }
+  }
+  function techLines() {
+    return LIVE.journal.map(techLine).filter(Boolean);
+  }
+  function renderTech() {
+    const ol = $("techLog");
+    ol.innerHTML = techLines().map((l) => "<li>" + escH(l) + "</li>").join("") || '<li style="list-style:none;color:#6d6252">событий пока нет</li>';
+    ol.scrollTop = ol.scrollHeight;
+  }
+  $("techCopy").addEventListener("click", () => {
+    const text = techLines().map((l, i) => i + 1 + ". " + l).join("\n");
+    const done = () => {
+      $("techCopy").textContent = "скопировано ✓";
+      setTimeout(() => {
+        $("techCopy").textContent = "скопировать хронологию";
+      }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, done);
+    else done();
+  });
+  document.querySelectorAll("#pickView button").forEach((b) => b.addEventListener("click", () => {
+    LIVE.view = b.dataset.v;
+    livePersist();
+    renderLive();
+  }));
+  $("liveSave").addEventListener("click", () => {
+    const name = prompt("Название партии:", LIVE.meta.name || "Новая партия");
+    if (name === null || !name.trim()) return;
+    LIVE.meta.name = name.trim().slice(0, 120);
+    livePersist();
+    renderLive();
+  });
+  $("liveFinish").addEventListener("click", () => {
+    if (LIVE.meta.status === "done") {
+      LIVE.meta.status = "active";
+    } else {
+      const result = prompt("Результат партии (например: победа мирных). Можно оставить пустым:", LIVE.meta.result || "");
+      if (result === null) return;
+      LIVE.meta.status = "done";
+      LIVE.meta.result = result.trim().slice(0, 120);
+    }
+    livePersist();
+    renderLive();
+  });
+  function renderGamesModal() {
+    const games = loadGames(), box = $("gamesList");
+    box.innerHTML = "";
+    const search = $("gamesSearch").value.trim().toLocaleLowerCase("ru");
+    const filter = $("gamesFilter").value;
+    const ids = Object.keys(games).filter((id) => {
+      const g = games[id];
+      return g && g.state && Array.isArray(g.state.rounds) && String(g.name || "").toLocaleLowerCase("ru").includes(search) && (filter === "all" || (g.state.meta?.status || "active") === filter);
+    }).sort((a, b) => games[b].ts - games[a].ts);
+    if (!ids.length) {
+      box.textContent = "Партий не найдено. Новые партии сохраняются автоматически.";
+      return;
+    }
+    ids.forEach((id) => {
+      const game = games[id], row = document.createElement("div");
+      row.className = "games-row";
+      const title = document.createElement("b");
+      title.textContent = game.name || "Без названия";
+      const info = document.createElement("span");
+      info.className = "gr-d";
+      info.textContent = new Date(game.ts).toLocaleString("ru-RU") + " · кругов: " + game.state.rounds.length + " · " + (game.state.meta?.status === "done" ? "Завершена" : "В процессе") + (game.state.meta?.result ? " · " + game.state.meta.result : "");
+      const open = document.createElement("button");
+      open.className = "btn slim";
+      open.textContent = id === LIVE.meta.id ? "Продолжить" : "Открыть";
+      open.onclick = () => {
+        if (!livePersist()) return;
+        const fresh = loadGames()[id];
+        if (!fresh) return;
+        LIVE = migrateLive(fresh.state);
+        LIVE.meta.id = id;
+        LIVE.meta.name = fresh.name;
+        liveSel = null;
+        voteTarget = null;
+        livePersist();
+        $("gamesModal").classList.remove("on");
+        renderLive();
+      };
+      const del = document.createElement("button");
+      del.className = "btn slim danger";
+      del.textContent = "Удалить";
+      del.disabled = id === LIVE.meta.id;
+      del.title = del.disabled ? "Текущую партию можно удалить после перехода к другой" : "Удалить партию";
+      del.onclick = () => {
+        if (!confirm("Удалить сохранение «" + game.name + "»?")) return;
+        const fresh = loadGames();
+        delete fresh[id];
+        if (!saveGames(fresh)) {
+          alert("Не удалось удалить партию.");
+          return;
+        }
+        renderGamesModal();
+      };
+      row.append(title, info, open, del);
+      box.appendChild(row);
+    });
+  }
+  $("gamesSearch").addEventListener("input", renderGamesModal);
+  $("gamesFilter").addEventListener("change", renderGamesModal);
+  $("liveGames").addEventListener("click", () => {
+    if (!livePersist()) return;
+    renderGamesModal();
+    $("gamesModal").classList.add("on");
+    $("gamesSearch").focus();
+  });
+  $("toolCategories").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-category]");
+    if (!b) return;
+    toolCategory = +b.dataset.category;
+    liveSel = null;
+    liveTool = document.querySelectorAll("#liveTools .tool-group")[toolCategory].querySelector("button").dataset.tool;
+    renderLive();
+  });
+  for (let i = 0; i < N; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = LN(i);
+    $("voteTarget").appendChild(option);
+  }
+  $("voteJump").addEventListener("click", () => {
+    $("voteEntry").open = true;
+    $("voteEntry").scrollIntoView({ block: "start" });
+    $("voteTarget").focus({ preventScroll: true });
+  });
+  $("tableJump").addEventListener("click", () => {
+    $("liveTools").scrollIntoView({ block: "start" });
+    document.querySelector("#liveTools .tool-group:not([hidden]) button").focus({ preventScroll: true });
+  });
+  $("voteTarget").addEventListener("change", () => {
+    voteTarget = $("voteTarget").value === "" ? null : +$("voteTarget").value;
+    renderVoteEntry();
+  });
+  function renderVoteEntry() {
+    $("voteTarget").value = voteTarget === null ? "" : String(voteTarget);
+    const votes = LIVE.rounds[LIVE.cur].votes, box = $("voterButtons");
+    box.innerHTML = "";
+    const pending = [];
+    for (let i = 0; i < N; i++) {
+      const out = LIVE.out[i];
+      const unavailable = out && out.round < LIVE.cur;
+      if (votes[i] == null && !unavailable) pending.push(LN(i));
+      const b = document.createElement("button");
+      b.className = "voter";
+      b.textContent = LN(i) + (votes[i] != null ? " → " + LN(votes[i]) : unavailable ? " · выбыл" : "");
+      b.disabled = voteTarget === null;
+      b.setAttribute("aria-pressed", String(voteTarget !== null && votes[i] === voteTarget));
+      b.setAttribute("aria-label", LN(i) + (votes[i] != null ? ", сейчас голос за " + LN(votes[i]) : ", голос не записан") + (voteTarget !== null ? ", переключить голос за " + LN(voteTarget) : ""));
+      b.onclick = () => {
+        liveAct(toggleVote(LIVE, i, voteTarget));
+        $("voterButtons").children[i]?.focus({ preventScroll: true });
+      };
+      box.appendChild(b);
+    }
+    $("votePending").textContent = pending.length ? "Ещё не отмечены: " + pending.join(", ") : "Голоса всех оставшихся игроков отмечены.";
+  }
+  $("liveTools").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    liveTool = b.dataset.tool;
+    liveSel = null;
+    renderLive();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && liveSel !== null) {
+      liveSel = null;
+      renderLive();
+    }
+  });
+  $("liveUndo").addEventListener("click", liveUndo);
+  $("liveReset").addEventListener("click", () => {
+    if (!livePersist()) return;
+    LIVE = defaultLive();
+    liveSel = null;
+    voteTarget = null;
+    livePersist();
+    renderLive();
+  });
+  $("mCardLive").addEventListener("click", () => show("live"));
+  $("mCardAdvanced").addEventListener("click", () => show("advanced"));
+  $("advToEfir").addEventListener("click", () => show("live"));
+  $("advUndo").addEventListener("click", liveUndo);
+  syncSettings();
+  renderMenu();
+})();
+
+</script>
+</body>
+</html>
