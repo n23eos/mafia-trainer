@@ -2790,15 +2790,10 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         num.setAttribute("y", "-7");
         num.style.fontSize = "20px";
         const bars = el("g", { class: "seat-confidence-bars", "pointer-events": "none" });
-        for (const [color, x, label, fill] of [["red", -23, "К", "#ed8076"], ["black", 5, "Ч", "#292d37"]]) {
+        for (const [color, x, fill] of [["red", -23, "#ed8076"], ["black", 5, "#292d37"]]) {
           const value = confidenceScore(read || {}, color), height = value * 2;
           bars.appendChild(el("rect", { x, y: 0, width: 18, height: 20, rx: 2, fill: "#112018", stroke: "#a6b4aa", "stroke-width": 1 }));
           bars.appendChild(el("rect", { x: x + 1, y: 20 - height, width: 16, height, fill, stroke: color === "black" && value ? "#d2d5df" : "none", "stroke-width": 0.7, "data-confidence": color, "data-value": value }));
-          const caption = el("text", { x: x + 9, y: 33, "text-anchor": "middle", fill: "#fff5e5" });
-          caption.style.fontSize = "12px";
-          caption.style.fontWeight = "700";
-          caption.textContent = label + value;
-          bars.appendChild(caption);
         }
         g.appendChild(bars);
       }
