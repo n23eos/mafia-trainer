@@ -4,8 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#12271c">
-<title>Протокол — головоломка на дедукцию</title>
+<title>Помощник по мафии: трекер и тренажёр — Протокол</title>
+<meta name="description" content="Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mafia-tool.com/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Протокол">
+<meta property="og:title" content="Помощник по мафии: трекер и тренажёр — Протокол">
+<meta property="og:description" content="Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.">
+<meta property="og:url" content="https://mafia-tool.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Помощник по мафии: трекер и тренажёр — Протокол">
+<meta name="twitter:description" content="Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Протокол","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/#webpage","url":"https://mafia-tool.com/","name":"Помощник по мафии: трекер и тренажёр — Протокол","description":"Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"WebApplication","@id":"https://mafia-tool.com/#app","name":"Протокол","url":"https://mafia-tool.com/","description":"Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Требуется JavaScript; сохранения используют localStorage.","inLanguage":"ru","isAccessibleForFree":true,"featureList":["Трекер голосований","Заметки и версии ролей","Проверки шерифа","Связи игроков","Тренировка дедукции"]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;600;800&family=PT+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -44,6 +58,12 @@ h1,h2.disp,h3.disp{font-family:'Prata',serif;font-weight:400;letter-spacing:.5px
 .backbtn{background:none;border:1px solid var(--line);color:var(--cream-dim);border-radius:4px;padding:7px 14px;font-size:13px;cursor:pointer}
 .backbtn:hover{border-color:var(--brass);color:var(--cream)}
 
+.home-reference{margin-top:30px;padding:24px 0;border-top:1px solid var(--line);max-width:850px}
+.home-reference h2{font-size:21px;margin:22px 0 12px}
+.home-reference p{font-size:15px;line-height:1.75;color:var(--cream-dim)}
+.home-reference nav{display:flex;flex-wrap:wrap;gap:12px 24px;margin:20px 0}
+.home-reference a{color:var(--gold);text-underline-offset:4px}
+a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 /* ---------- главная ---------- */
 .menu-hero{text-align:left;margin:22px 0 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,480px);gap:36px;align-items:end}
 .menu-hero h1{font-size:clamp(42px,7vw,72px);line-height:1}
@@ -413,7 +433,29 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 .confidence-controls button:disabled{opacity:.35;cursor:default!important}
 .seat-confidence{display:block;margin-top:7px;font-size:12px;color:var(--cream-dim)}
 .feedback-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;text-decoration:none;font-size:13px}
+.session-bar{position:sticky;top:8px;z-index:20;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:rgba(11,29,20,.94);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.session-bar .backbtn{min-height:44px}.session-title{min-width:0}.session-title strong,.session-title span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.session-title span{font:11px 'PT Mono',monospace;color:var(--cream-dim);margin-top:3px}
+.session-actions{position:relative}.session-actions summary{list-style:none;display:grid;place-items:center;min-width:44px;border:1px solid var(--brass-dim);border-radius:8px;cursor:pointer}.session-actions summary::-webkit-details-marker{display:none}.session-menu{position:absolute;right:0;top:calc(100% + 8px);width:min(280px,calc(100vw - 24px));display:grid;gap:7px;padding:10px;border:1px solid var(--brass-dim);border-radius:10px;background:var(--surface);box-shadow:0 14px 35px rgba(0,0,0,.45)}
+.session-menu .btn,.session-menu .feedback-link{width:100%;text-align:left;justify-content:flex-start;min-height:44px}
+.workspace-switch{display:flex;gap:4px;width:max-content;margin:10px 0;padding:4px;border:1px solid var(--line);border-radius:10px;background:rgba(11,29,20,.5)}
+.workspace-switch button{min-height:40px;padding:7px 16px;border:0;border-radius:7px;background:transparent;color:var(--cream-dim);font:700 13px 'Manrope',sans-serif;cursor:pointer}.workspace-switch button[aria-pressed=true]{background:var(--cream);color:var(--ink)}
+.workspace-view[hidden]{display:none!important}
+#playerCard .optional-block{margin-top:10px;border-top:1px solid var(--line)}
+#playerCard .optional-block>summary{color:var(--cream);font-size:14px}
+#playerCard .confidence-columns{display:grid;grid-template-columns:1fr;gap:8px}
+#playerCard .confidence-column{display:grid;grid-template-columns:72px 58px minmax(70px,1fr) 104px;align-items:center;gap:9px;min-height:52px}
+#playerCard .confidence-track{height:10px;width:100%;min-height:10px}
+#playerCard .confidence-track>div{height:100%!important;width:var(--score-width,0)}
+#playerCard .confidence-controls{width:104px}
+#playerCard .confidence-column output{white-space:nowrap;font-size:16px}
+@media(max-width:600px){
+  .session-bar{top:4px;grid-template-columns:auto minmax(0,1fr) auto;margin:-4px 0 10px}.session-title strong{font-size:14px}
+  .workspace-switch{width:100%}.workspace-switch button{flex:1}
+  #playerCard .confidence-column{grid-template-columns:62px 52px minmax(44px,1fr) 92px;gap:6px}
+  #playerCard .confidence-controls{width:92px}
+}
 </style>
+
 </head>
 <body>
 <div class="wrap">
@@ -423,19 +465,18 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   <div class="menu-hero">
     <div>
       <div class="tag">интерактивный стол · v1.7</div>
-      <h1>Протокол</h1>
+      <h1>Протокол<span style="display:block;font:600 clamp(18px,3vw,25px)/1.5 Manrope,system-ui,sans-serif;margin-top:14px">Помощник по мафии</span></h1>
     </div>
-    <div class="rulebrief">Веди живую партию или тренируй дедукцию на игровых задачах.
-      Голоса, связи и аргументы остаются перед глазами — без лишней математики и шума.</div>
+    <div class="rulebrief">Бесплатный инструмент для мафии: веди онлайн- или живую партию, записывай голоса, проверки шерифа и версии ролей. Тренируй дедукцию на игровых задачах — без регистрации.</div>
   </div>
   <div class="home-grid">
     <div class="home-column">
       <div class="section-label">Во время игры</div>
       <button class="card primary" id="mCardLive">
         <span class="card-kicker">главный режим</span>
-        <h3>Открыть стол</h3>
-        <p>Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.</p>
-        <span class="card-cta">Начать отслеживание <span aria-hidden="true">→</span></span>
+        <h3 id="liveCardTitle">Открыть стол</h3>
+        <p id="liveCardDescription">Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.</p>
+        <span class="card-cta" id="liveCardCta">Начать отслеживание <span aria-hidden="true">→</span></span>
       </button>
       <div class="cards aux">
         <button class="card small" id="mCardAdvanced"><h3>Разбор игроков</h3><p>сигналы и аргументы по каждому</p></button>
@@ -494,6 +535,16 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     <button class="backbtn" id="mCardSettings">Настройки</button>
     <a class="btn slim feedback-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdT5Z1iXNtOCeKI1L3vqLBT0JiD1pRLTBw2MqNVn6qWAlIK4A/viewform" target="_blank" rel="noopener noreferrer">Предложить улучшение ↗</a>
   </div>
+  <section class="home-reference" aria-labelledby="about-heading">
+    <h2 id="about-heading">Инструменты для игры в мафию</h2>
+    <p>«Протокол» объединяет трекер партии, заметки по игрокам и тренажёр дедукции. Записывай речи и голосования по кругам, отмечай связи и сравнивай версии. Партии сохраняются в текущем браузере; между устройствами они автоматически не переносятся.</p>
+    <nav aria-label="Материалы по мафии"><a href="mafia-online.html">Помощник для мафии онлайн</a><a href="spravochnik-mafii.html">Справочник по мафии: роли, термины и тактика</a></nav>
+    <h2>Можно ли играть в мафию онлайн?</h2>
+    <p>Используй трекер рядом с вашей игровой площадкой: вноси наблюдения вручную во время партии. Игровых комнат и видеосвязи здесь нет. Для самостоятельной тренировки доступны головоломки, курс и задача дня.</p>
+    <h2>Как тренажёр помогает учиться?</h2>
+    <p>Вычисляй трёх мафиози по протоколу голосований и проверяй выводы в разборе решения. Ограничения головоломок — например, запрет мафии голосовать против своих — относятся только к задачам. В настоящей партии такое поведение возможно.</p>
+  </section>
+  <noscript><p>Для работы трекера и головоломок включите JavaScript. Справочник и инструкция по онлайн-партиям доступны без него.</p></noscript>
   <div class="menu-foot" id="menuFoot"></div>
 </section>
 
@@ -552,27 +603,35 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 
 <!-- ================= ПРЯМОЙ ЭФИР ================= -->
 <section class="screen" id="screen-live">
-  <div class="gamebar">
+  <div class="session-bar">
     <button class="backbtn" data-nav="menu">← меню</button>
-    <span class="mode-badge">прямой эфир</span>
-    <h1 style="font-size:clamp(18px,3vw,26px)">Трекер игры</h1>
-    <span class="spacer"></span>
-    <a class="btn slim feedback-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdT5Z1iXNtOCeKI1L3vqLBT0JiD1pRLTBw2MqNVn6qWAlIK4A/viewform" target="_blank" rel="noopener noreferrer">Предложить улучшение ↗</a>
-    <button class="btn slim" id="liveSave">Название</button>
-    <button class="btn slim" id="liveFinish">Завершить</button>
-    <button class="btn slim" id="liveGames">📂 игры</button>
-    <button class="btn slim" id="liveUndo">↩ отменить</button>
-    <button class="btn slim danger" id="liveReset">Новая игра</button>
+    <div class="session-title"><strong id="liveName"></strong><span id="liveRoundLabel"></span></div>
+    <details class="session-actions" id="sessionActions">
+      <summary aria-label="Меню партии">•••</summary>
+      <div class="session-menu">
+        <button class="btn slim" id="liveSave">Переименовать</button>
+        <button class="btn slim" id="liveFinish">Завершить</button>
+        <button class="btn slim" id="liveGames">Библиотека игр</button>
+        <a class="btn slim feedback-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdT5Z1iXNtOCeKI1L3vqLBT0JiD1pRLTBw2MqNVn6qWAlIK4A/viewform" target="_blank" rel="noopener noreferrer">Предложить улучшение ↗</a>
+        <button class="btn slim danger" id="liveReset">Новая игра</button>
+      </div>
+    </details>
   </div>
 
   <div class="live-summary">
-    <strong id="liveName"></strong><span id="liveRoundLabel"></span>
     <span id="liveSaveStatus" role="status" aria-live="polite"></span>
+    <button class="btn slim" id="liveUndo">↩ отменить</button>
   </div>
   <div id="liveMode" class="pickrow" aria-label="Режим записи">
     <button class="btn slim" data-mode="casual">Простой</button>
     <button class="btn slim" data-mode="expert">Подробный</button>
   </div>
+  <nav id="workspaceSwitch" class="workspace-switch" aria-label="Представление игроков">
+    <button data-view="list" aria-pressed="true">Список</button>
+    <button data-view="table" aria-pressed="false">Стол</button>
+  </nav>
+  <button class="btn slim" id="voteJump">Записать голосование</button>
+  <div id="listWorkspace" class="workspace-view">
   <section id="casualPanel" class="casual-panel">
     <h2>Слушай игрока — собирай картину</h2>
     <p>Нажми номер: отметь свою версию, запиши речь и соедини возможную команду.</p>
@@ -582,6 +641,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     <div id="casualSeats" class="casual-seats"></div>
     <p id="casualTeams"></p>
   </section>
+  </div>
+  <div id="tableWorkspace" class="workspace-view">
   <div class="pickrow" id="toolCategories" aria-label="Группы инструментов">
     <button class="btn slim" data-category="0">Основное</button>
     <button class="btn slim" data-category="1">Отношения</button>
@@ -625,7 +686,6 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     </div>
   </div>
   <div class="hint-click" role="status" aria-live="polite" id="liveHint" style="text-align:left;margin:0 0 8px"></div>
-  <button class="btn slim" id="voteJump">Записать голосование ↓</button>
   <div class="pickrow" style="margin:8px 0 12px">
     <span class="lbl">просмотр векторов и действий</span>
     <div class="pick" id="pickView">
@@ -667,6 +727,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       <div class="vote-groups" id="liveVotes"></div>
       <div class="live-log" id="liveLog"></div>
     </aside>
+  </div>
   </div>
 
   <div class="protocol" style="margin-top:18px">
@@ -802,10 +863,11 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     <div id="playerSaysTargets" class="card-choices"></div>
     <p id="playerSaysSummary"></p>
   </details>
-  <h3>Возможно одна команда с…</h3>
-  <p>Нажми номер, чтобы соединить. Повтор — убрать связь. Цепочка связей образует команду.</p>
-  <div id="playerTeamTargets" class="card-choices"></div>
-  <details><summary>Записи по кругам</summary><ul id="playerHistory"></ul></details>
+  <details class="optional-block"><summary>Возможная команда</summary>
+    <p>Нажми номер, чтобы соединить. Повтор — убрать связь. Цепочка связей образует команду.</p>
+    <div id="playerTeamTargets" class="card-choices"></div>
+  </details>
+  <details class="optional-block"><summary>Записи по кругам</summary><ul id="playerHistory"></ul></details>
   <footer><span id="playerSaveState" role="status">Заметка сохраняется при выходе из поля</span><button id="playerNext">Записал → следующий</button></footer>
 </dialog>
 <div class="modal-bg" id="gamesModal">
@@ -1378,7 +1440,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   // app/js/ui/casual.js
   function setupCasual({ getLive, act, refresh }) {
     const $2 = (id) => document.getElementById(id), dialog = $2("playerCard");
-    let selected = 0, returnTo = "grid";
+    let selected = 0, returnTo = "grid", noteTimer = null;
     const roles = { unknown: "Не знаю", red: "Красный", black: "Чёрный", sheriff: "Шериф", don: "Дон" };
     const commit = (e) => {
       if (e) act(e);
@@ -1394,6 +1456,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       document.querySelectorAll(returnTo === "table" ? "#liveSvg g.seat" : "#casualSeats button")[selected]?.focus({ preventScroll: true });
     });
     function saveNote() {
+      clearTimeout(noteTimer);
+      noteTimer = null;
       const note = $2("playerNote").value.trim();
       if (note !== (readPlayer(getLive(), selected).note || "")) commit(updatePlayer(getLive(), selected, { note }));
     }
@@ -1433,7 +1497,9 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     $2("playerSaysKind").onchange = render;
     $2("playerNote").addEventListener("change", saveNote);
     $2("playerNote").addEventListener("input", () => {
-      $2("playerSaveState").textContent = "Заметка сохранится при выходе из поля";
+      $2("playerSaveState").textContent = "Сохраняю заметку…";
+      clearTimeout(noteTimer);
+      noteTimer = setTimeout(saveNote, 700);
     });
     for (const [role, label] of Object.entries(roles)) {
       const b = document.createElement("button");
@@ -1494,6 +1560,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         const value = confidenceScore(read, color);
         $2(color + "PointsValue").textContent = value + " / 10";
         $2(color + "PointsFill").style.height = value * 10 + "%";
+        $2(color + "PointsMeter").style.setProperty("--score-width", value * 10 + "%");
         $2(color + "PointsMeter").setAttribute("aria-valuenow", String(value));
         $2("playerConfidence").querySelector(`[data-score="${color}"][data-delta="-1"]`).disabled = value === 0;
         $2("playerConfidence").querySelector(`[data-score="${color}"][data-delta="1"]`).disabled = value === 10;
@@ -1677,6 +1744,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   function show(name) {
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("on"));
     $("screen-" + name).classList.add("on");
+    document.dispatchEvent(new CustomEvent("protocol:screen", { detail: name }));
     if (name === "menu") renderMenu();
     if (name === "campaign") renderCampaign();
     if (name === "stats") renderStats();
@@ -2234,6 +2302,10 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     return chIdx === 0 || chapterSolved(chIdx - 1) >= 8;
   }
   function renderMenu() {
+    const hasLiveProgress = LIVE.rounds.length > 1 || LIVE.journal.length > 0 || LIVE.notes.length > 0 || !!LIVE.meta.name;
+    $("liveCardTitle").textContent = hasLiveProgress ? "Продолжить партию" : "Открыть стол";
+    $("liveCardDescription").textContent = hasLiveProgress ? `${LIVE.meta.name || "Текущая партия"} · круг ${LIVE.cur + 1}. Записи сохранены в этом браузере.` : "Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.";
+    $("liveCardCta").innerHTML = (hasLiveProgress ? "Вернуться к игре" : "Начать отслеживание") + ' <span aria-hidden="true">→</span>';
     const key = dailyKey();
     const done = save.daily.history[key];
     $("dailyBadge").textContent = (save.daily.streak > 0 ? "🔥 " + save.daily.streak + " " : "") + (done ? "★".repeat(done) : "");
@@ -2310,6 +2382,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     $("helpBody").innerHTML = '<h3>Задача</h3>За столом 10 игроков, трое — мафия. Тебе дан протокол голосований: кто в кого голосовал, кто выбыл и кем оказался. Вычисли тройку и обвини её. Решение всегда ровно одно — и выводится логикой, без угадайки.<h3>Железные правила</h3><li><b>R1.</b> Мафия никогда не голосует в своих.</li><li><b>R2.</b> Все живые мафиози в раунде голосуют в одну цель.</li><li><b>R3.</b> Выбывает большинством (при равенстве — меньший номер); его команда раскрывается.</li><li><b>R4.</b> Мирные голосуют произвольно.</li><h3>Приёмы детектива</h3><li><b>Голос во вскрытую мафию — оправдание.</b> По R1 голосовавший не может быть её напарником.</li><div class="ex">Выбыл №7, вскрытие: мафия. В него голосовали №2 и №5 → №2 и №5 не могут быть в одной команде с №7. Если мафия голосует единой рукой (R2), а №2 и №5 голосовали в №7... они чисты.</div><li><b>Разные цели — не напарники.</b> По R2 двое, голосовавшие в раунде в разные цели, не могут быть мафией одновременно.</li><li><b>Куда смотрела вскрытая мафия.</b> Цель голосования раскрытого мафиозо — мирная (R1), и туда же голосовала вся его команда (R2): ищи, кто поднимал руку вместе с ним.</li><li><b>Фиксируй невозможное.</b> Отмечай пары, которые не могут быть мафией вместе, и проверяй вывод на следующем раунде.</li><h3>Поздние правила</h3><li><b>R5 · Заявки:</b> двое кричат «я шериф» и предъявляют проверку. Настоящий шериф — мирный и не врёт; фальшивый — мафия. Минимум один из заявителей лжёт.</li><li><b>R6 · Разлад:</b> мафия может один раз за партию разойтись в голосах. R1 действует всегда.</li><li><b>R7 · Сбивание:</b> стол кричит. Мирные не врут; мафия говорит что угодно, но никогда не называет мафию (и себя) мафией. Следствия: «X — мафия!» делит пару «крикун—цель» так, что мафия там <b>ровно один</b>; «ручаюсь за X» от мирного обеляет X (а мафия ручается за кого угодно — чаще за своего); «я красный!» не значит ничего.</li><div class="ex">№2 кричит: «№5 — мафия!». Позже №2 вскрылся мирным → он не врал → №5 мафия. А вскрылся бы мафией — №5 был бы чист.</div><h3>Оценка</h3><li>★★★ — без ошибок и подсказок</li><li>★★ — одна ошибка или подсказка</li><li>★ — дело раскрыто</li>';
   }
   var LIVE = loadLive();
+  var liveWorkspace = localStorage.getItem("protokol-live-workspace") || "list";
   function livePersist() {
     const ok = persistLiveGame(LIVE);
     $("liveSaveStatus").textContent = ok ? "Сохранено в этом браузере" : "Не удалось сохранить — не закрывай страницу. Освободи место и повтори.";
@@ -2860,6 +2933,11 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     $("toolCategories").hidden = simple;
     $("liveTools").hidden = simple;
     $("liveHint").hidden = simple;
+    $("workspaceSwitch").hidden = !simple;
+    const activeWorkspace = simple ? liveWorkspace : "table";
+    $("listWorkspace").hidden = activeWorkspace !== "list";
+    $("tableWorkspace").hidden = activeWorkspace !== "table";
+    document.querySelectorAll("#workspaceSwitch [data-view]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === activeWorkspace)));
     document.querySelectorAll("#liveMode button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === (simple ? "casual" : "expert"))));
     casualUI.render();
     $("liveName").textContent = LIVE.meta.name || "Новая партия";
@@ -3366,6 +3444,9 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     $("voteTarget").appendChild(option);
   }
   $("voteJump").addEventListener("click", () => {
+    liveWorkspace = "table";
+    localStorage.setItem("protokol-live-workspace", liveWorkspace);
+    renderLive();
     $("voteEntry").open = true;
     $("voteEntry").scrollIntoView({ block: "start" });
     $("voteTarget").focus({ preventScroll: true });
@@ -3433,6 +3514,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   $("advToEfir").addEventListener("click", () => show("live"));
   $("advUndo").addEventListener("click", liveUndo);
   var casualUI = setupCasual({ getLive: () => LIVE, act: liveAct, refresh: renderLive });
+  $("workspaceSwitch").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-view]");
+    if (!b) return;
+    liveWorkspace = b.dataset.view;
+    localStorage.setItem("protokol-live-workspace", liveWorkspace);
+    renderLive();
+  });
   $("liveMode").addEventListener("click", (e) => {
     const b = e.target.closest("[data-mode]");
     if (!b) return;
