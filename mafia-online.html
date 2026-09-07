@@ -11,20 +11,112 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Помощник для мафии онлайн — трекер партий | Протокол">
 <meta name="twitter:description" content="Как вести партию в мафию онлайн: фиксировать речи, голосования, проверки шерифа и связи игроков. Бесплатный трекер в браузере без регистрации.">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Протокол","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/mafia-online.html#webpage","url":"https://mafia-tool.com/mafia-online.html","name":"Помощник для мафии онлайн — трекер партий | Протокол","description":"Как вести партию в мафию онлайн: фиксировать речи, голосования, проверки шерифа и связи игроков. Бесплатный трекер в браузере без регистрации.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Протокол","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Помощник для мафии онлайн — трекер партий | Протокол","item":"https://mafia-tool.com/mafia-online.html"}]}]}</script>
-<style> *{box-sizing:border-box}body{margin:0;background:#0b1d14;color:#f4ecdc;font:17px/1.75 system-ui,sans-serif}main,header,footer{max-width:850px;margin:auto;padding:24px}header,footer{border-bottom:1px solid #39513e}a{color:#f0cf7e;text-underline-offset:4px}a:focus-visible{outline:3px solid #f0cf7e;outline-offset:4px}h1{font-size:clamp(30px,6vw,46px);line-height:1.2}h2{margin-top:40px;line-height:1.3}h3{line-height:1.4}dt{font-weight:700;color:#f0cf7e}dd{margin:0 0 18px}li{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:12px}</style></head><body><header><a href="./">Протокол — открыть помощник по мафии</a></header><main>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Протокол","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/mafia-online.html#webpage","url":"https://mafia-tool.com/mafia-online.html","name":"Помощник для мафии онлайн — трекер партий | Протокол","description":"Как вести партию в мафию онлайн: фиксировать речи, голосования, проверки шерифа и связи игроков. Бесплатный трекер в браузере без регистрации.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Протокол","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Помощник для мафии онлайн — трекер партий | Протокол","item":"https://mafia-tool.com/mafia-online.html"}]},{"@type":"HowTo","name":"Как вести онлайн-партию в мафию с помощником «Протокол»","description":"Шесть шагов для записи речей, проверок и голосований во время онлайн-партии.","inLanguage":"ru","totalTime":"PT5M","step":[{"@type":"HowToStep","position":1,"text":"Откройте стол и сопоставьте номера с игроками"},{"@type":"HowToStep","position":2,"text":"Записывайте речь и версию роли"},{"@type":"HowToStep","position":3,"text":"Отмечайте заявления и проверки шерифа"},{"@type":"HowToStep","position":4,"text":"Фиксируйте голосование"},{"@type":"HowToStep","position":5,"text":"Сравнивайте наблюдения по кругам"},{"@type":"HowToStep","position":6,"text":"Сохраните и разберите партию"}]}]}</script><!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' — Протокол' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
+<style> *{box-sizing:border-box}body{margin:0;background:#0b1d14;color:#f4ecdc;font:17px/1.75 system-ui,sans-serif}main,header,footer{max-width:850px;margin:auto;padding:24px}header,footer{border-bottom:1px solid #39513e}a{color:#f0cf7e;text-underline-offset:4px}a:focus-visible{outline:3px solid #f0cf7e;outline-offset:4px}h1{font-size:clamp(30px,6vw,46px);line-height:1.2}h2{margin-top:40px;line-height:1.3}h3{line-height:1.4}dt{font-weight:700;color:#f0cf7e}dd{margin:0 0 18px}li{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:12px}.cta{display:inline-block;padding:12px 16px;border-radius:8px;background:#d5ad61;color:#211e18;font-weight:700;text-decoration:none}.verified{padding:12px 16px;border-left:3px solid #d5ad61;background:#10271b;font-size:14px}.checklist{list-style:'✓  ';padding-left:28px}</style></head><body><header><a href="./">Протокол — открыть помощник по мафии</a></header><main>
 <h1>Помощник для мафии онлайн</h1>
 <p>«Протокол» — бесплатный инструмент для записи и разбора партии в мафию. Откройте его рядом с окном онлайн-игры, чтобы сохранять речи, голоса, заявления шерифа и свои версии ролей по кругам.</p>
 <p>Сервис не создаёт игровые комнаты, не подбирает соперников и не передаёт звук или видео. Партия проходит на выбранной вами площадке, а наблюдения вы вводите в трекер вручную.</p>
+<p><a class="cta" data-analytics-action="start_live_from_online" href="./#screen-live">Открыть трекер для текущей партии →</a></p>
 <h2>Как вести онлайн-партию</h2>
 <ol><li>На <a href="./">главной странице</a> нажмите «Открыть стол». Сопоставьте номера за столом с игроками вашей партии.</li><li>Во время речи выберите игрока, запишите главное и отметьте свою версию его роли. В простом режиме кнопка «Записал → следующий» помогает переходить по столу.</li><li>Отдельно фиксируйте заявления шерифа и названные им красные и чёрные проверки. Заявление игрока ещё не доказывает его роль.</li><li>На голосовании выберите кандидата и отметьте номера голосующих. Повторное нажатие снимает голос, выбор другого кандидата переносит его.</li><li>Создайте следующий круг, чтобы сравнить оценки, речи и связи с предыдущим. Ошибочное действие можно отменить.</li><li>После партии сохраните результат в библиотеке и разберите, какие наблюдения помогли, а какие оказались неверными.</li></ol>
 <h2>Что записывать во время игры</h2>
 <p>Разделяйте факт и интерпретацию. «№4 проголосовал против №7» — наблюдение. «№4 и №7 не в одной команде» — версия: в настоящей мафии игрок может голосовать против своего напарника.</p>
 <p>Короткая заметка удобнее пересказа всей речи: «круг 2; №4 подозревает №7; причина — смена версии; голос против №7». Отдельно запишите аргументы за мирного и за мафию, чтобы не потерять противоречащие вашей версии факты.</p>
+<h2>Чек-лист перед началом</h2>
+<ul class="checklist"><li>Сверьте номера игроков в трекере и игровой комнате.</li><li>Уточните формат и роли у ведущего.</li><li>Оставьте место для фактов, версий и аргументов против собственной версии.</li><li>Проверьте, разрешены ли заметки правилами площадки.</li><li>После партии отметьте результат, пока ход игры ещё свеж в памяти.</li></ul>
 <h2>Инструменты помощника</h2>
 <ul><li>Заметки, доверие и версии ролей для каждого игрока.</li><li>Голосования и история наблюдений по кругам.</li><li>Заявления шерифа и его проверки.</li><li>Связи между игроками как ваши гипотезы о команде.</li><li>Библиотека партий с поиском, фильтром и результатом.</li></ul>
 <h2>Частые вопросы</h2>
 <h3>Нужна ли регистрация?</h3><p>Нет. Трекер работает в браузере, а партии сохраняются локально в этом браузере. Автоматической синхронизации между устройствами нет; очистка данных сайта может удалить сохранения.</p>
 <h3>Можно ли использовать помощник за живым столом?</h3><p>Да, тот же трекер подходит для очной партии. Согласуйте использование заметок и устройства с ведущим и правилами вашей игры.</p>
 <h3>Помощник сам определяет мафию?</h3><p>В живом трекере выводы делает игрок. Автоматическая проверка решения есть в отдельном режиме головоломок с заданными правилами; она не доказывает роли участников настоящей партии.</p>
-<p>Перед первой игрой откройте <a href="spravochnik-mafii.html">справочник по мафии: роли, термины и разбор голосований</a>.</p></main><footer><nav aria-label="Разделы сайта"><a href="./">Трекер и тренажёр</a><a href="mafia-online.html">Мафия онлайн</a><a href="spravochnik-mafii.html">Справочник</a></nav></footer></body></html>
+<p>Перед первой игрой откройте <a data-analytics-action="open_guide_from_online" href="spravochnik-mafii.html">справочник по мафии: роли, термины и разбор голосований</a>.</p></main><footer><nav aria-label="Разделы сайта"><a href="./">Трекер и тренажёр</a><a href="mafia-online.html">Мафия онлайн</a><a href="spravochnik-mafii.html">Справочник</a></nav></footer></body></html>

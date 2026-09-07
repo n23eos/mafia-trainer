@@ -455,7 +455,96 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   #playerCard .confidence-controls{width:92px}
 }
 </style>
-
+<!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' — Протокол' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
 </head>
 <body>
 <div class="wrap">
@@ -472,22 +561,23 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   <div class="home-grid">
     <div class="home-column">
       <div class="section-label">Во время игры</div>
-      <button class="card primary" id="mCardLive">
+      <button class="card primary" id="mCardLive" data-analytics-action="start_live_from_home">
         <span class="card-kicker">главный режим</span>
         <h3 id="liveCardTitle">Открыть стол</h3>
         <p id="liveCardDescription">Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.</p>
         <span class="card-cta" id="liveCardCta">Начать отслеживание <span aria-hidden="true">→</span></span>
       </button>
       <div class="cards aux">
+        <button class="card small" id="hostOpen"><h3>Ведущий</h3><p>таймер, фолы, голоса и журнал</p></button>
         <button class="card small" id="mCardAdvanced"><h3>Разбор игроков</h3><p>сигналы и аргументы по каждому</p></button>
         <button class="card small" id="mCardStats"><h3>Прогресс</h3><p>результаты тренировок</p></button>
         <button class="card small" id="mCardHelp"><h3>Правила</h3><p>короткая памятка</p></button>
       </div>
     </div>
 
-    <div class="home-column">
+    <div class="home-column" id="training">
       <div class="section-label">Тренировка</div>
-      <div class="card practice" id="mCardFree" role="button" tabindex="0" aria-label="Начать свободную головоломку">
+      <div class="card practice" id="mCardFree" role="button" tabindex="0" aria-label="Начать свободную головоломку" data-analytics-action="start_training_from_home">
         <h3>Решить задачу</h3>
         <p>Вычисли трёх мафиози по протоколу голосований.</p>
         <div class="pickrow" id="freePicks">
@@ -547,6 +637,9 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   <noscript><p>Для работы трекера и головоломок включите JavaScript. Справочник и инструкция по онлайн-партиям доступны без него.</p></noscript>
   <div class="menu-foot" id="menuFoot"></div>
 </section>
+
+<!-- ================= ВЕДУЩИЙ ================= -->
+<section class="screen" id="screen-host"></section>
 
 <!-- ================= ИГРА ================= -->
 <section class="screen" id="screen-game">
@@ -891,6 +984,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     <div class="closebar"><button class="btn slim" data-close="helpModal">Закрыть</button></div>
   </div>
 </div>
+
 
 <script>
 /* СГЕНЕРИРОВАНО build.mjs — не редактируй тут; правь app/js и index.dev.html */
@@ -1630,6 +1724,706 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       return true;
     }
     return false;
+  }
+
+  // app/js/state/host.js
+  var HOST_KEY = "protokol-host-v1";
+  var HOST_BACKUP_KEY = "protokol-host-backup-v1";
+  var clone = (value) => JSON.parse(JSON.stringify(value));
+  var core = (state) => {
+    const copy = clone(state);
+    copy.undo = [];
+    copy.redo = [];
+    return copy;
+  };
+  function defaultHost() {
+    return {
+      version: 1,
+      round: 1,
+      phase: "setup",
+      activeSpeaker: null,
+      showNames: true,
+      players: Array.from({ length: 10 }, (_, i) => ({ id: i, name: "", fouls: 0, status: "alive", role: "Не назначена" })),
+      timer: { duration: 60, remaining: 60, running: false, endAt: null },
+      voteRounds: [{ id: 1, candidates: [], activeCandidate: null, votes: {}, complete: false }],
+      currentVote: 0,
+      journal: [],
+      undo: [],
+      redo: []
+    };
+  }
+  function migrateHost(value) {
+    if (!value || typeof value !== "object" || !Array.isArray(value.players)) return defaultHost();
+    const base = defaultHost(), out = { ...base, ...value };
+    out.players = base.players.map((p, i) => ({ ...p, ...value.players[i] || {}, id: i }));
+    out.timer = { ...base.timer, ...value.timer || {} };
+    out.voteRounds = Array.isArray(value.voteRounds) && value.voteRounds.length ? value.voteRounds : base.voteRounds;
+    out.undo = Array.isArray(value.undo) ? value.undo : [];
+    out.redo = Array.isArray(value.redo) ? value.redo : [];
+    return out;
+  }
+  function loadHost() {
+    try {
+      const raw = localStorage.getItem(HOST_KEY);
+      if (raw) return migrateHost(JSON.parse(raw));
+    } catch {
+    }
+    try {
+      const backup = localStorage.getItem(HOST_BACKUP_KEY);
+      if (backup) return migrateHost(JSON.parse(backup));
+    } catch {
+    }
+    return defaultHost();
+  }
+  function writeHost(state) {
+    try {
+      const previous = localStorage.getItem(HOST_KEY);
+      if (previous) localStorage.setItem(HOST_BACKUP_KEY, previous);
+      localStorage.setItem(HOST_KEY, JSON.stringify(state));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function currentVote(state) {
+    return state.voteRounds[state.currentVote];
+  }
+  function description(state, action) {
+    const p = Number.isInteger(action.id) ? `№${action.id + 1}${state.players[action.id]?.name ? " · " + state.players[action.id].name : ""}` : "";
+    if (action.type === "foul") return `${p}: ${action.delta > 0 ? "добавлен" : "снят"} фол`;
+    if (action.type === "name") return `${p}: ник изменён на «${action.value || "без ника"}»`;
+    if (action.type === "speaker") return action.id == null ? "Выступление завершено" : `${p}: выступает`;
+    if (action.type === "speechStart") return `${p}: речь — таймер запущен`;
+    if (action.type === "status") return `${p}: статус — ${action.value === "alive" ? "в игре" : action.value === "voted" ? "заголосован" : action.value === "shot" ? "убит ночью" : "удалён"}`;
+    if (action.type === "phase") return `Этап: ${{ setup: "подготовка", speeches: "речи", vote: "голосование", night: "ночь" }[action.value] || action.value}`;
+    if (action.type === "round") return `Начат круг ${state.round + 1}`;
+    if (action.type === "nominate") return `${p}: ${action.add ? "выставлен на голосование" : "снят с голосования"}`;
+    if (action.type === "vote") return action.target == null ? `${p}: голос снят` : `${p}: голос за №${action.target + 1}`;
+    if (action.type === "voteRound") return `Начат тур голосования ${state.voteRounds.length + 1}`;
+    if (action.type === "completeVote") return `Тур голосования ${state.currentVote + 1} завершён`;
+    if (action.type === "timerAdd") return `К таймеру добавлено ${action.value} секунд`;
+    if (action.type === "timerReset") return "Таймер сброшен";
+    if (action.type === "role") return `${p}: приватная роль изменена`;
+    if (action.type === "swapSeats") return `Обмен местами №${action.id + 1} и №${action.target + 1}; прежние записи журнала указывают места на момент события`;
+    return null;
+  }
+  function applyHostAction(state, action, now = Date.now()) {
+    if (action.type === "swapSeats" && (!Number.isInteger(action.id) || !Number.isInteger(action.target) || !state.players[action.id] || !state.players[action.target] || action.id === action.target)) return state;
+    if (action.type === "speechStart") {
+      if (!Number.isInteger(action.id) || state.players[action.id]?.status !== "alive") return state;
+      if (state.activeSpeaker === action.id && state.timer.running && timerRemaining(state, now) > 0) return state;
+    }
+    const next = clone(state), before = core(state), text = description(state, action);
+    next.undo = [...state.undo || [], before].slice(-50);
+    next.redo = [];
+    const p = Number.isInteger(action.id) ? next.players[action.id] : null;
+    switch (action.type) {
+      case "swapSeats": {
+        const a = action.id, b = action.target, seat = (id) => id === a ? b : id === b ? a : id;
+        [next.players[a], next.players[b]] = [next.players[b], next.players[a]];
+        next.players[a].id = a;
+        next.players[b].id = b;
+        next.activeSpeaker = seat(next.activeSpeaker);
+        for (const vote of next.voteRounds) {
+          vote.candidates = vote.candidates.map(seat);
+          vote.activeCandidate = seat(vote.activeCandidate);
+          vote.votes = Object.fromEntries(Object.entries(vote.votes).map(([v, t]) => [seat(Number(v)), seat(t)]));
+        }
+        break;
+      }
+      case "foul":
+        p.fouls = Math.max(0, Math.min(4, p.fouls + action.delta));
+        break;
+      case "name":
+        p.name = String(action.value || "").trim().slice(0, 32);
+        break;
+      case "role":
+        p.role = String(action.value || "Не назначена").slice(0, 32);
+        break;
+      case "speaker":
+        next.activeSpeaker = action.id;
+        break;
+      case "speechStart": {
+        const resume = state.activeSpeaker === action.id && !state.timer.running && state.timer.remaining > 0;
+        next.activeSpeaker = action.id;
+        next.phase = "speeches";
+        next.timer.remaining = resume ? state.timer.remaining : state.timer.duration;
+        next.timer.running = true;
+        next.timer.endAt = now + next.timer.remaining * 1e3;
+        break;
+      }
+      case "status":
+        p.status = action.value;
+        break;
+      case "showNames":
+        next.showNames = !!action.value;
+        break;
+      case "phase":
+        next.phase = action.value;
+        break;
+      case "round":
+        next.round++;
+        next.phase = "speeches";
+        next.activeSpeaker = null;
+        break;
+      case "timerDuration":
+        next.timer.duration = action.value;
+        next.timer.remaining = action.value;
+        next.timer.running = false;
+        next.timer.endAt = null;
+        break;
+      case "timerStart":
+        next.timer.running = true;
+        next.timer.endAt = now + next.timer.remaining * 1e3;
+        break;
+      case "timerPause":
+        next.timer.remaining = Math.max(0, Math.ceil((next.timer.endAt - now) / 1e3));
+        next.timer.running = false;
+        next.timer.endAt = null;
+        break;
+      case "timerReset":
+        next.timer.remaining = next.timer.duration;
+        next.timer.running = false;
+        next.timer.endAt = null;
+        break;
+      case "timerAdd":
+        next.timer.remaining = Math.max(0, timerRemaining(next, now) + action.value);
+        if (next.timer.running) next.timer.endAt = now + next.timer.remaining * 1e3;
+        break;
+      case "nominate": {
+        const vote = currentVote(next), set = new Set(vote.candidates);
+        action.add ? set.add(action.id) : set.delete(action.id);
+        vote.candidates = [...set];
+        if (!set.has(vote.activeCandidate)) vote.activeCandidate = vote.candidates[0] ?? null;
+        break;
+      }
+      case "activeCandidate":
+        currentVote(next).activeCandidate = action.id;
+        break;
+      case "vote": {
+        const vote = currentVote(next);
+        if (action.target == null) delete vote.votes[action.id];
+        else vote.votes[action.id] = action.target;
+        break;
+      }
+      case "voteRound":
+        next.voteRounds.push({ id: next.voteRounds.length + 1, candidates: [...currentVote(next).candidates], activeCandidate: null, votes: {}, complete: false });
+        next.currentVote = next.voteRounds.length - 1;
+        break;
+      case "completeVote":
+        currentVote(next).complete = true;
+        break;
+    }
+    if (text) next.journal.push({ id: `${now}-${next.journal.length}`, at: now, round: next.round, type: action.type, text });
+    return next;
+  }
+  function undoHost(state) {
+    if (!state.undo?.length) return state;
+    const previous = state.undo.at(-1), now = core(state);
+    return { ...clone(previous), undo: state.undo.slice(0, -1), redo: [...state.redo || [], now].slice(-50) };
+  }
+  function redoHost(state) {
+    if (!state.redo?.length) return state;
+    const following = state.redo.at(-1), now = core(state);
+    return { ...clone(following), undo: [...state.undo || [], now].slice(-50), redo: state.redo.slice(0, -1) };
+  }
+  function timerRemaining(state, now = Date.now()) {
+    return state.timer.running ? Math.max(0, Math.ceil((state.timer.endAt - now) / 1e3)) : state.timer.remaining;
+  }
+
+  // app/js/ui/host-view.js
+  var roleIcons = { "Не назначена": "?", "Мирный": "●", "Мафия": "♠", "Дон": "♛", "Шериф": "★" };
+  var hostMarkup = `
+  <header class="hd-header">
+    <button id="hostBack" class="hd-quiet">← Меню</button>
+    <div class="hd-brand"><span>ПРОТОКОЛ / ВЕДУЩИЙ</span><h1>Игра под контролем</h1></div>
+    <div class="hd-history"><button id="hostUndo" aria-label="Отменить последнее действие">↶ <span>Отменить</span></button><button id="hostRedo" aria-label="Повторить действие">↷ <span>Повторить</span></button></div>
+  </header>
+  <div class="hd-session">
+    <strong id="hostRound"></strong>
+    <label class="hd-select-label">Этап <select id="hostPhase"><option value="setup">Подготовка</option><option value="speeches">Речи</option><option value="vote">Голосование</option><option value="night">Ночь</option></select></label>
+    <button id="hostNextRound">+ Круг</button>
+    <span id="hostSave" role="status">Изменения сохраняются автоматически</span>
+  </div>
+  <div class="hd-workspace">
+    <section class="hd-stage" aria-label="Круглый стол ведущего">
+      <div class="hd-stage-bar"><span class="hd-kicker">10 МЕСТ · ЖИВАЯ ПАРТИЯ</span><label><input type="checkbox" id="hostNamesToggle" checked> Ники</label></div>
+      <div class="hd-table" id="hostTable">
+        <div class="hd-felt" aria-hidden="true"></div>
+        <div class="hd-clock">
+          <strong id="hostSpeakerNumber" aria-label="Номер говорящего">—</strong>
+          <span id="hostSpeakerLabel">Слово игроку</span>
+          <output id="hostTimerValue" aria-label="Осталось времени">1:00</output>
+          <div class="hd-clock-controls"><button id="hostTimerStart" aria-label="Запустить таймер">▶</button><button id="hostTimerPlus">+10</button><button id="hostTimerReset" aria-label="Сбросить таймер">↺</button></div>
+        </div>
+        <div id="hostPlayers"></div>
+      </div>
+      <div class="hd-speech-toolbar"><label class="hd-duration"><select id="hostDuration" aria-label="Длительность речи"><option value="30">30 секунд</option><option value="60" selected>1 минута</option><option value="90">1:30</option><option value="120">2 минуты</option></select></label><button id="hostNextSpeaker" class="hd-accent">Следующий игрок ▶</button></div>
+      <div class="hd-table-actions"><button id="hostRevealAll" aria-pressed="false">◉ Удерживать — роли</button><span id="hostTableHint">Нажми место · перетащи ник для обмена</span></div>
+      <div class="hd-table-mode" id="hostTableMode" aria-label="Действие при нажатии на место"><button data-table-mode="select" aria-pressed="true">Настроить</button><button data-table-mode="speech" aria-pressed="false">Речь + таймер</button><button data-table-mode="vote" aria-pressed="false">Рука</button></div>
+    </section>
+
+    <section class="hd-editor" aria-labelledby="hostPlayerTitle">
+      <header class="hd-editor-title"><span class="hd-avatar" id="hostSelectedNumber">01</span><div><span class="hd-kicker">ВЫБРАННЫЙ ИГРОК</span><h2 id="hostPlayerTitle">Игрок №1</h2></div><span id="hostSelectedRole" class="hd-selected-role" aria-label="Роль скрыта">?</span></header>
+      <label class="hd-field">Никнейм<input id="hostNickname" maxlength="32" autocomplete="off" placeholder="Имя игрока"></label>
+      <div class="hd-primary-actions"><button id="hostSpeech" class="hd-accent">▶ Речь · старт</button><button id="hostNominate">Выставить</button></div>
+      <div class="hd-fouls"><div><strong>Фолы</strong><small id="hostFoulHint">Без замечаний</small></div><button id="hostFoulMinus" aria-label="Снять фол">−</button><output id="hostFouls">0</output><button id="hostFoulPlus" aria-label="Добавить фол">+</button></div>
+      <div class="hd-field"><span>Назначить роль <small>· просмотр — удержанием на столе</small></span><div id="hostRoleChoices" class="hd-role-choices"></div></div>
+      <label class="hd-field">Статус<select id="hostPlayerStatus"><option value="alive">В игре</option><option value="voted">Заголосован</option><option value="shot">Убит ночью</option><option value="removed">Удалён</option></select></label>
+      <div class="hd-swap"><label class="hd-field">Обмен местами<select id="hostSwapTarget"></select></label><button id="hostSwap" aria-label="Обменять места">⇄ Обменять</button></div>
+      <p id="hostActionStatus" class="hd-action-status" role="status"></p>
+    </section>
+
+    <section class="hd-voting" aria-labelledby="hostVoteTitle">
+      <header class="hd-section-title"><div><span class="hd-kicker" id="hostVoteRound"></span><h2 id="hostVoteTitle">Кто в кого голосует</h2></div><button id="hostNewVoteRound">+ Тур</button></header>
+      <div id="hostCandidates" class="hd-candidates"></div>
+      <p id="hostVoteStatus" class="hd-vote-status" role="status"></p>
+      <div id="hostVoters" class="hd-voters"></div>
+      <div id="hostTransfer" class="hd-transfer" hidden><span id="hostTransferText"></span><button id="hostTransferConfirm">Перенести голос</button><button id="hostTransferCancel">Отмена</button></div>
+      <footer class="hd-vote-footer"><span>Повтор снимает руку</span><button id="hostCompleteVote">Завершить тур ✓</button></footer>
+    </section>
+
+    <section class="hd-log" aria-labelledby="hostLogTitle"><header class="hd-section-title"><div><span class="hd-kicker">СОБЫТИЯ ПАРТИИ</span><h2 id="hostLogTitle">Журнал</h2></div><button id="hostExport">↓ JSON</button></header><ol id="hostJournal"></ol><button id="hostReset" class="hd-reset">Новая партия ведущего</button></section>
+  </div>`;
+  var hostStyles = `
+#screen-host{--hd-surface:#132d23;--hd-muted:#b6cabc;--hd-line:#ffffff16;--hd-accent:#dfbe79;padding-bottom:24px;color:#edf2e9;font-size:14px}
+#screen-host *{box-sizing:border-box}
+#screen-host button,#screen-host select,#screen-host input{font:inherit}
+#screen-host button{min-height:44px;border:1px solid var(--hd-line);border-radius:10px;padding:8px 12px;background:#1b392d;color:#edf2e9;cursor:pointer;transition:background .15s,border-color .15s}
+#screen-host button:hover{background:#264c3c;border-color:#a5c6ae70}
+#screen-host button:disabled{opacity:.4;cursor:default}
+#screen-host :is(button,input,select):focus-visible{outline:3px solid #f4d390;outline-offset:2px}
+#screen-host input,#screen-host select{min-height:44px;max-width:100%;width:100%;background:#0c231a;border:1px solid #637e6c;border-radius:9px;padding:8px 10px;color:#edf2e9;font-size:16px}
+#screen-host input[type=checkbox]{width:18px;min-height:18px;accent-color:var(--hd-accent)}
+#screen-host h1,#screen-host h2{font-family:'Manrope',system-ui,sans-serif;font-weight:800;letter-spacing:-.04em}
+#screen-host h1{font-size:24px}#screen-host h2{font-size:20px}
+.hd-header{display:flex;align-items:center;gap:16px;padding:4px 0 18px}.hd-brand{flex:1}.hd-brand>span,.hd-kicker{font-size:10px;font-weight:700;letter-spacing:.13em;color:var(--hd-muted)}
+.hd-history{display:flex;gap:6px}.hd-session{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--hd-line);margin-bottom:12px}.hd-select-label{display:flex;align-items:center;gap:8px}.hd-session #hostSave{margin-left:auto;color:var(--hd-muted);font-size:11px}.hd-session select{width:auto!important}
+.hd-workspace{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:16px;align-items:start}.hd-workspace>section{min-width:0;background:var(--hd-surface);border:1px solid var(--hd-line);border-radius:20px;padding:20px}
+.hd-stage{background:radial-gradient(ellipse at center,#254935,#142f23 70%)!important}.hd-stage-bar{display:flex;justify-content:space-between;align-items:center}.hd-stage-bar label{display:flex;gap:6px;align-items:center}
+.hd-table{position:relative;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%;isolation:isolate}
+.hd-felt{position:absolute;inset:14%;border:10px solid #493e28;border-radius:50%;background:radial-gradient(ellipse,#315941,#183b2b);box-shadow:0 0 0 2px #ac90633d,inset 0 0 0 2px #ccbb8130,inset 0 0 42px #001e17,0 18px 36px #0005}
+#hostPlayers{position:absolute;inset:0;pointer-events:none}
+.hd-seat{position:absolute;left:var(--x);top:var(--y);width:17%;transform:translate(-50%,-50%);pointer-events:auto;text-align:center;z-index:2}
+#screen-host .hd-seat-button{display:flex;align-items:center;justify-content:center;gap:5px;padding:3px;width:100%;min-height:50px;border-radius:17px;background:#12271e;border:1px solid #668774;box-shadow:0 4px 10px #0003}
+.hd-seat-number{font-size:20px;font-weight:800}.hd-role-icon{font-size:21px;color:#dec991;min-width:18px}.hd-seat.selected .hd-seat-button{border:2px solid #f2cf89!important;background:#314735!important}.hd-seat.speaking .hd-seat-button{box-shadow:0 0 0 3px #73bc9555}.hd-seat.out .hd-seat-number{text-decoration:line-through;color:#b8c1bb}.hd-seat.out .hd-seat-button{border-style:dashed}.hd-seat.drop-target{outline:3px solid #f1cc83;border-radius:10px}
+.hd-seat-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:22px;cursor:grab;touch-action:none;user-select:none}.hd-seat-meta{display:block;color:#bfd5c5;font-size:9px;min-height:12px;white-space:nowrap}
+.hd-clock{position:absolute;left:27%;right:27%;top:33%;text-align:center;z-index:1}.hd-clock>span{display:block;font-size:12px;color:#d2dfd5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hd-clock output{display:block;font:800 clamp(28px,4.4vw,58px)/1.15 'PT Mono',monospace;letter-spacing:-.06em;margin:5px 0 8px}.hd-clock output.ending{color:#ffb2a4}.hd-clock-controls{display:flex;gap:4px;justify-content:center}#screen-host .hd-clock-controls button{padding:3px;min-width:32px;flex:1;background:#0c281dbb}.hd-duration select{margin-top:7px;font-size:12px!important;min-height:32px!important;padding:4px!important;border:0!important;background:transparent!important;text-align:center}
+.hd-table-actions{display:flex;align-items:center;gap:12px;justify-content:space-between}.hd-table-actions>span{font-size:11px;max-width:160px;color:var(--hd-muted)}#hostRevealAll{touch-action:none;user-select:none}#hostRevealAll[aria-pressed=true]{background:var(--hd-accent);color:#1a231a}.hd-table-mode{display:flex;gap:6px;margin-top:12px}.hd-table-mode button{flex:1;font-size:12px!important}.hd-table-mode [aria-pressed=true]{background:#dfbe79!important;color:#19291f!important}
+.hd-editor-title{display:flex;align-items:center;gap:12px;margin-bottom:14px}.hd-avatar{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#dfbe79;color:#1e2e20;font-size:22px;font-weight:800}.hd-selected-role{margin-left:auto;font-size:30px;color:#e8c784}.hd-field{display:grid;gap:7px;margin:12px 0}.hd-field>span,.hd-field{font-size:12px;color:#d8e4db}.hd-field small{color:var(--hd-muted);font-size:10px}.hd-primary-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}#screen-host .hd-accent{background:var(--hd-accent);color:#16231b;font-weight:800}
+.hd-fouls{display:flex;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--hd-line)}.hd-fouls>div{flex:1}.hd-fouls small{display:block;color:var(--hd-muted);font-size:11px;margin-top:4px}.hd-fouls output{font-size:24px;font-weight:800;width:25px;text-align:center}.hd-fouls button{min-width:44px;font-size:20px!important}
+.hd-role-choices{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}#screen-host .hd-role-choices button{padding:8px 2px;font-size:10px}.hd-role-choices b{display:block;font-size:24px;font-weight:400;line-height:28px;color:#dfc58b}.hd-role-choices button[aria-pressed=true]{border-color:#edce91!important;background:#3e4c32!important}
+.hd-swap{display:flex;align-items:end;gap:8px}.hd-swap label{flex:1;margin-bottom:0}.hd-swap button{font-size:12px!important}.hd-action-status{min-height:18px;font-size:11px;color:var(--hd-muted);margin-top:10px}
+.hd-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.hd-section-title button{font-size:12px!important}.hd-candidates{display:flex;gap:8px;flex-wrap:wrap}.hd-candidates button{display:flex;align-items:center;gap:10px}.hd-candidates [aria-pressed=true]{background:#dfbe79!important;color:#15271b!important}.hd-candidates strong{font-size:19px}.hd-candidates p{color:var(--hd-muted);font-size:13px}
+.hd-vote-status{min-height:34px;font-size:12px;line-height:1.6;color:var(--hd-muted);margin:12px 0}.hd-voters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.hd-voters button{padding:6px!important;min-height:60px!important}.hd-voters strong,.hd-voters span{display:block}.hd-voters span{font-size:10px;margin-top:4px}.hd-voters [aria-pressed=true]{background:#35744e!important;border-color:#b4d8bc!important}.hd-vote-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;font-size:11px;color:var(--hd-muted)}.hd-vote-footer button{font-size:12px!important}.hd-transfer{display:flex;gap:6px;flex-wrap:wrap;border:1px solid #cda867;border-radius:10px;padding:10px;margin-top:10px}.hd-transfer span{width:100%;font-size:12px}
+#hostJournal{list-style:none;max-height:290px;overflow:auto;overscroll-behavior:contain}#hostJournal li{display:grid;grid-template-columns:45px 1fr;gap:8px;padding:11px 0;border-bottom:1px solid var(--hd-line);font-size:12px;line-height:1.5;overflow-wrap:anywhere}#hostJournal time{font:10px 'PT Mono',monospace;color:var(--hd-muted)}.hd-reset{margin-top:14px;font-size:11px!important;color:#e4b2a4!important}
+@media(min-width:950px){.hd-stage{grid-row:span 1}.hd-editor{align-self:stretch}}
+@media(max-width:850px){.hd-workspace{grid-template-columns:minmax(0,1.1fr) minmax(280px,1fr);gap:10px}.hd-workspace>section{padding:12px}.hd-clock output{font-size:36px}.hd-seat-button{min-height:44px!important}.hd-table-actions{flex-wrap:wrap}.hd-table-actions>span{max-width:none}.hd-brand h1{font-size:19px!important}.hd-clock{top:31%;left:26%;right:26%}.hd-seat-name{font-size:10px}.hd-seat-meta{font-size:8px}}
+@media(max-width:650px){#screen-host{margin:0 -4px}.hd-header{gap:8px;padding-bottom:10px}.hd-brand>span{font-size:8px}.hd-brand h1{font-size:16px!important}.hd-history span{display:none}.hd-history button{min-width:44px;padding:6px!important;font-size:22px!important}.hd-header .hd-quiet{font-size:11px!important;padding:6px!important}.hd-session{gap:6px;font-size:12px;padding:8px 0;margin-bottom:6px}.hd-session #hostSave{width:100%;margin:0;min-height:14px}.hd-session .hd-select-label{flex:1}.hd-session select{width:100%!important;font-size:13px!important}.hd-workspace{grid-template-columns:minmax(0,1fr)}.hd-workspace>section{border-radius:16px}.hd-table{max-width:420px}.hd-stage-bar .hd-kicker{font-size:8px}.hd-clock output{font-size:36px}.hd-table-actions>span{display:none}.hd-table-actions button{width:100%}.hd-editor-title{margin-bottom:8px}.hd-field{margin:10px 0}.hd-voting,.hd-log{margin-top:0}}
+#screen-host [data-role-team]{display:inline-grid;place-items:center;min-width:26px;height:28px;border-radius:6px;background:#f4ead6;color:#76694e;line-height:1;vertical-align:middle}
+#screen-host [data-role-team="red"]{color:#c52232}
+#screen-host [data-role-team="black"]{color:#111111}
+#screen-host .hd-role-choices b{display:grid;width:30px;margin:0 auto 5px}
+#screen-host .hd-selected-role{width:38px;height:38px}
+#screen-host .hd-clock{top:27%}#hostSpeakerNumber{display:block;font:800 36px/1 'PT Mono',monospace;color:#f5d89b;margin-bottom:4px}.hd-speech-toolbar{display:flex;align-items:center;gap:8px;margin-top:12px}.hd-speech-toolbar button{flex:1}.hd-speech-toolbar .hd-duration select{margin:0;min-height:44px!important}
+#screen-host [data-fouls]{display:inline-grid;place-items:center;border-radius:5px;padding:2px 5px;background:#fff;color:#242424;font-weight:800;font-size:12px;line-height:16px;transition:background .15s,color .15s}
+#screen-host [data-fouls="1"]{background:#fff2a6;color:#594700}
+#screen-host [data-fouls="2"]{background:#edb936;color:#392900}
+#screen-host [data-fouls="3"],#screen-host [data-fouls="4"]{background:#cf293a;color:#fff}
+#screen-host #hostFouls{width:44px;height:44px;font-size:26px;border-radius:10px}
+@media(prefers-reduced-motion:reduce){#screen-host *{transition:none!important}}
+`;
+
+  // app/js/ui/host.js
+  function setupHost({ show: show2 }) {
+    const $2 = (id) => document.getElementById(id), root = $2("screen-host");
+    root.innerHTML = hostMarkup;
+    const style = document.createElement("style");
+    style.textContent = hostStyles;
+    document.head.appendChild(style);
+    let state = loadHost(), selected = 0, rolesVisible = false, tableMode = "select", pendingTransfer = null, drag = null, suppressClick = false, noteTimer = null;
+    const label = (p) => "№" + (p.id + 1) + (state.showNames && p.name ? " · " + p.name : "");
+    const roleKey = (role) => Object.keys(roleIcons).includes(role) ? role : "Не назначена";
+    const roleTeam = (role) => ["Мирный", "Шериф"].includes(role) ? "red" : ["Мафия", "Дон"].includes(role) ? "black" : "unknown";
+    const persist2 = () => {
+      const ok = writeHost(state);
+      $2("hostSave").textContent = ok ? "✓ Сохранено" : "Не удалось сохранить · скачай JSON в журнале";
+      $2("hostSave").classList.toggle("save-error", !ok);
+      return ok;
+    };
+    function act(action) {
+      const next = applyHostAction(state, action);
+      if (next === state) return;
+      state = next;
+      persist2();
+      render();
+    }
+    function saveName() {
+      clearTimeout(noteTimer);
+      noteTimer = null;
+      const value = $2("hostNickname").value.trim();
+      if (value !== state.players[selected].name) act({ type: "name", id: selected, value });
+    }
+    function selectPlayer(id) {
+      saveName();
+      selected = id;
+      pendingTransfer = null;
+      showRoles(false);
+      render();
+    }
+    function renderRoles() {
+      root.querySelectorAll("[data-host-role]").forEach((node) => {
+        const p = state.players[Number(node.dataset.hostRole)], role2 = roleKey(p.role);
+        node.textContent = rolesVisible ? roleIcons[role2] : "?";
+        node.dataset.roleTeam = rolesVisible ? roleTeam(role2) : "unknown";
+        node.setAttribute("aria-label", rolesVisible ? role2 : "Роль скрыта");
+        node.title = rolesVisible ? role2 : "Роль скрыта";
+      });
+      const role = roleKey(state.players[selected].role);
+      $2("hostSelectedRole").textContent = rolesVisible ? roleIcons[role] : "?";
+      $2("hostSelectedRole").dataset.roleTeam = rolesVisible ? roleTeam(role) : "unknown";
+      $2("hostSelectedRole").setAttribute("aria-label", rolesVisible ? role : "Роль скрыта");
+      $2("hostRoleChoices").querySelectorAll("[data-role]").forEach((b) => {
+        if (rolesVisible) b.setAttribute("aria-pressed", String(b.dataset.role === role));
+        else b.removeAttribute("aria-pressed");
+      });
+    }
+    function showRoles(value) {
+      rolesVisible = value;
+      $2("hostRevealAll").setAttribute("aria-pressed", String(value));
+      renderRoles();
+    }
+    function renderTable2() {
+      const vote = currentVote(state);
+      if (!$2("hostPlayers").children.length) {
+        $2("hostPlayers").innerHTML = state.players.map((p) => {
+          const a = (126 + p.id * 36) * Math.PI / 180, x = 50 + 40 * Math.cos(a), y = 50 + 40 * Math.sin(a);
+          return '<div class="hd-seat" data-host-seat="' + p.id + '" style="--x:' + x + "%;--y:" + y + '%"><button class="hd-seat-button" data-open-player="' + p.id + '"><span class="hd-seat-number">' + (p.id + 1) + '</span><span class="hd-role-icon" data-host-role="' + p.id + '">?</span></button><span class="hd-seat-name" data-drag-seat="' + p.id + '" title="Перетащи ник для обмена местами"></span><span class="hd-seat-meta"></span></div>';
+        }).join("");
+      }
+      state.players.forEach((p) => {
+        const seat = $2("hostPlayers").children[p.id], button = seat.querySelector("button"), target = vote.votes[p.id];
+        seat.classList.toggle("selected", p.id === selected);
+        seat.classList.toggle("speaking", p.id === state.activeSpeaker && state.timer.running);
+        seat.classList.toggle("out", p.status !== "alive");
+        button.setAttribute("aria-label", (tableMode === "vote" ? "Записать голос " : tableMode === "speech" ? "Запустить речь " : "Выбрать игрока ") + label(p));
+        button.setAttribute("aria-pressed", String(tableMode === "vote" ? target != null && target === vote.activeCandidate : p.id === selected));
+        seat.querySelector("[data-drag-seat]").textContent = state.showNames ? p.name || "Игрок " + (p.id + 1) : "№" + (p.id + 1);
+        seat.querySelector(".hd-seat-meta").innerHTML = '<span data-fouls="' + p.fouls + '">' + p.fouls + " ф.</span>" + (p.status !== "alive" ? " · выбыл" : target != null ? " · → " + (target + 1) : vote.candidates.includes(p.id) ? " · кандидат" : "");
+      });
+      $2("hostSpeakerLabel").textContent = state.activeSpeaker == null ? "Слово игроку" : label(state.players[state.activeSpeaker]);
+      $2("hostSpeakerNumber").textContent = state.activeSpeaker == null ? "—" : "№" + (state.activeSpeaker + 1);
+      $2("hostNextSpeaker").disabled = !state.players.some((p) => p.status === "alive" && p.id !== state.activeSpeaker);
+      root.querySelectorAll("[data-table-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tableMode === tableMode)));
+      $2("hostTableHint").textContent = tableMode === "vote" ? "Нажми игрока, поднявшего руку" : tableMode === "speech" ? "Нажми место — речь и таймер запустятся вместе" : "Нажми место · перетащи ник для обмена";
+    }
+    function renderEditor() {
+      const p = state.players[selected];
+      $2("hostSelectedNumber").textContent = String(selected + 1).padStart(2, "0");
+      $2("hostPlayerTitle").textContent = "Игрок №" + (selected + 1);
+      if (document.activeElement !== $2("hostNickname")) $2("hostNickname").value = p.name;
+      $2("hostPlayerStatus").value = p.status;
+      $2("hostSpeech").disabled = p.status !== "alive";
+      $2("hostSpeech").textContent = state.activeSpeaker === selected && state.timer.running ? "▶ Речь идёт" : "▶ Речь · старт";
+      $2("hostFouls").textContent = p.fouls;
+      $2("hostFouls").dataset.fouls = p.fouls;
+      $2("hostFoulMinus").disabled = p.fouls === 0;
+      $2("hostFoulPlus").disabled = p.fouls === 4;
+      $2("hostFoulHint").textContent = p.fouls === 4 ? "Лимит · решение за ведущим" : p.fouls === 0 ? "Без замечаний" : "Замечания записаны";
+      $2("hostNominate").textContent = currentVote(state).candidates.includes(selected) ? "Снять кандидатуру" : "Выставить";
+      const old = $2("hostSwapTarget").value;
+      $2("hostSwapTarget").innerHTML = state.players.filter((p2) => p2.id !== selected).map((p2) => '<option value="' + p2.id + '">' + escH(label(p2)) + "</option>").join("");
+      if (old !== String(selected) && old) $2("hostSwapTarget").value = old;
+    }
+    function renderVote() {
+      const vote = currentVote(state), counts = {};
+      Object.values(vote.votes).forEach((id) => counts[id] = (counts[id] || 0) + 1);
+      $2("hostCandidates").innerHTML = vote.candidates.length ? vote.candidates.map((id) => '<button data-candidate="' + id + '" aria-pressed="' + (vote.activeCandidate === id) + '">' + escH(label(state.players[id])) + "<strong>" + (counts[id] || 0) + "</strong></button>").join("") : "<p>Выбери место на столе и нажми «Выставить».</p>";
+      $2("hostVoters").innerHTML = state.players.map((p) => {
+        const target = vote.votes[p.id], active = target != null && target === vote.activeCandidate;
+        return '<button data-voter="' + p.id + '" aria-pressed="' + active + '" ' + (p.status !== "alive" || vote.activeCandidate == null ? "disabled" : "") + "><strong>№" + (p.id + 1) + "</strong><span>" + (target != null ? "→ №" + (target + 1) : "нет записи") + "</span></button>";
+      }).join("");
+      const pending = state.players.filter((p) => p.status === "alive" && vote.votes[p.id] == null);
+      $2("hostVoteStatus").textContent = vote.activeCandidate == null ? "Выбери кандидата, затем отмечай руки на столе или по номерам ниже." : "За " + label(state.players[vote.activeCandidate]) + ": " + (counts[vote.activeCandidate] || 0) + ". Нет записи: " + (pending.length ? pending.map((p) => "№" + (p.id + 1)).join(", ") : "все отмечены");
+      $2("hostVoteRound").textContent = "КРУГ " + state.round + " · ТУР " + (state.currentVote + 1) + (vote.complete ? " · ЗАВЕРШЁН" : "");
+      $2("hostTransfer").hidden = !pendingTransfer;
+      if (pendingTransfer) $2("hostTransferText").textContent = "№" + (pendingTransfer.id + 1) + ": перенести голос с №" + (pendingTransfer.old + 1) + " на №" + (pendingTransfer.target + 1) + "?";
+    }
+    function renderTimer() {
+      const left = timerRemaining(state), text = Math.floor(left / 60) + ":" + String(left % 60).padStart(2, "0");
+      if ($2("hostTimerValue").textContent !== text) $2("hostTimerValue").textContent = text;
+      $2("hostTimerValue").classList.toggle("ending", left <= 10);
+      $2("hostTimerStart").textContent = state.timer.running ? "Ⅱ" : "▶";
+      $2("hostTimerStart").setAttribute("aria-label", state.timer.running ? "Приостановить таймер" : "Запустить таймер");
+      if (state.timer.running && left === 0) {
+        state.timer.running = false;
+        state.timer.remaining = 0;
+        state.timer.endAt = null;
+        persist2();
+        render();
+      }
+    }
+    function render() {
+      $2("hostRound").textContent = "Круг " + state.round;
+      $2("hostPhase").value = state.phase;
+      $2("hostNamesToggle").checked = state.showNames;
+      $2("hostDuration").value = String(state.timer.duration);
+      $2("hostUndo").disabled = !state.undo.length;
+      $2("hostRedo").disabled = !state.redo.length;
+      renderTable2();
+      renderEditor();
+      renderRoles();
+      renderVote();
+      renderTimer();
+      $2("hostJournal").innerHTML = state.journal.length ? state.journal.slice().reverse().map((e) => "<li><time>" + new Date(e.at).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }) + "</time><span>" + escH(e.text) + "</span></li>").join("") : "<li><span>—</span><span>Фолы, речи и голоса появятся здесь автоматически.</span></li>";
+    }
+    function voteFor(id) {
+      saveName();
+      const vote = currentVote(state), target = vote.activeCandidate, old = vote.votes[id];
+      if (target == null || state.players[id].status !== "alive") return;
+      if (old != null && old !== target) {
+        pendingTransfer = { id, old, target };
+        renderVote();
+        $2("hostTransferConfirm").focus({ preventScroll: true });
+        return;
+      }
+      pendingTransfer = null;
+      act({ type: "vote", id, target: old === target ? null : target });
+    }
+    function swap(id, target) {
+      saveName();
+      showRoles(false);
+      act({ type: "swapSeats", id, target });
+      selected = target;
+      render();
+    }
+    $2("hostRoleChoices").innerHTML = Object.entries(roleIcons).map(([role, icon]) => '<button data-role="' + escH(role) + '" aria-label="Назначить роль: ' + escH(role) + '"><b data-role-team="' + roleTeam(role) + '" aria-hidden="true">' + icon + "</b>" + escH(role === "Не назначена" ? "Без роли" : role) + "</button>").join("");
+    $2("hostRoleChoices").onclick = (e) => {
+      const b = e.target.closest("[data-role]");
+      if (!b) return;
+      saveName();
+      showRoles(false);
+      act({ type: "role", id: selected, value: b.dataset.role });
+      $2("hostActionStatus").textContent = "Роль назначена. Удерживай кнопку под столом для просмотра.";
+    };
+    $2("hostNickname").oninput = () => {
+      clearTimeout(noteTimer);
+      noteTimer = setTimeout(saveName, 500);
+    };
+    $2("hostNickname").onchange = saveName;
+    $2("hostPlayerStatus").onchange = (e) => {
+      saveName();
+      act({ type: "status", id: selected, value: e.target.value });
+    };
+    $2("hostOpen").onclick = () => {
+      show2("host");
+      render();
+    };
+    $2("hostBack").onclick = () => {
+      saveName();
+      showRoles(false);
+      show2("menu");
+    };
+    $2("hostPlayers").onclick = (e) => {
+      if (suppressClick) {
+        suppressClick = false;
+        return;
+      }
+      const b = e.target.closest("[data-open-player]");
+      if (!b) return;
+      const id = Number(b.dataset.openPlayer);
+      if (tableMode === "vote") voteFor(id);
+      else {
+        selectPlayer(id);
+        if (tableMode === "speech") act({ type: "speechStart", id });
+      }
+    };
+    $2("hostTableMode").onclick = (e) => {
+      const b = e.target.closest("[data-table-mode]");
+      if (b) {
+        saveName();
+        tableMode = b.dataset.tableMode;
+        showRoles(false);
+        renderTable2();
+      }
+    };
+    $2("hostSpeech").onclick = () => {
+      saveName();
+      act({ type: "speechStart", id: selected });
+    };
+    $2("hostNextSpeaker").onclick = () => {
+      const start = state.activeSpeaker ?? -1;
+      const next = Array.from({ length: state.players.length }, (_, i) => state.players[(start + i + 1) % state.players.length]).find((p) => p.status === "alive" && p.id !== state.activeSpeaker);
+      if (!next) return;
+      selectPlayer(next.id);
+      act({ type: "speechStart", id: next.id });
+    };
+    $2("hostFoulMinus").onclick = () => {
+      saveName();
+      act({ type: "foul", id: selected, delta: -1 });
+    };
+    $2("hostFoulPlus").onclick = () => {
+      saveName();
+      act({ type: "foul", id: selected, delta: 1 });
+    };
+    $2("hostNominate").onclick = () => {
+      saveName();
+      act({ type: "nominate", id: selected, add: !currentVote(state).candidates.includes(selected) });
+    };
+    $2("hostPhase").onchange = (e) => {
+      saveName();
+      act({ type: "phase", value: e.target.value });
+    };
+    $2("hostNextRound").onclick = () => {
+      saveName();
+      act({ type: "round" });
+    };
+    $2("hostNamesToggle").onchange = (e) => {
+      saveName();
+      act({ type: "showNames", value: e.target.checked });
+    };
+    $2("hostSwap").onclick = () => swap(selected, Number($2("hostSwapTarget").value));
+    $2("hostUndo").onclick = () => {
+      saveName();
+      pendingTransfer = null;
+      showRoles(false);
+      state = undoHost(state);
+      persist2();
+      render();
+    };
+    $2("hostRedo").onclick = () => {
+      saveName();
+      pendingTransfer = null;
+      showRoles(false);
+      state = redoHost(state);
+      persist2();
+      render();
+    };
+    $2("hostTimerStart").onclick = () => {
+      saveName();
+      act({ type: state.timer.running ? "timerPause" : "timerStart" });
+    };
+    $2("hostTimerReset").onclick = () => {
+      saveName();
+      act({ type: "timerReset" });
+    };
+    $2("hostTimerPlus").onclick = () => {
+      saveName();
+      act({ type: "timerAdd", value: 10 });
+    };
+    $2("hostDuration").onchange = (e) => {
+      saveName();
+      act({ type: "timerDuration", value: Number(e.target.value) });
+    };
+    $2("hostCandidates").onclick = (e) => {
+      const b = e.target.closest("[data-candidate]");
+      if (b) {
+        saveName();
+        pendingTransfer = null;
+        act({ type: "activeCandidate", id: Number(b.dataset.candidate) });
+      }
+    };
+    $2("hostVoters").onclick = (e) => {
+      const b = e.target.closest("[data-voter]");
+      if (b) voteFor(Number(b.dataset.voter));
+    };
+    $2("hostTransferConfirm").onclick = () => {
+      if (!pendingTransfer) return;
+      const { id, target } = pendingTransfer;
+      pendingTransfer = null;
+      act({ type: "vote", id, target });
+    };
+    $2("hostTransferCancel").onclick = () => {
+      pendingTransfer = null;
+      renderVote();
+    };
+    $2("hostNewVoteRound").onclick = () => {
+      saveName();
+      pendingTransfer = null;
+      act({ type: "voteRound" });
+    };
+    $2("hostCompleteVote").onclick = () => {
+      saveName();
+      act({ type: "completeVote" });
+    };
+    const hold = $2("hostRevealAll");
+    hold.onpointerdown = (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      hold.setPointerCapture(e.pointerId);
+      showRoles(true);
+    };
+    hold.onkeydown = (e) => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        showRoles(true);
+      }
+    };
+    ["pointerup", "pointercancel", "lostpointercapture", "pointerleave", "keyup", "blur"].forEach((type) => hold.addEventListener(type, () => showRoles(false)));
+    function cancelDrag() {
+      drag = null;
+      root.querySelectorAll(".drop-target").forEach((n) => n.classList.remove("drop-target"));
+    }
+    $2("hostPlayers").onpointerdown = (e) => {
+      const h = e.target.closest("[data-drag-seat]");
+      if (!h || e.button !== 0) return;
+      suppressClick = false;
+      drag = { id: Number(h.dataset.dragSeat), pointer: e.pointerId, x: e.clientX, y: e.clientY, moved: false };
+      h.setPointerCapture(e.pointerId);
+    };
+    $2("hostPlayers").onpointermove = (e) => {
+      if (!drag || drag.pointer !== e.pointerId) return;
+      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 8) drag.moved = true;
+      if (!drag.moved) return;
+      root.querySelectorAll(".drop-target").forEach((n) => n.classList.remove("drop-target"));
+      document.elementFromPoint(e.clientX, e.clientY)?.closest("[data-host-seat]")?.classList.add("drop-target");
+    };
+    $2("hostPlayers").onpointerup = (e) => {
+      if (!drag || drag.pointer !== e.pointerId) return;
+      const previous = drag, target = document.elementFromPoint(e.clientX, e.clientY)?.closest("[data-host-seat]");
+      cancelDrag();
+      suppressClick = previous.moved;
+      if (previous.moved && target) swap(previous.id, Number(target.dataset.hostSeat));
+    };
+    $2("hostPlayers").onpointercancel = cancelDrag;
+    function hidePrivate() {
+      showRoles(false);
+      cancelDrag();
+    }
+    window.addEventListener("blur", hidePrivate);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        saveName();
+        hidePrivate();
+      }
+    });
+    window.addEventListener("pagehide", () => {
+      saveName();
+      hidePrivate();
+    });
+    document.addEventListener("protocol:screen", hidePrivate);
+    $2("hostReset").onclick = () => {
+      saveName();
+      if (confirm("Начать новую партию ведущего? Экспортируй текущую партию, чтобы сохранить её.")) {
+        state = defaultHost();
+        selected = 0;
+        pendingTransfer = null;
+        hidePrivate();
+        persist2();
+        render();
+      }
+    };
+    $2("hostExport").onclick = () => {
+      saveName();
+      const data = JSON.stringify({ ...state, exportedAt: (/* @__PURE__ */ new Date()).toISOString() }, null, 2), url = URL.createObjectURL(new Blob([data], { type: "application/json" })), a = document.createElement("a");
+      a.href = url;
+      a.download = "protokol-host-" + (/* @__PURE__ */ new Date()).toISOString().slice(0, 10) + ".json";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1e3);
+    };
+    setInterval(renderTimer, 250);
+    render();
+    return { render };
   }
 
   // app/js/state/storage.js
@@ -3514,6 +4308,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   $("advToEfir").addEventListener("click", () => show("live"));
   $("advUndo").addEventListener("click", liveUndo);
   var casualUI = setupCasual({ getLive: () => LIVE, act: liveAct, refresh: renderLive });
+  var hostUI = setupHost({ show });
   $("workspaceSwitch").addEventListener("click", (e) => {
     const b = e.target.closest("[data-view]");
     if (!b) return;
@@ -3531,6 +4326,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   });
   syncSettings();
   renderMenu();
+  if (location.hash === "#screen-live") show("live");
 })();
 
 </script>
