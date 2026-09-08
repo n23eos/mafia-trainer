@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#12271c">
-<title>Помощник по мафии: трекер и тренажёр — Протокол</title>
+<title>Mafia-tool.com — помощник по мафии, трекер и тренажёр</title>
 <meta name="description" content="Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://mafia-tool.com/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:site_name" content="Протокол">
-<meta property="og:title" content="Помощник по мафии: трекер и тренажёр — Протокол">
+<meta property="og:site_name" content="Mafia-tool.com">
+<meta property="og:title" content="Mafia-tool.com — помощник по мафии, трекер и тренажёр">
 <meta property="og:description" content="Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.">
 <meta property="og:url" content="https://mafia-tool.com/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Помощник по мафии: трекер и тренажёр — Протокол">
+<meta name="twitter:title" content="Mafia-tool.com — помощник по мафии, трекер и тренажёр">
 <meta name="twitter:description" content="Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Протокол","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/#webpage","url":"https://mafia-tool.com/","name":"Помощник по мафии: трекер и тренажёр — Протокол","description":"Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"WebApplication","@id":"https://mafia-tool.com/#app","name":"Протокол","url":"https://mafia-tool.com/","description":"Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Требуется JavaScript; сохранения используют localStorage.","inLanguage":"ru","isAccessibleForFree":true,"featureList":["Трекер голосований","Заметки и версии ролей","Проверки шерифа","Связи игроков","Тренировка дедукции"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Mafia-tool.com","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/#webpage","url":"https://mafia-tool.com/","name":"Mafia-tool.com — помощник по мафии, трекер и тренажёр","description":"Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"WebApplication","@id":"https://mafia-tool.com/#app","name":"Mafia-tool.com","url":"https://mafia-tool.com/","description":"Бесплатный инструмент для мафии: записывайте голоса, проверки шерифа и версии ролей. Помощник для онлайн- и живых партий, тренажёр дедукции и справочник.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Требуется JavaScript; сохранения используют localStorage.","inLanguage":"ru","isAccessibleForFree":true,"featureList":["Трекер голосований","Заметки и версии ролей","Проверки шерифа","Связи игроков","Тренировка дедукции"]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;600;800&family=PT+Mono&display=swap" rel="stylesheet">
@@ -37,9 +37,27 @@ body{
     radial-gradient(circle at 12% 0%, rgba(213,173,97,.08), transparent 28rem),
     radial-gradient(circle at 85% 12%, rgba(41,92,64,.34), transparent 32rem),
     var(--felt-dark);
-  color:var(--cream); min-height:100vh; padding:20px 18px 64px;
+  color:var(--cream); min-height:100vh; padding:0 18px 64px;
 }
 .wrap{max-width:1180px;margin:0 auto}
+.site-header{position:sticky;top:0;z-index:90;margin:0 -18px 18px;border-bottom:1px solid var(--line);background:rgba(8,23,16,.88);backdrop-filter:blur(18px)}
+.site-header-inner{max-width:1180px;min-height:68px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:24px}
+.site-brand{color:var(--cream);text-decoration:none;font:400 21px 'Prata',serif;white-space:nowrap}.site-brand i{color:var(--brass);font-style:normal}
+.site-brand{border:0;background:transparent;padding:0;cursor:pointer}.site-header-actions{margin-left:auto}
+.site-nav{display:flex;align-items:center;justify-content:center;gap:3px;flex:1}.site-nav button{min-height:40px;padding:8px 12px;border:0;border-radius:9px;background:transparent;color:var(--cream-dim);font:700 13px 'Manrope',sans-serif;cursor:pointer}.site-nav button:hover{background:rgba(244,236,220,.07);color:var(--cream)}
+.site-header-actions{display:flex;align-items:center;gap:8px}
+.language-switch{
+  position:static;display:flex;align-items:center;
+  min-width:48px;min-height:40px;justify-content:center;border:1px solid rgba(244,236,220,.28);
+  border-radius:999px;background:rgba(11,29,20,.92);color:var(--cream);font:700 13px 'PT Mono',monospace;
+  cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.24);backdrop-filter:blur(8px)
+}
+.language-switch:hover{border-color:var(--brass);color:var(--gold)}
+.site-menu-toggle{display:none;min-width:42px;min-height:40px;border:1px solid var(--line);border-radius:9px;background:transparent;color:var(--cream);font-size:20px;cursor:pointer}
+.recent-games{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 18px}.recent-games.on{display:grid}.recent-game{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);color:var(--cream);text-align:left}.recent-game span{display:block;color:var(--cream-dim);font-size:11px;margin-top:3px}.recent-game b{flex:1}.recent-game em{font-style:normal;color:var(--brass)}
+@media(max-width:760px){.site-header-inner{min-height:58px;gap:10px}.site-brand{font-size:18px}.site-menu-toggle{display:block}.site-nav{display:none;position:absolute;left:12px;right:12px;top:58px;padding:8px;flex-direction:column;align-items:stretch;border:1px solid var(--line);border-radius:12px;background:#0b1d14;box-shadow:0 18px 40px rgba(0,0,0,.45)}.site-nav.on{display:flex}.site-nav button{text-align:left}.language-switch{min-width:44px;min-height:38px}.menu-hero{padding-top:8px}}
+@media(max-width:600px){.recent-games{grid-template-columns:1fr}}
+@media(max-width:600px){.site-header{margin-left:-12px;margin-right:-12px}}
 button{font-family:inherit}
 button:focus-visible,[role=button]:focus-visible,input:focus-visible,textarea:focus-visible{
   outline:3px solid var(--focus);outline-offset:3px
@@ -65,11 +83,15 @@ h1,h2.disp,h3.disp{font-family:'Prata',serif;font-weight:400;letter-spacing:.5px
 .home-reference a{color:var(--gold);text-underline-offset:4px}
 a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 /* ---------- главная ---------- */
-.menu-hero{text-align:left;margin:22px 0 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,480px);gap:36px;align-items:end}
+.menu-hero{text-align:left;margin:22px 0 26px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(320px,1.1fr);gap:36px;align-items:center}
 .menu-hero h1{font-size:clamp(42px,7vw,72px);line-height:1}
 .menu-hero .tag{font-family:'PT Mono',monospace;font-size:12px;color:var(--brass);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em}
 .menu-hero .rulebrief{font-size:15px;line-height:1.65;color:var(--cream-dim)}
-.home-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:18px}
+.hero-copy h1{overflow-wrap:anywhere}
+.hero-visual{position:relative;overflow:hidden;min-height:270px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:0 20px 48px rgba(0,0,0,.28)}
+.hero-visual img{display:block;width:100%;height:100%;min-height:270px;object-fit:cover}
+.hero-visual::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(244,236,220,.06);pointer-events:none}
+.home-grid{display:grid;grid-template-columns:1fr;gap:18px}
 .home-column{display:flex;flex-direction:column;gap:18px}
 .section-label{font-family:'PT Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-dim);opacity:.8}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -92,6 +114,23 @@ a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 .utility-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
 .utility-nav .backbtn{min-height:42px}
 .menu-foot{text-align:center;margin-top:26px;font-family:'PT Mono',monospace;font-size:11px;color:var(--cream-dim);opacity:.7}
+.training-drawer{margin-top:18px;border:1px solid var(--line);border-radius:14px;background:rgba(16,39,27,.72);overflow:hidden}
+.training-drawer>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;padding:14px 18px;cursor:pointer;list-style:none;font-weight:800}
+.training-drawer>summary::-webkit-details-marker{display:none}
+.training-drawer>summary::after{content:'+';font:22px 'PT Mono',monospace;color:var(--brass)}
+.training-drawer[open]>summary::after{content:'−'}
+.training-drawer>summary span{font:12px 'PT Mono',monospace;color:var(--cream-dim);font-weight:400}
+.training-panel{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:12px;padding:0 12px 12px}
+.training-panel .card.practice{min-height:0;padding:18px}
+.training-panel .card.practice h3{font-size:21px;margin:0 0 5px}
+.training-panel .card-cta{margin-top:14px}
+.training-side{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.training-side>.card:last-child{grid-column:1/-1}
+.roadmap{margin-top:28px;padding:24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(26,57,42,.62),rgba(11,29,20,.68))}
+.roadmap-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}.roadmap h2{font:400 24px 'Prata',serif}.roadmap-head p{max-width:480px;color:var(--cream-dim);font-size:14px;line-height:1.55}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.roadmap-card{padding:16px;border:1px solid var(--line);border-radius:12px;background:rgba(9,27,18,.56)}.roadmap-card .status{display:inline-block;margin-bottom:10px;color:var(--brass);font:11px 'PT Mono',monospace;text-transform:uppercase;letter-spacing:.08em}.roadmap-card h3{font-size:16px;margin-bottom:5px}.roadmap-card p{color:var(--cream-dim);font-size:13px;line-height:1.5}
+@media(max-width:760px){.menu-hero{grid-template-columns:1fr;gap:18px}.hero-visual,.hero-visual img{min-height:210px}.training-panel{grid-template-columns:1fr}.training-side{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.roadmap{padding:18px}.roadmap-head{display:block}.roadmap-head p{margin-top:7px}.roadmap-grid{grid-template-columns:1fr}.training-side{grid-template-columns:1fr}.cards.aux{grid-template-columns:1fr}}
 
 /* ---------- селекторы свободной игры ---------- */
 .pickrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
@@ -455,6 +494,11 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   #playerCard .confidence-controls{width:92px}
 }
 </style>
+<style>#screen-urban{--uc-line:#ffffff1c;--uc-muted:#b4c8bb;color:#eef3eb;padding-bottom:36px;font-size:14px}#screen-urban *{box-sizing:border-box}#screen-urban h1,#screen-urban h2,#screen-urban h3{font-family:Manrope,system-ui,sans-serif;letter-spacing:-.04em}#screen-urban h1{font-size:clamp(26px,4vw,40px);font-weight:800}#screen-urban h2{font-size:22px}#screen-urban h3{font-size:18px}#screen-urban button,#screen-urban input,#screen-urban select,#screen-urban textarea{font:inherit}#screen-urban button{min-height:44px;padding:9px 13px;border:1px solid var(--uc-line);border-radius:10px;background:#203d30;color:#eef3eb;cursor:pointer}#screen-urban button:hover{background:#315340}#screen-urban button:disabled{opacity:.38;cursor:default}#screen-urban button.uc-accent,#screen-urban button[aria-pressed=true]{background:#dfbe79;color:#18281d;border-color:#dfbe79}#screen-urban input,#screen-urban select,#screen-urban textarea{width:100%;min-width:0;min-height:44px;border:1px solid #698472;border-radius:9px;padding:9px 10px;background:#0c251a;color:#eef3eb}#screen-urban textarea{resize:vertical}#screen-urban label{display:grid;gap:6px;font-size:12px;color:#b4c8bb;margin:10px 0}#screen-urban p{line-height:1.65;margin:8px 0}#screen-urban summary{display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer;list-style:none}#screen-urban summary:before{content:'+';color:#dfbe79}#screen-urban details[open]>summary:before{content:'−'}#screen-urban summary b{flex:1}#screen-urban summary span:last-child{margin-left:auto}#screen-urban .uc-muted{color:var(--uc-muted);font-size:12px}.uc-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:24px 0}.uc-header p{color:var(--uc-muted)}.uc-eyebrow{font:11px 'PT Mono',monospace;color:#dfbe79;letter-spacing:.12em}.uc-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.uc-session{display:flex;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid var(--uc-line);padding:6px 0}.uc-session label{flex:1;max-width:340px}.uc-session #urbanSave{margin-left:auto;font-size:11px;color:#b4c8bb}.uc-toolbar{position:sticky;top:68px;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0b2118f5;border:1px solid #ffffff22;padding:10px;border-radius:12px;box-shadow:0 8px 24px #0003}.uc-timer{display:flex;gap:8px;align-items:center}.uc-timer output{font:700 28px 'PT Mono',monospace;min-width:75px;color:#f0d39a}.uc-timer select{max-width:86px}.uc-panel{padding:18px;border:1px solid var(--uc-line);border-radius:16px;background:#122c21;margin:16px 0}.uc-setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:14px}.uc-role-catalog{max-height:550px;overflow:auto;overscroll-behavior:contain;padding-right:8px}.uc-role{border-bottom:1px solid var(--uc-line);padding:5px 0}.uc-role-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.uc-dot{width:8px;height:8px;border-radius:50%;background:#9bc8aa}.uc-dot[data-team=mafia]{background:#e8a59a}.uc-dot[data-team=clan]{background:#c7b2ef}.uc-dot[data-team=solo]{background:#e5c276}.uc-section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:20px 0 14px}.uc-section-head p{color:#b4c8bb;font-size:12px}.uc-section-head label{display:flex;align-items:center;gap:8px;margin:0}.uc-columns{display:grid;grid-template-columns:repeat(var(--uc-columns),minmax(0,1fr));gap:14px;align-items:start}.uc-column{display:grid;gap:10px;min-width:0}.uc-player{padding:14px;background:#152f23;border:1px solid #ffffff1c;border-radius:14px;min-width:0}.uc-player.uc-speaking{border-color:#dfbe79}.uc-player.uc-out{background:#12251c;opacity:.72}.uc-player.uc-out .uc-seat{text-decoration:line-through}.uc-player-top{display:flex;gap:10px;align-items:center}.uc-seat{font:700 24px 'PT Mono',monospace;color:#ead5aa}.uc-player-top input{flex:1}.uc-state{font-size:10px;white-space:nowrap;color:#b4c8bb}.uc-player-actions{display:flex;align-items:center;gap:5px;margin-top:10px}.uc-player-actions button{flex:1;padding:6px!important}.uc-role-hidden{font-size:11px;color:#8da693;margin:14px 0}.uc-private-role{margin:10px 0 4px!important}.uc-role-team{display:inline-block;font-size:10px;color:#c9b8ec}.uc-player-more{margin-top:7px;border-top:1px solid var(--uc-line)}.uc-player-more summary{font-size:11px;font-weight:500}.uc-warning,.uc-error{color:#ffcb9c!important}#urbanMessage:empty{display:none}.uc-night{border-color:#8a799655;background:linear-gradient(120deg,#1c2930,#152c22)}.uc-night-step{padding:12px;border:1px solid var(--uc-line);border-radius:12px;margin-top:10px}.uc-night-step summary em{margin-left:auto;color:#cfc0e9;font-size:11px;font-style:normal}.uc-targets{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.uc-targets>span{padding:10px;border:1px solid var(--uc-line);border-radius:8px}.uc-morning{border-top:1px solid var(--uc-line);margin-top:20px;padding-top:20px}.uc-source-links{display:flex;flex-wrap:wrap;gap:16px}.uc-source-links a{color:#dfbe79;text-underline-offset:4px}.uc-vote-count{display:block;color:#dfbe79}.uc-night-step p,.uc-panel p{overflow-wrap:anywhere}
+@media(max-width:950px){.uc-columns{gap:8px}.uc-player{padding:10px}.uc-state{display:none}.uc-toolbar{flex-wrap:wrap}.uc-header{align-items:start}.uc-header>.uc-actions{justify-content:flex-end}.uc-setup-grid{gap:16px}}
+@media(max-width:760px){.uc-toolbar{top:58px}.uc-columns{grid-template-columns:1fr}.uc-setup-grid{grid-template-columns:1fr}.uc-role-catalog{max-height:360px}.uc-header{flex-direction:column}.uc-header>.uc-actions{justify-content:flex-start}.uc-section-head{flex-wrap:wrap}.uc-session{gap:10px}.uc-session label{max-width:none;flex-basis:100%}.uc-session #urbanSave{margin:0}.uc-toolbar{padding:8px}.uc-toolbar .uc-actions{flex:1}.uc-toolbar button{padding:6px 9px!important;font-size:12px!important}.uc-timer{width:100%;justify-content:flex-end}.uc-panel{padding:12px}.uc-player{padding:12px}.uc-state{display:block}.uc-header{margin-top:10px}.uc-header p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){#screen-urban *{animation:none!important;transition:none!important}}
+</style>
 <!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
   const site = new URL(siteUrl);
   if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
@@ -475,7 +519,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     if (url === lastPage) return;
     const pageData = {
       page_location:url,
-      page_title:home ? screens[currentScreen] + ' — Протокол' : document.title,
+      page_title:home ? screens[currentScreen] + ' — Mafia-tool.com' : document.title,
       page_referrer:lastPage || safeReferrer,
       ...(home ? {screen_name:currentScreen} : {}),
     };
@@ -547,36 +591,56 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 })("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
 </head>
 <body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <button class="site-brand" data-nav="menu" aria-label="Mafia-tool.com, главная">Mafia<i>-tool</i>.com</button>
+    <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
+      <button id="siteHostNav">Вести игру</button>
+      <button id="siteLiveNav">Записывать просмотр</button>
+      <button id="siteGamesNav">Мои игры</button>
+      <button id="siteToolsNav">Инструменты</button>
+    </nav>
+    <div class="site-header-actions">
+      <button class="language-switch" id="languageSwitch" type="button" aria-label="Switch site language">EN</button>
+      <button class="site-menu-toggle" id="siteMenuToggle" aria-label="Открыть меню" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
 <div class="wrap">
 
 <!-- ================= МЕНЮ ================= -->
 <section class="screen on" id="screen-menu">
   <div class="menu-hero">
-    <div>
+    <div class="hero-copy">
       <div class="tag">интерактивный стол · v1.7</div>
-      <h1>Протокол<span style="display:block;font:600 clamp(18px,3vw,25px)/1.5 Manrope,system-ui,sans-serif;margin-top:14px">Помощник по мафии</span></h1>
+      <h1>Mafia-tool.com<span style="display:block;font:600 clamp(18px,3vw,25px)/1.5 Manrope,system-ui,sans-serif;margin-top:14px">Помощник по мафии</span></h1>
+      <div class="rulebrief" style="margin-top:18px">Бесплатный инструмент для мафии: веди онлайн- или живую партию, записывай голоса, проверки шерифа и версии ролей.</div>
     </div>
-    <div class="rulebrief">Бесплатный инструмент для мафии: веди онлайн- или живую партию, записывай голоса, проверки шерифа и версии ролей. Тренируй дедукцию на игровых задачах — без регистрации.</div>
+    <figure class="hero-visual"><img src="assets/mafia-table-hero-v2.webp" width="1536" height="1024" alt="Десять игроков и ведущий сидят за круглым столом для мафии"></figure>
   </div>
+  <div class="recent-games" id="recentGames" aria-label="Активные партии"></div>
   <div class="home-grid">
     <div class="home-column">
       <div class="section-label">Во время игры</div>
-      <button class="card primary" id="mCardLive" data-analytics-action="start_live_from_home">
-        <span class="card-kicker">главный режим</span>
-        <h3 id="liveCardTitle">Открыть стол</h3>
+      <button class="card primary" id="hostOpen"><span class="card-kicker">главный режим</span><h3>Ведущий</h3><p>Управляй игрой: речи, таймер, фолы, выставления и голосование.</p><span class="card-cta">Открыть пульт →</span></button>
+      <button class="card small" id="urbanOpen"><span class="card-kicker">Гибкий состав</span><h3>Городская мафия</h3><p>Свои роли и правила, игроки в колонках, ночной помощник ведущего.</p><span class="card-cta">Открыть городскую мафию →</span></button>
+      <button class="card small" id="mCardLive" data-analytics-action="start_live_from_home">
+        <span class="card-kicker">Просмотр игры</span>
+        <h3 id="liveCardTitle">Просмотр игры</h3>
         <p id="liveCardDescription">Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.</p>
         <span class="card-cta" id="liveCardCta">Начать отслеживание <span aria-hidden="true">→</span></span>
       </button>
       <div class="cards aux">
-        <button class="card small" id="hostOpen"><h3>Ведущий</h3><p>таймер, фолы, голоса и журнал</p></button>
         <button class="card small" id="mCardAdvanced"><h3>Разбор игроков</h3><p>сигналы и аргументы по каждому</p></button>
         <button class="card small" id="mCardStats"><h3>Прогресс</h3><p>результаты тренировок</p></button>
         <button class="card small" id="mCardHelp"><h3>Правила</h3><p>короткая памятка</p></button>
       </div>
     </div>
 
-    <div class="home-column" id="training">
-      <div class="section-label">Тренировка</div>
+  </div>
+  <details class="training-drawer" id="training">
+    <summary>Тренировка <span>задачи на дедукцию</span></summary>
+    <div class="training-panel">
       <div class="card practice" id="mCardFree" role="button" tabindex="0" aria-label="Начать свободную головоломку" data-analytics-action="start_training_from_home">
         <h3>Решить задачу</h3>
         <p>Вычисли трёх мафиози по протоколу голосований.</p>
@@ -598,7 +662,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         </div>
         <span class="card-cta">Начать задачу <span aria-hidden="true">→</span></span>
       </div>
-      <div class="cards">
+      <div class="training-side">
         <button class="card small" id="mCardDaily">
           <h3>Задача дня</h3>
           <p id="dailyDesc">Новая задача каждый день.</p>
@@ -609,25 +673,33 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
           <p>Постепенное усложнение механик.</p>
           <span class="badge" id="campBadge"></span>
         </button>
-      </div>
-      <div class="card small" id="mCardExam" role="button" tabindex="0">
-        <h3>Режим на время</h3>
-        <p>Без подсказок, с личным рекордом.</p>
-        <div class="pickrow"><div class="pick" id="pickExam">
-          <button data-v="easy">лёгкая</button>
-          <button data-v="medium" class="on">средняя</button>
-          <button data-v="hard">сложная</button>
-        </div></div>
+        <div class="card small" id="mCardExam" role="button" tabindex="0">
+          <h3>Режим на время</h3>
+          <p>Без подсказок, с личным рекордом.</p>
+          <div class="pickrow"><div class="pick" id="pickExam">
+            <button data-v="easy">лёгкая</button>
+            <button data-v="medium" class="on">средняя</button>
+            <button data-v="hard">сложная</button>
+          </div></div>
+        </div>
       </div>
     </div>
-  </div>
+  </details>
+  <section class="roadmap" id="roadmap" aria-labelledby="roadmapTitle">
+    <div class="roadmap-head"><div><div class="section-label">Следующие возможности</div><h2 id="roadmapTitle">Развиваем Mafia-tool.com</h2></div><p>Сначала делаем инструменты для партии быстрее и надёжнее. Эти направления появятся после проверки нового хаба.</p></div>
+    <div class="roadmap-grid">
+      <article class="roadmap-card"><span class="status">Планируем</span><h3>Игры в облаке</h3><p>Аккаунт, резервные копии и доступ к своей библиотеке с разных устройств.</p></article>
+      <article class="roadmap-card"><span class="status">Планируем</span><h3>Страницы клубов</h3><p>Каталог настоящих клубов, контакты, форматы и актуальное расписание.</p></article>
+      <article class="roadmap-card"><span class="status">Доступно</span><h3>Городская мафия</h3><p>Настраиваемый состав ролей и ночной помощник для ведущего.</p><button class="btn slim" id="urbanRoadmapOpen">Открыть городскую мафию →</button></article>
+    </div>
+  </section>
   <div class="utility-nav">
     <button class="backbtn" id="mCardSettings">Настройки</button>
     <a class="btn slim feedback-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdT5Z1iXNtOCeKI1L3vqLBT0JiD1pRLTBw2MqNVn6qWAlIK4A/viewform" target="_blank" rel="noopener noreferrer">Предложить улучшение ↗</a>
   </div>
   <section class="home-reference" aria-labelledby="about-heading">
     <h2 id="about-heading">Инструменты для игры в мафию</h2>
-    <p>«Протокол» объединяет трекер партии, заметки по игрокам и тренажёр дедукции. Записывай речи и голосования по кругам, отмечай связи и сравнивай версии. Партии сохраняются в текущем браузере; между устройствами они автоматически не переносятся.</p>
+    <p>Mafia-tool.com объединяет трекер партии, заметки по игрокам и тренажёр дедукции. Записывай речи и голосования по кругам, отмечай связи и сравнивай версии. Партии сохраняются в текущем браузере; между устройствами они автоматически не переносятся.</p>
     <nav aria-label="Материалы по мафии"><a href="mafia-online.html">Помощник для мафии онлайн</a><a href="spravochnik-mafii.html">Справочник по мафии: роли, термины и тактика</a></nav>
     <h2>Можно ли играть в мафию онлайн?</h2>
     <p>Используй трекер рядом с вашей игровой площадкой: вноси наблюдения вручную во время партии. Игровых комнат и видеосвязи здесь нет. Для самостоятельной тренировки доступны головоломки, курс и задача дня.</p>
@@ -640,13 +712,14 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 
 <!-- ================= ВЕДУЩИЙ ================= -->
 <section class="screen" id="screen-host"></section>
+<section class="screen" id="screen-urban"></section>
 
 <!-- ================= ИГРА ================= -->
 <section class="screen" id="screen-game">
   <div class="gamebar">
     <button class="backbtn" id="gameBack">← меню</button>
     <span class="mode-badge" id="modeBadge">свободная игра</span>
-    <h1 style="font-size:clamp(18px,3vw,26px)">Протокол <span class="num" id="caseNum">№1</span></h1>
+    <h1 style="font-size:clamp(18px,3vw,26px)">Mafia-tool.com <span class="num" id="caseNum">№1</span></h1>
     <span class="spacer"></span>
     <span class="stat" id="timerBox" style="display:none">⏱ <span id="timerV">0:00</span></span>
     <span class="stat" id="stat"></span>
@@ -1595,12 +1668,12 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       clearTimeout(noteTimer);
       noteTimer = setTimeout(saveNote, 700);
     });
-    for (const [role, label] of Object.entries(roles)) {
+    for (const [role2, label] of Object.entries(roles)) {
       const b = document.createElement("button");
       b.type = "button";
-      b.dataset.role = role;
+      b.dataset.role = role2;
       b.textContent = label;
-      b.onclick = () => commit(updatePlayer(getLive(), selected, { role }));
+      b.onclick = () => commit(updatePlayer(getLive(), selected, { role: role2 }));
       $2("playerRoles").appendChild(b);
     }
     for (let id = 0; id < 10; id++) {
@@ -1681,7 +1754,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       $2("playerHistory").innerHTML = live.rounds.map((r, i) => {
         const item = r.reads?.[selected];
         if (!item) return "";
-        return `<li><b>Круг ${i + 1}</b> · ${escH(roles[item.role] || "Не знаю")} · очки: красный ${confidenceScore(item, "red")}/10, чёрный ${confidenceScore(item, "black")}/10${item.seen ? " · речь отмечена" : ""}${item.sheriffClaim ? " · назвался шерифом" : ""}<p>Его красные: ${numbers(item.saysRed)}; чёрные: ${numbers(item.saysBlack)}</p>${item.note ? "<p>" + escH(item.note) + "</p>" : ""}</li>`;
+        return `<li><b>Круг ${i + 1}</b> · ${escH(roles[item.role] || "Не знаю")} · очки: красный ${confidenceScore(item, "red")}/10, чёрный ${confidenceScore(item, "black")}/10${item.seen ? " · речь отмечена" : ""}${item.sheriffClaim ? " · назвался шерифом" : ""}<p>Его красные: ${numbers(item.saysRed)}; чёрные: ${numbers(item.saysBlack)}</p>${item.note ? "<p data-user-content>" + escH(item.note) + "</p>" : ""}</li>`;
       }).join("") || "<li>Здесь появятся твои записи по кругам.</li>";
     }
     return { open, render };
@@ -1729,21 +1802,30 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   // app/js/state/host.js
   var HOST_KEY = "protokol-host-v1";
   var HOST_BACKUP_KEY = "protokol-host-backup-v1";
+  var HOST_GAMES_KEY = "mafia-tool-host-games-v1";
   var clone = (value) => JSON.parse(JSON.stringify(value));
   var core = (state) => {
-    const copy = clone(state);
-    copy.undo = [];
-    copy.redo = [];
-    return copy;
+    const copy2 = clone(state);
+    copy2.undo = [];
+    copy2.redo = [];
+    return copy2;
   };
+  var player = (id, uid2 = `player-${Date.now()}-${id}-${Math.random().toString(36).slice(2, 8)}`) => ({ id, uid: uid2, name: "", fouls: 0, status: "alive", role: "Не назначена" });
   function defaultHost() {
     return {
-      version: 1,
+      version: 2,
+      gameId: `host-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      name: "Новая партия",
+      status: "setup",
+      format: "sports",
+      view: "circle",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
       round: 1,
       phase: "setup",
       activeSpeaker: null,
       showNames: true,
-      players: Array.from({ length: 10 }, (_, i) => ({ id: i, name: "", fouls: 0, status: "alive", role: "Не назначена" })),
+      players: Array.from({ length: 10 }, (_, i) => player(i)),
       timer: { duration: 60, remaining: 60, running: false, endAt: null },
       voteRounds: [{ id: 1, candidates: [], activeCandidate: null, votes: {}, complete: false }],
       currentVote: 0,
@@ -1755,7 +1837,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   function migrateHost(value) {
     if (!value || typeof value !== "object" || !Array.isArray(value.players)) return defaultHost();
     const base = defaultHost(), out = { ...base, ...value };
-    out.players = base.players.map((p, i) => ({ ...p, ...value.players[i] || {}, id: i }));
+    const source = value.players.length ? value.players : base.players;
+    out.players = source.slice(0, 30).map((p, i) => ({ ...player(i, `legacy-${i}`), ...p, id: i, uid: p.uid || `legacy-${i}` }));
+    if (out.players.length < 3) out.players.push(...Array.from({ length: 3 - out.players.length }, (_, i) => player(out.players.length + i)));
+    out.version = 2;
+    out.status = ["setup", "active", "done"].includes(value.status) ? value.status : value.journal?.length ? "active" : "setup";
+    out.view = value.view === "list" ? "list" : "circle";
+    if (out.players.length !== 10) out.view = "list";
     out.timer = { ...base.timer, ...value.timer || {} };
     out.voteRounds = Array.isArray(value.voteRounds) && value.voteRounds.length ? value.voteRounds : base.voteRounds;
     out.undo = Array.isArray(value.undo) ? value.undo : [];
@@ -1775,11 +1863,31 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     }
     return defaultHost();
   }
+  function loadHostGames() {
+    try {
+      const value = JSON.parse(localStorage.getItem(HOST_GAMES_KEY) || "[]");
+      return Array.isArray(value) ? value.map(migrateHost) : [];
+    } catch {
+      return [];
+    }
+  }
   function writeHost(state) {
     try {
       const previous = localStorage.getItem(HOST_KEY);
       if (previous) localStorage.setItem(HOST_BACKUP_KEY, previous);
       localStorage.setItem(HOST_KEY, JSON.stringify(state));
+      const games = loadHostGames(), snapshot = core(state), index = games.findIndex((game) => game.gameId === state.gameId);
+      if (index >= 0) games[index] = snapshot;
+      else games.unshift(snapshot);
+      localStorage.setItem(HOST_GAMES_KEY, JSON.stringify(games.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).slice(0, 100)));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function deleteHostGame(gameId) {
+    try {
+      localStorage.setItem(HOST_GAMES_KEY, JSON.stringify(loadHostGames().filter((game) => game.gameId !== gameId)));
       return true;
     } catch {
       return false;
@@ -1790,6 +1898,10 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   }
   function description(state, action) {
     const p = Number.isInteger(action.id) ? `№${action.id + 1}${state.players[action.id]?.name ? " · " + state.players[action.id].name : ""}` : "";
+    if (action.type === "startGame") return "Партия начата";
+    if (action.type === "finishGame") return "Партия завершена";
+    if (action.type === "addPlayer") return `Добавлен игрок №${state.players.length + 1}`;
+    if (action.type === "removePlayer") return `${p}: место удалено до начала партии`;
     if (action.type === "foul") return `${p}: ${action.delta > 0 ? "добавлен" : "снят"} фол`;
     if (action.type === "name") return `${p}: ник изменён на «${action.value || "без ника"}»`;
     if (action.type === "speaker") return action.id == null ? "Выступление завершено" : `${p}: выступает`;
@@ -1816,8 +1928,42 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     const next = clone(state), before = core(state), text = description(state, action);
     next.undo = [...state.undo || [], before].slice(-50);
     next.redo = [];
+    next.updatedAt = now;
     const p = Number.isInteger(action.id) ? next.players[action.id] : null;
     switch (action.type) {
+      case "gameName":
+        next.name = String(action.value || "Новая партия").trim().slice(0, 80) || "Новая партия";
+        break;
+      case "startGame":
+        next.status = "active";
+        next.phase = "speeches";
+        break;
+      case "finishGame":
+        next.status = "done";
+        next.timer.running = false;
+        next.timer.endAt = null;
+        break;
+      case "setView":
+        next.view = action.value === "list" ? "list" : "circle";
+        break;
+      case "addPlayer": {
+        if (next.status !== "setup" || next.players.length >= 30) return state;
+        next.players.push(player(next.players.length));
+        next.format = next.players.length === 10 ? "sports" : "free";
+        if (next.players.length !== 10) next.view = "list";
+        break;
+      }
+      case "removePlayer": {
+        if (next.status !== "setup" || next.players.length <= 3 || !next.players[action.id]) return state;
+        next.players.splice(action.id, 1);
+        next.players.forEach((item, i) => item.id = i);
+        next.activeSpeaker = null;
+        next.voteRounds = [{ id: 1, candidates: [], activeCandidate: null, votes: {}, complete: false }];
+        next.currentVote = 0;
+        next.format = next.players.length === 10 ? "sports" : "free";
+        if (next.players.length !== 10) next.view = "list";
+        break;
+      }
       case "swapSeats": {
         const a = action.id, b = action.target, seat = (id) => id === a ? b : id === b ? a : id;
         [next.players[a], next.players[b]] = [next.players[b], next.players[a]];
@@ -1939,21 +2085,27 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     "Дон": '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 15 8 5h8l2 10H6zm-4 1h20v3H2v-3z"/><path d="M7 12h10" stroke="#d8cbb6" stroke-width="2"/></svg>',
     "Шериф": "★"
   };
+  var statusNames = { alive: "В игре", voted: "Заголосован", shot: "Убит ночью", removed: "Удалён" };
   var hostMarkup = `
   <header class="hd-header">
     <button id="hostBack" class="hd-quiet">← Меню</button>
-    <div class="hd-brand"><span>ПРОТОКОЛ / ВЕДУЩИЙ</span><h1>Игра под контролем</h1></div>
+    <div class="hd-brand"><span>MAFIA-TOOL.COM / ВЕДУЩИЙ</span><h1>Игра под контролем</h1></div>
     <div class="hd-history"><button id="hostUndo" aria-label="Отменить последнее действие">↶ <span>Отменить</span></button><button id="hostRedo" aria-label="Повторить действие">↷ <span>Повторить</span></button></div>
   </header>
   <div class="hd-session">
     <strong id="hostRound"></strong>
+    <label class="hd-game-name">Название <input id="hostGameName" maxlength="80" value="Новая партия"></label>
+    <div class="hd-view-switch" id="hostViewSwitch" aria-label="Вид состава"><button data-host-view="circle" aria-pressed="true">Круг</button><button data-host-view="list" aria-pressed="false">Список</button></div>
     <label class="hd-select-label">Этап <select id="hostPhase"><option value="setup">Подготовка</option><option value="speeches">Речи</option><option value="vote">Голосование</option><option value="night">Ночь</option></select></label>
     <button id="hostNextRound">+ Круг</button>
+    <button id="hostStartGame" class="hd-accent">Начать игру</button>
+    <button id="hostFinishGame">Завершить игру</button>
     <span id="hostSave" role="status">Изменения сохраняются автоматически</span>
   </div>
   <div class="hd-workspace">
     <section class="hd-stage" aria-label="Круглый стол ведущего">
-      <div class="hd-stage-bar"><span class="hd-kicker">10 МЕСТ · ЖИВАЯ ПАРТИЯ</span><label><input type="checkbox" id="hostNamesToggle" checked> Ники</label></div>
+      <div class="hd-stage-bar"><span class="hd-kicker" id="hostRosterLabel">10 МЕСТ · ЖИВАЯ ПАРТИЯ</span><label><input type="checkbox" id="hostNamesToggle" checked> Ники</label></div>
+      <div class="hd-roster-controls" id="hostRosterControls"><button id="hostRemovePlayer">− Убрать</button><strong id="hostPlayerCount">10 игроков</strong><button id="hostAddPlayer">+ Добавить</button></div>
       <div class="hd-table" id="hostTable">
         <div class="hd-felt" aria-hidden="true"></div>
         <div class="hd-clock">
@@ -1964,6 +2116,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         </div>
         <div id="hostPlayers"></div>
       </div>
+      <div class="hd-list-timer" id="hostListTimerBar"><div><strong id="hostListSpeaker">Слово игроку</strong><output id="hostListTimerValue">1:00</output></div><button id="hostListTimerStart" aria-label="Запустить таймер">▶</button><button id="hostListNextSpeaker">Следующий ▶</button></div>
+      <div class="hd-player-list" id="hostPlayerList"></div>
       <div class="hd-speech-toolbar"><label class="hd-duration"><select id="hostDuration" aria-label="Длительность речи"><option value="30">30 секунд</option><option value="60" selected>1 минута</option><option value="90">1:30</option><option value="120">2 минуты</option></select></label><button id="hostNextSpeaker" class="hd-accent">Следующий игрок ▶</button></div>
       <div class="hd-table-actions"><button id="hostRevealAll" aria-pressed="false">◉ Удерживать — роли</button><span id="hostTableHint">Нажми место · перетащи ник для обмена</span></div>
       <div class="hd-table-mode" id="hostTableMode" aria-label="Действие при нажатии на место"><button data-table-mode="select" aria-pressed="true">Настроить</button><button data-table-mode="speech" aria-pressed="false">Речь + таймер</button><button data-table-mode="vote" aria-pressed="false">Рука</button></div>
@@ -1989,7 +2143,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       <footer class="hd-vote-footer"><span>Повтор снимает руку</span><button id="hostCompleteVote">Завершить тур ✓</button></footer>
     </section>
 
-    <section class="hd-log" aria-labelledby="hostLogTitle"><header class="hd-section-title"><div><span class="hd-kicker">СОБЫТИЯ ПАРТИИ</span><h2 id="hostLogTitle">Журнал</h2></div><button id="hostExport">↓ JSON</button></header><ol id="hostJournal"></ol><button id="hostReset" class="hd-reset">Новая партия ведущего</button></section>
+    <section class="hd-log" aria-labelledby="hostLogTitle"><header class="hd-section-title"><div><span class="hd-kicker">СОБЫТИЯ ПАРТИИ</span><h2 id="hostLogTitle">Журнал</h2></div><div><button id="hostImport">↑ JSON</button><input id="hostImportFile" type="file" accept="application/json,.json" hidden><button id="hostExport">↓ JSON</button></div></header><ol id="hostJournal"></ol><div class="hd-log-actions"><button id="hostRepeat">Повторить состав</button><button id="hostReset" class="hd-reset">Новая партия ведущего</button></div></section>
   </div>`;
   var hostStyles = `
 #screen-host{--hd-surface:#132d23;--hd-muted:#b6cabc;--hd-line:#ffffff16;--hd-accent:#dfbe79;padding-bottom:24px;color:#edf2e9;font-size:14px}
@@ -2005,6 +2159,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 #screen-host h1{font-size:24px}#screen-host h2{font-size:20px}
 .hd-header{display:flex;align-items:center;gap:16px;padding:4px 0 18px}.hd-brand{flex:1}.hd-brand>span,.hd-kicker{font-size:10px;font-weight:700;letter-spacing:.13em;color:var(--hd-muted)}
 .hd-history{display:flex;gap:6px}.hd-session{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--hd-line);margin-bottom:12px}.hd-select-label{display:flex;align-items:center;gap:8px}.hd-session #hostSave{margin-left:auto;color:var(--hd-muted);font-size:11px}.hd-session select{width:auto!important}
+.hd-game-name{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--hd-muted)}#screen-host .hd-game-name input{width:170px;min-height:36px;font-size:13px}
+.hd-view-switch{display:flex;gap:4px;padding:3px;border:1px solid var(--hd-line);border-radius:10px}.hd-view-switch button{min-height:34px!important;padding:4px 10px!important}.hd-view-switch [aria-pressed=true]{background:#dfbe79!important;color:#19291f!important}
 .hd-workspace{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:16px;align-items:start}.hd-workspace>section{min-width:0;background:var(--hd-surface);border:1px solid var(--hd-line);border-radius:20px;padding:20px}
 .hd-stage{background:radial-gradient(ellipse at center,#254935,#142f23 70%)!important}.hd-stage-bar{display:flex;justify-content:space-between;align-items:center}.hd-stage-bar label{display:flex;gap:6px;align-items:center}
 .hd-table{position:relative;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%;isolation:isolate}
@@ -2016,6 +2172,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 .hd-seat-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:22px;cursor:grab;touch-action:none;user-select:none}.hd-seat-meta{display:block;color:#bfd5c5;font-size:9px;min-height:12px;white-space:nowrap}
 .hd-clock{position:absolute;left:27%;right:27%;top:33%;text-align:center;z-index:1}.hd-clock>span{display:block;font-size:12px;color:#d2dfd5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hd-clock output{display:block;font:800 clamp(28px,4.4vw,58px)/1.15 'PT Mono',monospace;letter-spacing:-.06em;margin:5px 0 8px}.hd-clock output.ending{color:#ffb2a4}.hd-clock-controls{display:flex;gap:4px;justify-content:center}#screen-host .hd-clock-controls button{padding:3px;min-width:32px;flex:1;background:#0c281dbb}.hd-duration select{margin-top:7px;font-size:12px!important;min-height:32px!important;padding:4px!important;border:0!important;background:transparent!important;text-align:center}
 .hd-table-actions{display:flex;align-items:center;gap:12px;justify-content:space-between}.hd-table-actions>span{font-size:11px;max-width:160px;color:var(--hd-muted)}#hostRevealAll{touch-action:none;user-select:none}#hostRevealAll[aria-pressed=true]{background:var(--hd-accent);color:#1a231a}.hd-table-mode{display:flex;gap:6px;margin-top:12px}.hd-table-mode button{flex:1;font-size:12px!important}.hd-table-mode [aria-pressed=true]{background:#dfbe79!important;color:#19291f!important}
+.hd-roster-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0}.hd-roster-controls strong{min-width:92px;text-align:center}.hd-player-list{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:470px;overflow:auto;margin:12px 0}.hd-player-list.on{display:grid}.hd-table.off{display:none}.hd-player-row{display:grid;grid-template-columns:auto minmax(0,1fr) repeat(3,auto);gap:5px;align-items:center;padding:7px;border:1px solid var(--hd-line);border-radius:12px;background:#10281f}.hd-player-row.selected{border-color:#dfbe79}.hd-player-row strong{font-size:17px}.hd-player-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hd-player-row button{min-height:36px!important;padding:5px 8px!important;font-size:11px!important}.hd-log-actions{display:flex;gap:7px;flex-wrap:wrap}
+.hd-list-timer{display:none;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;margin:12px 0;padding:10px 12px;border:1px solid var(--hd-line);border-radius:14px;background:#0c231a}.hd-list-timer.on{display:grid}.hd-list-timer div{display:flex;align-items:baseline;gap:12px;min-width:0}.hd-list-timer strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hd-list-timer output{font:800 30px/1 'PT Mono',monospace;color:#f5d89b}.hd-list-timer output.ending{color:#ffb2a4}
 .hd-editor-title{display:flex;align-items:center;gap:12px;margin-bottom:14px}.hd-avatar{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#dfbe79;color:#1e2e20;font-size:22px;font-weight:800}.hd-selected-role{margin-left:auto;font-size:30px;color:#e8c784}.hd-field{display:grid;gap:7px;margin:12px 0}.hd-field>span,.hd-field{font-size:12px;color:#d8e4db}.hd-field small{color:var(--hd-muted);font-size:10px}.hd-primary-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}#screen-host .hd-accent{background:var(--hd-accent);color:#16231b;font-weight:800}
 .hd-fouls{display:flex;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--hd-line)}.hd-fouls>div{flex:1}.hd-fouls small{display:block;color:var(--hd-muted);font-size:11px;margin-top:4px}.hd-fouls output{font-size:24px;font-weight:800;width:25px;text-align:center}.hd-fouls button{min-width:44px;font-size:20px!important}
 .hd-role-choices{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}#screen-host .hd-role-choices button{padding:8px 2px;font-size:10px}.hd-role-choices b{display:block;font-size:24px;font-weight:400;line-height:28px;color:#dfc58b}.hd-role-choices button[aria-pressed=true]{border-color:#edce91!important;background:#3e4c32!important}
@@ -2026,6 +2184,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 @media(min-width:950px){.hd-stage{grid-row:span 1}.hd-editor{align-self:stretch}}
 @media(max-width:850px){.hd-workspace{grid-template-columns:minmax(0,1.1fr) minmax(280px,1fr);gap:10px}.hd-workspace>section{padding:12px}.hd-clock output{font-size:36px}.hd-seat-button{min-height:44px!important}.hd-table-actions{flex-wrap:wrap}.hd-table-actions>span{max-width:none}.hd-brand h1{font-size:19px!important}.hd-clock{top:31%;left:26%;right:26%}.hd-seat-name{font-size:10px}.hd-seat-meta{font-size:8px}}
 @media(max-width:650px){#screen-host{margin:0 -4px}.hd-header{gap:8px;padding-bottom:10px}.hd-brand>span{font-size:8px}.hd-brand h1{font-size:16px!important}.hd-history span{display:none}.hd-history button{min-width:44px;padding:6px!important;font-size:22px!important}.hd-header .hd-quiet{font-size:11px!important;padding:6px!important}.hd-session{gap:6px;font-size:12px;padding:8px 0;margin-bottom:6px}.hd-session #hostSave{width:100%;margin:0;min-height:14px}.hd-session .hd-select-label{flex:1}.hd-session select{width:100%!important;font-size:13px!important}.hd-workspace{grid-template-columns:minmax(0,1fr)}.hd-workspace>section{border-radius:16px}.hd-table{max-width:420px}.hd-stage-bar .hd-kicker{font-size:8px}.hd-clock output{font-size:36px}.hd-table-actions>span{display:none}.hd-table-actions button{width:100%}.hd-editor-title{margin-bottom:8px}.hd-field{margin:10px 0}.hd-voting,.hd-log{margin-top:0}}
+@media(max-width:650px){.hd-player-list{grid-template-columns:1fr}.hd-player-row{grid-template-columns:auto minmax(0,1fr) repeat(3,auto)}.hd-roster-controls{justify-content:space-between}.hd-view-switch{order:2}}
 #screen-host [data-role-team]{display:inline-grid;place-items:center;min-width:26px;height:28px;border-radius:6px;background:#f4ead6;color:#76694e;line-height:1;vertical-align:middle}
 #screen-host [data-role-team="red"]{color:#c52232}
 #screen-host [data-role-team="black"]{color:#111111}
@@ -2039,6 +2198,23 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 #screen-host [data-fouls="2"]{background:#edb936;color:#392900}
 #screen-host [data-fouls="3"],#screen-host [data-fouls="4"]{background:#cf293a;color:#fff}
 #screen-host #hostFouls{width:44px;height:44px;font-size:26px;border-radius:10px}
+#hostRevealAll,#hostRevealAll *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none}
+#screen-host .hd-seat-button{flex-direction:column;gap:0;padding:3px 2px}
+#screen-host .hd-seat-name{font-size:13px;font-weight:700;width:100%;line-height:18px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#screen-host .hd-seat .hd-role-icon{position:absolute;inset:0 0 18px;width:100%;height:auto;pointer-events:none;background:transparent!important;font-size:54px;opacity:.5;border-radius:14px;z-index:3;text-shadow:0 0 3px #fff}
+#screen-host .hd-seat .hd-role-icon svg{width:100%;height:100%;max-height:62px;filter:drop-shadow(0 0 2px #fff)}
+#screen-host .hd-seat .hd-role-icon[data-role-team="unknown"]{visibility:hidden}
+.hd-quick:empty{display:none}
+@media(max-width:650px){
+#screen-host .hd-header{padding-bottom:4px}#screen-host .hd-brand>span{display:none}
+#screen-host .hd-session{padding:4px 0;margin-bottom:2px}#screen-host .hd-session #hostSave{display:none}
+#screen-host .hd-workspace>section{padding:8px}#screen-host .hd-stage-bar{font-size:11px}
+#screen-host .hd-table{max-width:min(340px,43svh)}
+#screen-host .hd-seat{width:19%}#screen-host .hd-seat-number{font-size:18px}
+#screen-host .hd-clock{top:29%}#screen-host #hostSpeakerNumber{font-size:28px}#screen-host .hd-clock output{font-size:30px;margin:2px 0}#screen-host #hostSpeakerLabel{font-size:10px}
+#screen-host .hd-speech-toolbar{margin-top:5px}#screen-host .hd-table-actions{margin:5px 0}#screen-host .hd-table-mode{margin-top:4px}
+.hd-quick{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:5px;align-items:center}.hd-quick .hd-primary-actions{display:flex;gap:4px}#screen-host .hd-quick .hd-primary-actions button{padding:4px;font-size:11px;flex:1}.hd-quick .hd-fouls{padding:0;border:0;gap:3px}.hd-quick .hd-fouls>div{display:none}
+}
 @media(prefers-reduced-motion:reduce){#screen-host *{transition:none!important}}
 `;
 
@@ -2051,8 +2227,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     document.head.appendChild(style);
     let state = loadHost(), selected = 0, rolesVisible = false, tableMode = "select", pendingTransfer = null, drag = null, suppressClick = false, noteTimer = null;
     const label = (p) => "№" + (p.id + 1) + (state.showNames && p.name ? " · " + p.name : "");
-    const roleKey = (role) => Object.keys(roleIcons).includes(role) ? role : "Не назначена";
-    const roleTeam = (role) => ["Мирный", "Шериф"].includes(role) ? "red" : ["Мафия", "Дон"].includes(role) ? "black" : "unknown";
+    const roleKey = (role2) => Object.keys(roleIcons).includes(role2) ? role2 : "Не назначена";
+    const roleTeam = (role2) => ["Мирный", "Шериф"].includes(role2) ? "red" : ["Мафия", "Дон"].includes(role2) ? "black" : "unknown";
     const persist2 = () => {
       const ok = writeHost(state);
       $2("hostSave").textContent = ok ? "✓ Сохранено" : "Не удалось сохранить · скачай JSON в журнале";
@@ -2081,18 +2257,18 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     }
     function renderRoles() {
       root.querySelectorAll("[data-host-role]").forEach((node) => {
-        const p = state.players[Number(node.dataset.hostRole)], role2 = roleKey(p.role);
-        node.innerHTML = rolesVisible ? roleIcons[role2] : "?";
-        node.dataset.roleTeam = rolesVisible ? roleTeam(role2) : "unknown";
-        node.setAttribute("aria-label", rolesVisible ? role2 : "Роль скрыта");
-        node.title = rolesVisible ? role2 : "Роль скрыта";
+        const p = state.players[Number(node.dataset.hostRole)], role3 = roleKey(p.role);
+        node.innerHTML = rolesVisible ? roleIcons[role3] : "?";
+        node.dataset.roleTeam = rolesVisible ? roleTeam(role3) : "unknown";
+        node.setAttribute("aria-label", rolesVisible ? role3 : "Роль скрыта");
+        node.title = rolesVisible ? role3 : "Роль скрыта";
       });
-      const role = roleKey(state.players[selected].role);
-      $2("hostSelectedRole").innerHTML = rolesVisible ? roleIcons[role] : "?";
-      $2("hostSelectedRole").dataset.roleTeam = rolesVisible ? roleTeam(role) : "unknown";
-      $2("hostSelectedRole").setAttribute("aria-label", rolesVisible ? role : "Роль скрыта");
+      const role2 = roleKey(state.players[selected].role);
+      $2("hostSelectedRole").innerHTML = rolesVisible ? roleIcons[role2] : "?";
+      $2("hostSelectedRole").dataset.roleTeam = rolesVisible ? roleTeam(role2) : "unknown";
+      $2("hostSelectedRole").setAttribute("aria-label", rolesVisible ? role2 : "Роль скрыта");
       $2("hostRoleChoices").querySelectorAll("[data-role]").forEach((b) => {
-        if (rolesVisible) b.setAttribute("aria-pressed", String(b.dataset.role === role));
+        if (rolesVisible) b.setAttribute("aria-pressed", String(b.dataset.role === role2));
         else b.removeAttribute("aria-pressed");
       });
     }
@@ -2103,17 +2279,19 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     }
     function renderTable2() {
       const vote = currentVote(state);
-      if (!$2("hostPlayers").children.length) {
+      if (state.players.length !== 10) $2("hostPlayers").innerHTML = "";
+      else if ($2("hostPlayers").children.length !== state.players.length) {
         $2("hostPlayers").innerHTML = state.players.map((p) => {
           const a = (126 + p.id * 36) * Math.PI / 180, x = 50 + 40 * Math.cos(a), y = 50 + 40 * Math.sin(a);
-          return '<div class="hd-seat" data-host-seat="' + p.id + '" style="--x:' + x + "%;--y:" + y + '%"><button class="hd-seat-button" data-open-player="' + p.id + '"><span class="hd-seat-number">' + (p.id + 1) + '</span><span class="hd-role-icon" data-host-role="' + p.id + '">?</span></button><span class="hd-seat-name" data-drag-seat="' + p.id + '" title="Перетащи ник для обмена местами"></span><span class="hd-seat-meta"></span></div>';
+          return '<div class="hd-seat" data-host-seat="' + p.id + '" style="--x:' + x + "%;--y:" + y + '%"><button class="hd-seat-button" data-open-player="' + p.id + '"><span class="hd-seat-number">' + (p.id + 1) + '</span><span class="hd-seat-name" data-drag-seat="' + p.id + '" title="Перетащи ник для обмена местами"></span></button><span class="hd-role-icon" data-host-role="' + p.id + '">?</span><span class="hd-seat-meta"></span></div>';
         }).join("");
       }
-      state.players.forEach((p) => {
+      if (state.players.length === 10) state.players.forEach((p) => {
         const seat = $2("hostPlayers").children[p.id], button = seat.querySelector("button"), target = vote.votes[p.id];
         seat.classList.toggle("selected", p.id === selected);
         seat.classList.toggle("speaking", p.id === state.activeSpeaker && state.timer.running);
         seat.classList.toggle("out", p.status !== "alive");
+        button.disabled = tableMode === "vote" && (p.status !== "alive" || target != null && target !== vote.activeCandidate);
         button.setAttribute("aria-label", (tableMode === "vote" ? "Записать голос " : tableMode === "speech" ? "Запустить речь " : "Выбрать игрока ") + label(p));
         button.setAttribute("aria-pressed", String(tableMode === "vote" ? target != null && target === vote.activeCandidate : p.id === selected));
         seat.querySelector("[data-drag-seat]").textContent = state.showNames ? p.name || "Игрок " + (p.id + 1) : "№" + (p.id + 1);
@@ -2124,6 +2302,13 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       $2("hostNextSpeaker").disabled = !state.players.some((p) => p.status === "alive" && p.id !== state.activeSpeaker);
       root.querySelectorAll("[data-table-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tableMode === tableMode)));
       $2("hostTableHint").textContent = tableMode === "vote" ? "Нажми игрока, поднявшего руку" : tableMode === "speech" ? "Нажми место — речь и таймер запустятся вместе" : "Нажми место · перетащи ник для обмена";
+    }
+    function renderPlayerList() {
+      const vote = currentVote(state), root2 = $2("hostPlayerList");
+      root2.innerHTML = state.players.map((p) => {
+        const target = vote.votes[p.id], name = state.showNames ? p.name || "Игрок " + (p.id + 1) : "№" + (p.id + 1);
+        return '<article class="hd-player-row ' + (p.id === selected ? "selected" : "") + '" data-list-player="' + p.id + '"><strong>№' + (p.id + 1) + "</strong><span>" + escH(name) + (p.status !== "alive" ? " · " + escH(statusNames[p.status]) : "") + (p.fouls ? " · " + p.fouls + " ф." : "") + '</span><button data-list-action="speech" data-id="' + p.id + '" ' + (p.status !== "alive" ? "disabled" : "") + ' aria-label="Запустить речь ' + escH(label(p)) + '">▶</button><button data-list-action="foul" data-id="' + p.id + '" aria-label="Добавить фол ' + escH(label(p)) + '">+Ф</button><button data-list-action="nominate" data-id="' + p.id + '" aria-pressed="' + vote.candidates.includes(p.id) + '" aria-label="Выставить ' + escH(label(p)) + '">☝</button></article>';
+      }).join("");
     }
     function renderEditor() {
       const p = state.players[selected];
@@ -2147,7 +2332,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       const vote = currentVote(state), counts = {};
       Object.values(vote.votes).forEach((id) => counts[id] = (counts[id] || 0) + 1);
       $2("hostCandidates").innerHTML = vote.candidates.length ? vote.candidates.map((id) => '<button data-candidate="' + id + '" aria-pressed="' + (vote.activeCandidate === id) + '">' + escH(label(state.players[id])) + "<strong>" + (counts[id] || 0) + "</strong></button>").join("") : "<p>Выбери место на столе и нажми «Выставить».</p>";
-      $2("hostVoters").innerHTML = state.players.map((p) => {
+      $2("hostVoters").innerHTML = state.players.filter((p) => p.status === "alive" && (vote.votes[p.id] == null || vote.votes[p.id] === vote.activeCandidate)).map((p) => {
         const target = vote.votes[p.id], active = target != null && target === vote.activeCandidate;
         return '<button data-voter="' + p.id + '" aria-pressed="' + active + '" ' + (p.status !== "alive" || vote.activeCandidate == null ? "disabled" : "") + "><strong>№" + (p.id + 1) + "</strong><span>" + (target != null ? "→ №" + (target + 1) : "нет записи") + "</span></button>";
       }).join("");
@@ -2163,6 +2348,11 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       $2("hostTimerValue").classList.toggle("ending", left <= 10);
       $2("hostTimerStart").textContent = state.timer.running ? "Ⅱ" : "▶";
       $2("hostTimerStart").setAttribute("aria-label", state.timer.running ? "Приостановить таймер" : "Запустить таймер");
+      $2("hostListTimerValue").textContent = text;
+      $2("hostListTimerValue").classList.toggle("ending", left <= 10);
+      $2("hostListSpeaker").textContent = state.activeSpeaker == null ? "Слово игроку" : label(state.players[state.activeSpeaker]);
+      $2("hostListTimerStart").textContent = state.timer.running ? "Ⅱ" : "▶";
+      $2("hostListTimerStart").setAttribute("aria-label", state.timer.running ? "Приостановить таймер" : "Запустить таймер");
       if (state.timer.running && left === 0) {
         state.timer.running = false;
         state.timer.remaining = 0;
@@ -2172,13 +2362,31 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       }
     }
     function render() {
-      $2("hostRound").textContent = "Круг " + state.round;
+      if (selected >= state.players.length) selected = Math.max(0, state.players.length - 1);
+      if (state.players.length !== 10 && state.view !== "list") state.view = "list";
+      $2("hostRound").textContent = (state.status === "setup" ? "Подготовка · " : "") + "Круг " + state.round;
       $2("hostPhase").value = state.phase;
       $2("hostNamesToggle").checked = state.showNames;
+      if (document.activeElement !== $2("hostGameName")) $2("hostGameName").value = state.name || "Новая партия";
       $2("hostDuration").value = String(state.timer.duration);
       $2("hostUndo").disabled = !state.undo.length;
       $2("hostRedo").disabled = !state.redo.length;
+      $2("hostTable").classList.toggle("off", state.view !== "circle");
+      $2("hostPlayerList").classList.toggle("on", state.view === "list");
+      $2("hostListTimerBar").classList.toggle("on", state.view === "list");
+      $2("hostViewSwitch").querySelectorAll("[data-host-view]").forEach((b) => {
+        b.setAttribute("aria-pressed", String(b.dataset.hostView === state.view));
+        b.disabled = b.dataset.hostView === "circle" && state.players.length !== 10;
+      });
+      $2("hostPlayerCount").textContent = state.players.length + " игроков";
+      $2("hostRosterLabel").textContent = state.players.length + " МЕСТ · " + (state.status === "setup" ? "ПОДГОТОВКА" : "ЖИВАЯ ПАРТИЯ");
+      $2("hostRosterControls").hidden = state.status !== "setup";
+      $2("hostAddPlayer").disabled = state.players.length >= 30;
+      $2("hostRemovePlayer").disabled = state.players.length <= 3;
+      $2("hostStartGame").hidden = state.status !== "setup";
+      $2("hostFinishGame").hidden = state.status !== "active";
       renderTable2();
+      renderPlayerList();
       renderEditor();
       renderRoles();
       renderVote();
@@ -2189,12 +2397,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       saveName();
       const vote = currentVote(state), target = vote.activeCandidate, old = vote.votes[id];
       if (target == null || state.players[id].status !== "alive") return;
-      if (old != null && old !== target) {
-        pendingTransfer = { id, old, target };
-        renderVote();
-        $2("hostTransferConfirm").focus({ preventScroll: true });
-        return;
-      }
+      if (old != null && old !== target) return;
       pendingTransfer = null;
       act({ type: "vote", id, target: old === target ? null : target });
     }
@@ -2205,7 +2408,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       selected = target;
       render();
     }
-    $2("hostRoleChoices").innerHTML = Object.entries(roleIcons).map(([role, icon]) => '<button data-role="' + escH(role) + '" aria-label="Назначить роль: ' + escH(role) + '"><b data-role-team="' + roleTeam(role) + '" aria-hidden="true">' + icon + "</b>" + escH(role === "Не назначена" ? "Без роли" : role) + "</button>").join("");
+    $2("hostRoleChoices").innerHTML = Object.entries(roleIcons).map(([role2, icon]) => '<button data-role="' + escH(role2) + '" aria-label="Назначить роль: ' + escH(role2) + '"><b data-role-team="' + roleTeam(role2) + '" aria-hidden="true">' + icon + "</b>" + escH(role2 === "Не назначена" ? "Без роли" : role2) + "</button>").join("");
     $2("hostRoleChoices").onclick = (e) => {
       const b = e.target.closest("[data-role]");
       if (!b) return;
@@ -2219,6 +2422,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       noteTimer = setTimeout(saveName, 500);
     };
     $2("hostNickname").onchange = saveName;
+    $2("hostGameName").onchange = (e) => act({ type: "gameName", value: e.target.value });
     $2("hostPlayerStatus").onchange = (e) => {
       saveName();
       act({ type: "status", id: selected, value: e.target.value });
@@ -2246,6 +2450,35 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         if (tableMode === "speech") act({ type: "speechStart", id });
       }
     };
+    $2("hostPlayerList").onclick = (e) => {
+      const action = e.target.closest("[data-list-action]"), row = e.target.closest("[data-list-player]");
+      if (!row) return;
+      const id = Number(action?.dataset.id ?? row.dataset.listPlayer);
+      selectPlayer(id);
+      if (!action) return;
+      if (action.dataset.listAction === "speech") act({ type: "speechStart", id });
+      if (action.dataset.listAction === "foul") act({ type: "foul", id, delta: 1 });
+      if (action.dataset.listAction === "nominate") act({ type: "nominate", id, add: !currentVote(state).candidates.includes(id) });
+    };
+    $2("hostViewSwitch").onclick = (e) => {
+      const b = e.target.closest("[data-host-view]");
+      if (b && !b.disabled) act({ type: "setView", value: b.dataset.hostView });
+    };
+    $2("hostAddPlayer").onclick = () => act({ type: "addPlayer" });
+    $2("hostRemovePlayer").onclick = () => {
+      saveName();
+      act({ type: "removePlayer", id: selected });
+      selected = Math.min(selected, state.players.length - 1);
+      render();
+    };
+    $2("hostStartGame").onclick = () => {
+      saveName();
+      act({ type: "startGame" });
+    };
+    $2("hostFinishGame").onclick = () => {
+      saveName();
+      act({ type: "finishGame" });
+    };
     $2("hostTableMode").onclick = (e) => {
       const b = e.target.closest("[data-table-mode]");
       if (b) {
@@ -2266,6 +2499,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       selectPlayer(next.id);
       act({ type: "speechStart", id: next.id });
     };
+    $2("hostListNextSpeaker").onclick = $2("hostNextSpeaker").onclick;
     $2("hostFoulMinus").onclick = () => {
       saveName();
       act({ type: "foul", id: selected, delta: -1 });
@@ -2311,6 +2545,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       saveName();
       act({ type: state.timer.running ? "timerPause" : "timerStart" });
     };
+    $2("hostListTimerStart").onclick = $2("hostTimerStart").onclick;
     $2("hostTimerReset").onclick = () => {
       saveName();
       act({ type: "timerReset" });
@@ -2355,6 +2590,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       act({ type: "completeVote" });
     };
     const hold = $2("hostRevealAll");
+    hold.oncontextmenu = (e) => e.preventDefault();
+    hold.onselectstart = (e) => e.preventDefault();
     hold.onpointerdown = (e) => {
       if (e.button !== 0) return;
       e.preventDefault();
@@ -2421,6 +2658,23 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         render();
       }
     };
+    $2("hostRepeat").onclick = () => {
+      saveName();
+      const names = state.players.map((p) => p.name), count = state.players.length, view = state.view;
+      state = defaultHost();
+      while (state.players.length < count) state = applyHostAction(state, { type: "addPlayer" });
+      while (state.players.length > count) state = applyHostAction(state, { type: "removePlayer", id: state.players.length - 1 });
+      state.players.forEach((p, i) => p.name = names[i] || "");
+      state.view = count === 10 ? view : "list";
+      state.undo = [];
+      state.redo = [];
+      state.journal = [];
+      selected = 0;
+      pendingTransfer = null;
+      hidePrivate();
+      persist2();
+      render();
+    };
     $2("hostExport").onclick = () => {
       saveName();
       const data = JSON.stringify({ ...state, exportedAt: (/* @__PURE__ */ new Date()).toISOString() }, null, 2), url = URL.createObjectURL(new Blob([data], { type: "application/json" })), a = document.createElement("a");
@@ -2429,9 +2683,676 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1e3);
     };
+    $2("hostImport").onclick = () => $2("hostImportFile").click();
+    $2("hostImportFile").onchange = async (e) => {
+      const file = e.target.files?.[0];
+      e.target.value = "";
+      if (!file) return;
+      try {
+        const raw = JSON.parse(await file.text());
+        if (!raw || !Array.isArray(raw.players)) throw new Error("bad format");
+        const imported = migrateHost(raw);
+        imported.gameId = `host-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        imported.name = (imported.name || "Импортированная партия") + " · копия";
+        imported.undo = [];
+        imported.redo = [];
+        state = imported;
+        selected = 0;
+        pendingTransfer = null;
+        hidePrivate();
+        persist2();
+        render();
+        $2("hostActionStatus").textContent = "Резервная копия импортирована как отдельная партия.";
+      } catch {
+        $2("hostActionStatus").textContent = "Не удалось импортировать: выбранный файл не похож на резервную копию партии.";
+      }
+    };
+    const compact = window.matchMedia("(max-width:650px)"), editor = root.querySelector(".hd-editor");
+    const primary = editor.querySelector(".hd-primary-actions"), fouls = editor.querySelector(".hd-fouls");
+    const quick = document.createElement("div");
+    quick.className = "hd-quick";
+    root.querySelector(".hd-stage").append(quick);
+    const anchor = document.createComment("Основные действия");
+    primary.before(anchor);
+    function layout() {
+      if (compact.matches) {
+        quick.append(primary, fouls);
+      } else {
+        anchor.after(primary, fouls);
+      }
+    }
+    compact.addEventListener("change", layout);
+    layout();
     setInterval(renderTimer, 250);
     render();
-    return { render };
+    return { render, openGame(value) {
+      saveName();
+      state = migrateHost(value);
+      selected = 0;
+      pendingTransfer = null;
+      hidePrivate();
+      persist2();
+      show2("host");
+      render();
+    }, getState() {
+      return state;
+    } };
+  }
+
+  // app/js/state/urban.js
+  var URBAN_KEY = "mafia-tool-urban-v1";
+  var URBAN_LIBRARY = "mafia-tool-urban-library-v1";
+  var copy = (x) => JSON.parse(JSON.stringify(x));
+  var uid = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  var role = (id, ru, en, team, action, order, description2, descriptionEn, frequency = "every") => ({ id, ru, en, team, action, order, description: description2, descriptionEn, frequency, count: 0 });
+  function urbanRoles() {
+    return [
+      role("town", "Мирный житель", "Citizen", "town", "none", 100, "Обсуждает и голосует днём. Побеждает с городом.", "Discusses and votes by day. Wins with the town."),
+      role("mafia", "Мафия", "Mafia", "mafia", "kill", 40, "Одна общая цель команды за ночь. Победа — по правилам вашей компании.", "One shared team target each night. Agree on victory rules before play."),
+      role("don", "Дон", "Don", "mafia", "check", 70, "Участвует в ходе мафии; отдельно ищет комиссара. Это не дополнительный выстрел.", "Joins the Mafia action; separately searches for the detective. No extra team kill."),
+      role("detective", "Комиссар / детектив", "Detective", "town", "check", 60, "Проверяет принадлежность цели к мафии. Ответ ведущий определяет по правилам.", "Investigates alignment. The host determines the result under the agreed rules."),
+      role("doctor", "Доктор", "Doctor", "town", "protect", 20, "Выбирает защиту. До старта согласуйте самолечение, повторы и защиту от маньяка.", "Protects a target. Agree on self-healing, repeat targets and serial-killer protection."),
+      role("blocker", "Красотка / путана", "Roleblocker", "town", "block", 10, "Блокирует ночное действие цели. Защита гостя и связанные смерти зависят от правил.", "Blocks a night action. Visitor protection and linked deaths depend on house rules."),
+      role("killer", "Маньяк", "Serial killer", "solo", "kill", 50, "Независимая ночная атака. Собственное условие победы запишите в правилах.", "Independent night attack. Record the solo victory condition in house rules."),
+      role("bodyguard", "Телохранитель", "Bodyguard", "town", "protect", 25, "Защищает игрока. Перенос атаки и цена защиты определяются правилами.", "Guards a player. Agree whether the guard dies instead and which attacks are stopped."),
+      role("lawyer", "Адвокат", "Lawyer", "mafia", "other", 30, "Вариант роли на стороне мафии: маскировка проверки или защита от суда — уточните.", "Mafia support: investigation masking or trial protection; choose the local variant."),
+      role("vigilante", "Шериф / стрелок", "Vigilante", "town", "kill", 55, "Вооружённый мирный. Не путайте с проверяющим шерифом спортивной мафии.", "Armed town member. Distinct from the investigating Sheriff in sports Mafia."),
+      role("witness", "Свидетель", "Watcher", "town", "check", 65, "Наблюдает за целью. Что именно узнаёт свидетель, укажите в памятке.", "Watches a target. Specify precisely what information is provided."),
+      role("yakuza", "Якудза / второй клан", "Second clan", "clan", "kill", 45, "Отдельный преступный клан с общей ночной целью и собственными условиями победы.", "A separate hostile faction with a shared night target and its own victory condition."),
+      role("immortal", "Бессмертный", "Bulletproof", "town", "none", 100, "Пассивная защита от ночной атаки. Уточните тип атак и количество защит.", "Passive night protection. Specify attack types and number of charges."),
+      role("jester", "Шут", "Jester", "solo", "none", 100, "Личная цель: добиться своего изгнания днём. Продолжение игры после победы согласуйте.", "Personal goal: get eliminated by day. Agree whether play continues after this victory."),
+      role("wolf", "Оборотень (Werewolf)", "Werewolf", "clan", "kill", 40, "Команда оборотней выбирает общую жертву. Это тематический аналог мафии.", "The werewolf team chooses one shared victim. A thematic Mafia counterpart."),
+      role("seer", "Провидец", "Seer", "town", "check", 60, "Проверяет цель на принадлежность к оборотням.", "Investigates whether a target is a werewolf."),
+      role("witch", "Ведьма", "Witch", "town", "other", 75, "Зелья спасения и отравления. Расход отмечайте в заметке игрока; цели — в ночном ходе.", "Healing and poison potions. Track charges in player notes and targets in the night action."),
+      role("cupid", "Купидон", "Cupid", "town", "other", 5, "В первую ночь связывает двух игроков. Имена и последствия запишите в ночной заметке.", "Links two players on the first night. Record both names and consequences in the night note.", "first")
+    ];
+  }
+  function defaultUrban(count = 10) {
+    count = Math.max(3, Math.min(30, Math.trunc(Number(count)) || 10));
+    const roles = urbanRoles();
+    roles.find((r) => r.id === "mafia").count = Math.max(1, Math.floor(count / 4));
+    roles.find((r) => r.id === "detective").count = 1;
+    roles.find((r) => r.id === "doctor").count = count >= 6 ? 1 : 0;
+    roles[0].count = count - roles.reduce((n, r) => n + r.count, 0);
+    return {
+      version: 1,
+      toolType: "urban",
+      gameId: uid(),
+      name: "",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      status: "setup",
+      phase: "setup",
+      day: 1,
+      columns: 2,
+      assignment: "physical",
+      rules: "",
+      roles,
+      players: Array.from({ length: count }, () => ({ uid: uid(), name: "", roleId: null, alive: true, fouls: 0, note: "" })),
+      nights: [],
+      votes: {},
+      candidates: [],
+      result: "",
+      journal: [],
+      undo: [],
+      timer: { duration: 60, remaining: 60, endAt: null, speaker: null }
+    };
+  }
+  function validateUrban(s) {
+    if (!s || s.version !== 1 || s.toolType !== "urban" || typeof s.gameId !== "string" || !Array.isArray(s.players) || s.players.length < 3 || s.players.length > 30 || !Array.isArray(s.roles) || s.roles.length > 60) throw Error("invalid");
+    const ids = /* @__PURE__ */ new Set(), roles = /* @__PURE__ */ new Set();
+    for (const r of s.roles) {
+      if (!r || typeof r.id !== "string" || roles.has(r.id) || typeof r.ru !== "string" || typeof r.en !== "string" || !["town", "mafia", "clan", "solo"].includes(r.team) || !["none", "kill", "protect", "check", "block", "other"].includes(r.action) || !["every", "first"].includes(r.frequency) || !Number.isInteger(r.count) || r.count < 0 || r.count > 30 || !Number.isFinite(r.order) || typeof r.description !== "string" || typeof r.descriptionEn !== "string") throw Error("role");
+      roles.add(r.id);
+    }
+    for (const p of s.players) {
+      if (!p || typeof p.uid !== "string" || ids.has(p.uid) || typeof p.name !== "string" || typeof p.note !== "string" || typeof p.alive !== "boolean" || !Number.isInteger(p.fouls) || p.fouls < 0 || p.fouls > 4 || p.roleId !== null && !roles.has(p.roleId)) throw Error("player");
+      ids.add(p.uid);
+    }
+    if (!["setup", "active", "done"].includes(s.status) || !["setup", "day", "vote", "night", "done"].includes(s.phase) || !["physical", "assigned"].includes(s.assignment) || ![1, 2, 3].includes(s.columns) || !Number.isInteger(s.day) || s.day < 1 || typeof s.name !== "string" || typeof s.rules !== "string" || typeof s.result !== "string" || !Array.isArray(s.nights) || !Array.isArray(s.journal) || !s.votes || typeof s.votes !== "object" || Array.isArray(s.votes) || !Array.isArray(s.candidates) || !s.timer || !Number.isFinite(s.timer.duration) || s.timer.duration < 1 || !Number.isFinite(s.timer.remaining) || s.timer.endAt !== null && !Number.isFinite(s.timer.endAt)) throw Error("state");
+    if (s.candidates.some((id) => !ids.has(id)) || Object.entries(s.votes).some(([a, b]) => !ids.has(a) || !ids.has(b))) throw Error("vote");
+    for (const n of s.nights) {
+      if (!n || !Array.isArray(n.steps) || !Array.isArray(n.deaths) || n.deaths.some((id) => !ids.has(id))) throw Error("night");
+      for (const step of n.steps) {
+        if (typeof step.key !== "string" || typeof step.note !== "string" || !Array.isArray(step.targets) || step.targets.some((id) => !ids.has(id)) || !Array.isArray(step.actors) || step.actors.some((id) => !ids.has(id)) || !roles.has(step.roleId) || !["pending", "done", "skip"].includes(step.status)) throw Error("step");
+      }
+    }
+    return { ...copy(s), undo: [] };
+  }
+  function urbanLibrary() {
+    try {
+      const games = JSON.parse(localStorage.getItem(URBAN_LIBRARY) || "[]");
+      if (!Array.isArray(games)) return [];
+      return games.flatMap((g) => {
+        try {
+          return [validateUrban(g)];
+        } catch {
+          return [];
+        }
+      });
+    } catch {
+      return [];
+    }
+  }
+  function loadUrban() {
+    try {
+      return validateUrban(JSON.parse(localStorage.getItem(URBAN_KEY)));
+    } catch {
+      return urbanLibrary()[0] || defaultUrban();
+    }
+  }
+  function saveUrban(s) {
+    try {
+      const snapshot = { ...s, undo: [] }, games = JSON.parse(localStorage.getItem(URBAN_LIBRARY) || "[]");
+      if (!Array.isArray(games)) return false;
+      const i = games.findIndex((g) => g?.gameId === s.gameId);
+      if (i < 0) games.unshift(snapshot);
+      else games[i] = snapshot;
+      localStorage.setItem(URBAN_LIBRARY, JSON.stringify(games));
+      localStorage.setItem(URBAN_KEY, JSON.stringify(snapshot));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function repeatUrban(s) {
+    const n = defaultUrban(s.players.length);
+    n.roles = copy(s.roles);
+    n.rules = s.rules;
+    n.columns = s.columns;
+    n.assignment = s.assignment;
+    n.timer.duration = s.timer.duration;
+    n.timer.remaining = s.timer.duration;
+    n.players.forEach((p, i) => p.name = s.players[i].name);
+    return n;
+  }
+  function roleCount(s) {
+    return s.roles.reduce((n, r) => n + r.count, 0);
+  }
+  function canStartUrban(s) {
+    return s.assignment === "physical" || roleCount(s) === s.players.length && s.players.every((p) => p.roleId) && s.roles.every((r) => s.players.filter((p) => p.roleId === r.id).length === r.count);
+  }
+  function nightSteps(s) {
+    const steps = [];
+    for (const r of [...s.roles].sort((a, b) => a.order - b.order)) {
+      if (!r.count || r.action === "none" || r.frequency === "first" && s.nights.length > 0) continue;
+      const actors = s.players.filter((p) => p.alive && p.roleId === r.id);
+      if (r.id === "mafia") actors.push(...s.players.filter((p) => p.alive && p.roleId === "don"));
+      if (!actors.length && s.assignment === "assigned") continue;
+      if (["mafia", "wolf", "yakuza"].includes(r.id)) steps.push({ key: uid(), roleId: r.id, actors: actors.map((p) => p.uid), targets: [], note: "", status: "pending" });
+      else {
+        const slots = s.assignment === "physical" ? Math.max(r.count, actors.length) : actors.length;
+        for (let i = 0; i < slots; i++) steps.push({ key: uid(), roleId: r.id, actors: actors[i] ? [actors[i].uid] : [], targets: [], note: "", status: "pending" });
+      }
+    }
+    if (!s.roles.find((r) => r.id === "mafia")?.count && s.roles.find((r) => r.id === "don")?.count) {
+      const actors = s.players.filter((p) => p.alive && p.roleId === "don");
+      if (actors.length || s.assignment === "physical") steps.unshift({ key: uid(), roleId: "mafia", actors: actors.map((p) => p.uid), targets: [], note: "", status: "pending" });
+    }
+    return steps.sort((a, b) => s.roles.find((r) => r.id === a.roleId).order - s.roles.find((r) => r.id === b.roleId).order);
+  }
+  function urbanAction(s, a, now = Date.now()) {
+    const n = copy(s), p = n.players.find((p2) => p2.uid === a.id), role2 = n.roles.find((r) => r.id === a.id), night = n.nights.at(-1);
+    const setup = s.status === "setup";
+    let event = a.type;
+    if (s.status === "done" && !["columns", "name", "rules"].includes(a.type)) return s;
+    switch (a.type) {
+      case "name":
+        n.name = String(a.value).slice(0, 80);
+        break;
+      case "rules":
+        n.rules = String(a.value).slice(0, 4e3);
+        break;
+      case "columns":
+        if (![1, 2, 3].includes(+a.value)) return s;
+        n.columns = +a.value;
+        break;
+      case "assignment":
+        if (!setup || !["physical", "assigned"].includes(a.value)) return s;
+        n.assignment = a.value;
+        break;
+      case "add":
+        if (!setup || n.players.length >= 30) return s;
+        n.players.push({ uid: uid(), name: "", roleId: null, alive: true, fouls: 0, note: "" });
+        break;
+      case "remove":
+        if (!setup || !p || n.players.length <= 3) return s;
+        n.players = n.players.filter((x) => x.uid !== p.uid);
+        break;
+      case "move": {
+        if (!p) return s;
+        const i = n.players.indexOf(p), j = i + a.delta;
+        if (j < 0 || j >= n.players.length) return s;
+        [n.players[i], n.players[j]] = [n.players[j], n.players[i]];
+        break;
+      }
+      case "player":
+        if (!p || !["name", "note", "roleId"].includes(a.field)) return s;
+        if (a.field === "roleId" && a.value !== null && !n.roles.some((r) => r.id === a.value)) return s;
+        p[a.field] = a.field === "roleId" ? a.value : String(a.value).slice(0, a.field === "name" ? 40 : 1e3);
+        break;
+      case "foul":
+        if (!p) return s;
+        p.fouls = Math.max(0, Math.min(4, p.fouls + a.delta));
+        break;
+      case "alive":
+        if (!p) return s;
+        p.alive = !!a.value;
+        break;
+      case "role":
+        if (!setup || !role2 || !["count", "order", "description", "frequency", "team", "action"].includes(a.field)) return s;
+        if (["count", "order"].includes(a.field)) {
+          const v = Number(a.value);
+          if (!Number.isInteger(v) || v < 0 || v > (a.field === "count" ? 30 : 999)) return s;
+          role2[a.field] = v;
+        } else {
+          role2[a.field] = String(a.value).slice(0, 1e3);
+          if (a.field === "description") role2.descriptionEn = role2.description;
+        }
+        break;
+      case "custom":
+        if (!setup || n.roles.length >= 60 || !String(a.name || "").trim()) return s;
+        n.roles.push({ ...urbanRoles()[0], id: uid(), ru: String(a.name).trim().slice(0, 50), en: String(a.name).trim().slice(0, 50), count: 1, action: "other", order: 80, description: "", descriptionEn: "" });
+        break;
+      case "preset": {
+        if (!setup) return s;
+        n.roles.forEach((r) => r.count = 0);
+        const set = (id, c) => n.roles.find((r) => r.id === id).count = c;
+        const foes = Math.max(1, Math.floor(n.players.length / 4));
+        if (a.value === "werewolf") {
+          set("wolf", foes);
+          set("seer", 1);
+          if (n.players.length >= 8) set("witch", 1);
+        } else {
+          set("mafia", foes);
+          set("detective", 1);
+          if (n.players.length >= 6) set("doctor", 1);
+          if (a.value === "expanded" && n.players.length >= 10) {
+            set("blocker", 1);
+            set("killer", 1);
+          }
+        }
+        set("town", n.players.length - roleCount(n));
+        n.players.forEach((p2) => p2.roleId = null);
+        break;
+      }
+      case "deal": {
+        if (!setup || roleCount(n) !== n.players.length) return s;
+        const cards = n.roles.flatMap((r) => Array(r.count).fill(r.id));
+        for (let i = cards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+        n.players.forEach((p2, i) => p2.roleId = cards[i]);
+        n.assignment = "assigned";
+        break;
+      }
+      case "start":
+        if (!setup || !canStartUrban(n)) return s;
+        n.status = "active";
+        n.phase = "day";
+        break;
+      case "phase":
+        if (s.status !== "active" || !["day", "vote"].includes(a.value) || s.phase === "night") return s;
+        n.phase = a.value;
+        break;
+      case "night":
+        if (s.status !== "active" || s.phase === "night") return s;
+        n.nights.push({ number: n.nights.length + 1, steps: nightSteps(n), deaths: [], closed: false });
+        n.phase = "night";
+        n.timer.endAt = null;
+        break;
+      case "step": {
+        if (s.phase !== "night" || !night || night.closed) return s;
+        const step = night.steps.find((x) => x.key === a.id);
+        if (!step) return s;
+        if (a.field === "target") {
+          if (!p) return s;
+        }
+        if (a.field === "targets") {
+          if (!Array.isArray(a.value) || a.value.some((id) => !n.players.some((p2) => p2.uid === id && p2.alive))) return s;
+          step.targets = a.value;
+        } else if (a.field === "status" && ["pending", "done", "skip"].includes(a.value)) step.status = a.value;
+        else if (a.field === "note") step.note = String(a.value).slice(0, 1e3);
+        else return s;
+        break;
+      }
+      case "death":
+        if (s.phase !== "night" || !night || night.closed || !p || !p.alive) return s;
+        night.deaths = night.deaths.includes(p.uid) ? night.deaths.filter((id) => id !== p.uid) : [...night.deaths, p.uid];
+        break;
+      case "morning":
+        if (s.phase !== "night" || !night || night.closed || night.steps.some((x) => x.status === "pending")) return s;
+        night.deaths.forEach((id) => {
+          const p2 = n.players.find((p3) => p3.uid === id);
+          if (p2) p2.alive = false;
+        });
+        night.closed = true;
+        n.phase = "day";
+        n.day++;
+        n.votes = {};
+        n.candidates = [];
+        break;
+      case "nominate":
+        if (!p || !p.alive || s.status !== "active" || s.phase === "night") return s;
+        n.candidates = n.candidates.includes(p.uid) ? n.candidates.filter((id) => id !== p.uid) : [...n.candidates, p.uid];
+        for (const [id, target] of Object.entries(n.votes)) if (!n.candidates.includes(target)) delete n.votes[id];
+        break;
+      case "vote":
+        if (!p || !p.alive || s.phase !== "vote" || a.value && !n.candidates.includes(a.value)) return s;
+        if (a.value) n.votes[p.uid] = a.value;
+        else delete n.votes[p.uid];
+        break;
+      case "clearVotes":
+        n.votes = {};
+        break;
+      case "speech":
+        if (!p || !p.alive) return s;
+        n.timer.speaker = p.uid;
+        n.timer.remaining = n.timer.duration;
+        n.timer.endAt = now + n.timer.duration * 1e3;
+        break;
+      case "timer":
+        if (n.timer.endAt) {
+          n.timer.remaining = Math.max(0, Math.ceil((n.timer.endAt - now) / 1e3));
+          n.timer.endAt = null;
+        } else n.timer.endAt = now + (n.timer.remaining || n.timer.duration) * 1e3;
+        break;
+      case "duration":
+        if (![30, 60, 90, 120, 180].includes(+a.value)) return s;
+        n.timer.duration = +a.value;
+        n.timer.remaining = +a.value;
+        n.timer.endAt = null;
+        break;
+      case "finish":
+        if (s.status !== "active") return s;
+        n.status = "done";
+        n.phase = "done";
+        n.result = String(a.value || "").slice(0, 200);
+        n.timer.endAt = null;
+        break;
+      default:
+        return s;
+    }
+    n.updatedAt = now;
+    n.undo = [...s.undo || [], { ...copy(s), undo: [] }].slice(-30);
+    n.journal.push({ type: event, at: now, player: a.id || null, seat: p ? s.players.findIndex((x) => x.uid === p.uid) + 1 : null });
+    return n;
+  }
+
+  // app/js/ui/urban.js
+  function setupUrban({ show: show2 }) {
+    const root = document.getElementById("screen-urban");
+    root.dataset.i18nOwned = "true";
+    let state = loadUrban(), privateView = false, message = "", saveError = false;
+    const en = () => document.documentElement.lang === "en";
+    const t = (ru, eng) => en() ? eng : ru;
+    const title = (r) => r ? en() ? r.en : r.ru : t("Не назначена", "Unassigned");
+    const playerLabel = (p) => `№${state.players.indexOf(p) + 1} · ${p.name || t("Игрок", "Player")}`;
+    const phase = () => ({ setup: t("Подготовка", "Setup"), day: t("День", "Day"), vote: t("Голосование", "Voting"), night: t("Ночь", "Night"), done: t("Завершена", "Finished") })[state.phase];
+    const teamNames = () => ({ town: t("Город", "Town"), mafia: t("Мафия", "Mafia"), clan: t("Второй клан", "Second faction"), solo: t("Одиночка", "Independent") });
+    const actionNames = () => ({ none: t("Без ночного хода", "No night action"), kill: t("Атака", "Attack"), protect: t("Защита", "Protection"), check: t("Проверка", "Investigation"), block: t("Блокировка", "Block"), other: t("Особое действие", "Custom action") });
+    const disabled = (yes) => yes ? " disabled" : "";
+    const btn = (action, text, attrs = "", accent = false) => `<button type="button" data-action="${action}" ${attrs} class="${accent ? "uc-accent" : ""}">${text}</button>`;
+    const options = (items, value) => Object.entries(items).map(([id, text]) => `<option value="${escH(id)}"${id === String(value) ? " selected" : ""}>${escH(text)}</option>`).join("");
+    function persist2() {
+      saveError = !saveUrban(state);
+      const node = root.querySelector("#urbanSave");
+      if (node) {
+        node.textContent = saveError ? t("Не сохранено — скачайте копию", "Not saved — download a backup") : t("Сохранено на устройстве", "Saved on this device");
+        node.classList.toggle("uc-error", saveError);
+      }
+      return !saveError;
+    }
+    function act(a, redraw = true) {
+      const next = urbanAction(state, a);
+      if (next === state) return;
+      state = next;
+      message = "";
+      persist2();
+      if (redraw) render();
+    }
+    function setupMarkup() {
+      return `<details id="urbanSetup" class="uc-panel"${state.status === "setup" ? " open" : ""}>
+    <summary>${t("Состав и правила компании", "Lineup & house rules")} <span>${roleCount(state)} / ${state.players.length} ${t("карт", "cards")}</span></summary>
+    <div class="uc-setup-grid"><div>
+      <p class="uc-muted">${t("Выберите основу, затем измените роли. Это стартовые примеры, а не гарантия баланса. Ведущий не входит в число игроков.", "Pick a starting lineup, then adjust roles. Presets are examples, not a balance guarantee. The host is not counted as a player.")}</p>
+      <div class="uc-actions">${btn("preset", t("Базовая", "Basic"), 'data-value="basic"' + disabled(state.status !== "setup"))}${btn("preset", t("Расширенная", "Expanded"), 'data-value="expanded"' + disabled(state.status !== "setup"))}${btn("preset", t("Оборотни", "Werewolf"), 'data-value="werewolf"' + disabled(state.status !== "setup"))}</div>
+      <label>${t("Раздача ролей", "Role assignment")}<select id="urbanAssignment" data-field="assignment"${disabled(state.status !== "setup")}>${options({ physical: t("Физические карты — роли можно не вводить", "Physical cards — assignments optional"), assigned: t("Все роли записаны в пульте", "Record every role in the console") }, state.assignment)}</select></label>
+      <p class="uc-muted">${t("Для ночного чек-листа укажите количество участвующих ролей. При физических картах пустые назначения не мешают начать.", "Set role counts for the night checklist. With physical cards, unassigned seats do not prevent starting.")}</p>
+      <div class="uc-actions">${btn("deal", t("Случайно распределить", "Randomly assign"), disabled(state.status !== "setup" || roleCount(state) !== state.players.length))}${btn("fill", t("Остальные — мирные", "Fill with citizens"), disabled(state.status !== "setup"))}</div>
+      <p class="${roleCount(state) !== state.players.length ? "uc-warning" : "uc-muted"}" id="urbanBalance">${t("Карт", "Cards")}: ${roleCount(state)} / ${state.players.length}. ${roleCount(state) !== state.players.length ? t("Количество карт отличается от числа игроков.", "Card count differs from player count.") : t("Количество совпадает.", "Counts match.")}</p>
+      <label>${t("Правила этой партии", "House rules")}<textarea data-field="rules" rows="5" maxlength="4000" placeholder="${t("Самолечение? Повторные цели? Защита от маньяка? Первая ночь без убийств? Ничья и условия победы?", "Self-healing? Repeated targets? Killer protection? First-night kills? Ties and victory conditions?")}">${escH(state.rules)}</textarea></label>
+      <p class="uc-muted">${t("Ночь и победителя подтверждаете вы. Порядок пробуждения не вычисляет результат взаимодействий.", "You confirm night outcomes and the winner. Wake order does not automatically resolve interactions.")}</p>
+      <details><summary>${t("Добавить свою роль", "Add a custom role")}</summary><label>${t("Название роли", "Role name")}<input id="urbanCustomName" maxlength="50"></label>${btn("custom", t("Добавить роль", "Add role"), disabled(state.status !== "setup"))}</details>
+    </div><div class="uc-role-catalog">${state.roles.map((r) => `<details class="uc-role" id="urban-role-${escH(r.id)}"><summary><span class="uc-dot" data-team="${r.team}"></span><b>${escH(title(r))}</b><span>${r.count}</span></summary>
+      <div class="uc-role-fields"><label>${t("Количество", "Count")}<input type="number" min="0" max="30" value="${r.count}" data-role="${escH(r.id)}" data-role-field="count"${disabled(state.status !== "setup")}></label><label>${t("Порядок ночью", "Night order")}<input type="number" min="0" max="999" value="${r.order}" data-role="${escH(r.id)}" data-role-field="order"${disabled(state.status !== "setup")}></label></div>
+      <label>${t("Команда", "Team")}<select data-role="${escH(r.id)}" data-role-field="team"${disabled(state.status !== "setup")}>${options(teamNames(), r.team)}</select></label>
+      <label>${t("Ночной ход", "Night action")}<select data-role="${escH(r.id)}" data-role-field="action"${disabled(state.status !== "setup")}>${options(actionNames(), r.action)}</select></label>
+      <label>${t("Когда действует", "Frequency")}<select data-role="${escH(r.id)}" data-role-field="frequency"${disabled(state.status !== "setup")}>${options({ every: t("Каждую ночь", "Every night"), first: t("Только первая ночь", "First night only") }, r.frequency)}</select></label>
+      <label>${t("Как играет роль — можно изменить", "Role instructions — editable")}<textarea rows="3" data-role="${escH(r.id)}" data-role-field="description"${disabled(state.status !== "setup")}>${escH(en() ? r.descriptionEn : r.description)}</textarea></label>
+    </details>`).join("")}</div></div></details>`;
+    }
+    function playersMarkup() {
+      const size = Math.ceil(state.players.length / state.columns), groups = Array.from({ length: state.columns }, (_, i) => state.players.slice(i * size, (i + 1) * size));
+      return `<section class="uc-roster"><header class="uc-section-head"><div><h2>${t("Игроки", "Players")}</h2><p>${t("Нумерация сверху вниз в каждом столбике", "Seats run top to bottom in each column")}</p></div><div class="uc-actions"><label>${t("Колонки", "Columns")}<select id="urbanColumns" data-field="columns">${options({ 1: "1", 2: "2", 3: "3" }, state.columns)}</select></label>${btn("add", t("+ Игрок", "+ Player"), disabled(state.status !== "setup" || state.players.length >= 30))}</div></header>
+      <div class="uc-columns" style="--uc-columns:${state.columns}">${groups.map((group) => `<div class="uc-column">${group.map((p) => {
+        const index = state.players.indexOf(p), r = state.roles.find((r2) => r2.id === p.roleId), voted = state.votes[p.uid], counts = Object.values(state.votes).filter((id) => id === p.uid).length;
+        return `<article class="uc-player ${p.alive ? "" : "uc-out"} ${state.timer.speaker === p.uid ? "uc-speaking" : ""}" data-player="${p.uid}">
+          <div class="uc-player-top"><strong class="uc-seat">${String(index + 1).padStart(2, "0")}</strong><input aria-label="${t("Имя игрока", "Player name")} ${index + 1}" data-player-field="name" data-id="${p.uid}" value="${escH(p.name)}" placeholder="${t("Игрок", "Player")} ${index + 1}" maxlength="40"><span class="uc-state">${p.alive ? t("В игре", "Alive") : t("Выбыл", "Out")}</span></div>
+          ${privateView ? `<label class="uc-private-role">${t("Роль", "Role")}<select data-player-field="roleId" data-id="${p.uid}">${options({ "": t("Не назначена", "Unassigned"), ...Object.fromEntries(state.roles.filter((r2) => r2.count > 0 || r2.id === p.roleId).map((r2) => [r2.id, title(r2)])) }, p.roleId || "")}</select></label><span class="uc-role-team" data-team="${r?.team || "unknown"}">${escH(r ? teamNames()[r.team] : t("Роль не записана", "Role not recorded"))}</span>` : `<div class="uc-role-hidden">◈ ${t("Роль скрыта", "Role hidden")}</div>`}
+          <div class="uc-player-actions">${btn("speech", "▶", `data-id="${p.uid}" aria-label="${t("Речь игрока", "Player speech")} ${index + 1}"` + disabled(!p.alive || state.status === "done"))}${btn("foul", `−`, `data-id="${p.uid}" data-delta="-1" aria-label="${t("Снять фол", "Remove foul")} ${index + 1}"` + disabled(p.fouls === 0 || state.status === "done"))}<span>${p.fouls} ${t("ф.", "f.")}</span>${btn("foul", "+", `data-id="${p.uid}" data-delta="1" aria-label="${t("Добавить фол", "Add foul")} ${index + 1}"` + disabled(p.fouls === 4 || state.status === "done"))}${btn("nominate", state.candidates.includes(p.uid) ? "☝ ✓" : "☝", `data-id="${p.uid}" aria-label="${t("Кандидат", "Nominate")} ${index + 1}" aria-pressed="${state.candidates.includes(p.uid)}"` + disabled(!p.alive || state.status !== "active" || state.phase === "night"))}</div>
+          ${state.phase === "vote" && p.alive ? `<label>${t("Голос за", "Vote for")}<select data-voter="${p.uid}">${options({ "": t("Не голосовал", "No vote"), ...Object.fromEntries(state.candidates.map((id) => [id, playerLabel(state.players.find((p2) => p2.uid === id))])) }, voted || "")}</select></label>${state.candidates.includes(p.uid) ? `<strong class="uc-vote-count">${counts} ${t("голосов", "votes")}</strong>` : ""}` : ""}
+          <details class="uc-player-more" id="urban-more-${p.uid}"><summary>${t("Заметка и место", "Note & seat")}</summary>
+            ${privateView ? `<label>${t("Личная заметка ведущего", "Private host note")}<textarea data-player-field="note" data-id="${p.uid}" rows="2" maxlength="1000">${escH(p.note)}</textarea></label>` : `<p class="uc-muted">${t("Заметки доступны в приватном режиме.", "Notes are available in private mode.")}</p>`}
+            <div class="uc-actions">${btn("move", "↑", `data-id="${p.uid}" data-delta="-1" aria-label="${t("Поднять место", "Move up")} ${index + 1}"` + disabled(index === 0))}${btn("move", "↓", `data-id="${p.uid}" data-delta="1" aria-label="${t("Опустить место", "Move down")} ${index + 1}"` + disabled(index === state.players.length - 1))}${btn("alive", p.alive ? t("Отметить выбытие", "Mark out") : t("Вернуть в игру", "Restore"), `data-id="${p.uid}"` + disabled(state.status !== "active" || state.phase === "night"))}${state.status === "setup" ? btn("remove", t("Убрать место", "Remove seat"), `data-id="${p.uid}"` + disabled(state.players.length <= 3)) : ""}</div>
+          </details></article>`;
+      }).join("")}</div>`).join("")}</div></section>`;
+    }
+    function nightMarkup() {
+      const n = state.nights.at(-1);
+      if (state.phase !== "night" || !n) return "";
+      if (!privateView) return `<section class="uc-panel"><h2>${t("Ночной помощник скрыт", "Night assistant hidden")}</h2><p>${t("Откройте приватный режим, чтобы записать действия и подготовить утро.", "Open private mode to record actions and prepare the morning.")}</p></section>`;
+      const done = n.steps.filter((s) => s.status !== "pending").length;
+      return `<section class="uc-panel uc-night"><header class="uc-section-head"><div><span class="uc-eyebrow">${t("ТОЛЬКО ДЛЯ ВЕДУЩЕГО", "HOST ONLY")}</span><h2>${t("Ночь", "Night")} ${n.number}</h2></div><strong>${done} / ${n.steps.length}</strong></header><p class="uc-muted">${t("Подтвердите жест цели, затем попросите роль уснуть. Несколько целей — для особых ролей. Отметка хода не убивает и не лечит игроков.", "Confirm the target gesture, then ask the role to sleep. Special roles may have multiple targets. Completing an action does not kill or heal players.")}</p>
+      <div class="uc-night-steps">${n.steps.map((s, i) => {
+        const r = state.roles.find((r2) => r2.id === s.roleId);
+        return `<details class="uc-night-step" id="urban-step-${s.key}"${s.status === "pending" && n.steps.find((x) => x.status === "pending") === s ? " open" : ""}><summary><span>${i + 1}</span><b>${escH(title(r))}</b><em>${s.status === "pending" ? t("Ожидает", "Pending") : s.status === "done" ? "✓" : t("Пропуск", "Skipped")}</em></summary><p>${escH(en() ? r.descriptionEn : r.description)}</p><p class="uc-muted">${s.actors.length ? s.actors.map((id) => escH(playerLabel(state.players.find((p) => p.uid === id)))).join(", ") : t("Физические карты: вызовите роль по своему составу.", "Physical cards: call the role according to your lineup.")}</p><div class="uc-targets">${state.players.filter((p) => p.alive).map((p) => btn("target", escH(playerLabel(p)), `data-step="${s.key}" data-id="${p.uid}" aria-pressed="${s.targets.includes(p.uid)}"`)).join("")}</div><label>${t("Результат, ограничения, расход способности", "Result, restrictions, ability charges")}<textarea data-step-note="${s.key}" rows="2">${escH(s.note)}</textarea></label><div class="uc-actions">${btn("step", t("Ход записан", "Done"), `data-id="${s.key}" data-value="done"`, true)}${btn("step", t("Пропустить", "Skip"), `data-id="${s.key}" data-value="skip"`)}${btn("step", t("Вернуть", "Reopen"), `data-id="${s.key}" data-value="pending"`)}</div></details>`;
+      }).join("")}</div>
+      <div class="uc-morning"><h3>${t("Утро — решение ведущего", "Morning — host decision")}</h3><p>${t("Сопоставьте атаки, защиту и блокировки. Выберите только тех, кто действительно выбыл. Пустой выбор — все пережили ночь.", "Resolve attacks, protection and blocks under your rules. Select only the actual casualties. Empty selection means everyone survived.")}</p><div class="uc-targets">${state.players.filter((p) => p.alive).map((p) => btn("death", escH(playerLabel(p)), `data-id="${p.uid}" aria-pressed="${n.deaths.includes(p.uid)}"`)).join("")}</div>${btn("morning", t("Подтвердить утро", "Confirm morning"), disabled(done !== n.steps.length), true)}</div></section>`;
+    }
+    function render() {
+      const open = new Set([...root.querySelectorAll("details[open][id]")].map((n) => n.id)), active = document.activeElement, focusKey = active?.id || "", setup = state.status === "setup";
+      root.innerHTML = `<header class="uc-header"><div><span class="uc-eyebrow">MAFIA-TOOL.COM / ${t("ВЕДУЩИЙ", "HOST")}</span><h1>${t("Городская мафия", "Urban Mafia")}</h1><p>${t("Ваш состав. Ваши правила. Вся игра перед глазами.", "Your lineup. Your rules. The whole game in view.")}</p></div><div class="uc-actions">${btn("back", t("← Главная", "← Home"))}${btn("privacy", privateView ? t("◈ Скрыть приватное", "◈ Hide private data") : t("◈ Приватный режим", "◈ Private mode"), `id="urbanPrivacy" aria-pressed="${privateView}"`)}</div></header>
+      <div class="uc-session"><label>${t("Партия", "Game")}<input data-field="name" maxlength="80" value="${escH(state.name)}" placeholder="${t("Например: пятница в клубе", "e.g. Friday at the club")}"></label><strong>${phase()}${setup || state.status === "done" ? "" : " · " + state.day}</strong><span>${state.players.filter((p) => p.alive).length} / ${state.players.length} ${t("в игре", "alive")}</span><span id="urbanSave" class="${saveError ? "uc-error" : ""}" role="status">${saveError ? t("Не сохранено — скачайте копию", "Not saved — download a backup") : t("Сохранено на устройстве", "Saved on this device")}</span></div>
+      <div class="uc-toolbar"><div class="uc-actions">${btn("undo", "↶ " + t("Отменить", "Undo"), disabled(!state.undo.length))}${setup ? btn("start", t("Начать игру", "Start game"), 'id="urbanStart"' + disabled(!canStartUrban(state)), true) : state.status === "active" ? `${btn("phase", t("День", "Day"), 'data-value="day"' + disabled(state.phase === "night"))}${btn("phase", t("Голосование", "Voting"), 'data-value="vote"' + disabled(state.phase === "night"))}${btn("night", t("Наступает ночь", "Start night"), disabled(state.phase === "night"), true)}` : ""}</div><div class="uc-timer"><span id="urbanSpeaker"></span><output id="urbanTimer">1:00</output>${btn("timer", "▶", 'id="urbanTimerToggle" aria-label="' + t("Таймер: пуск или пауза", "Timer: start or pause") + '"' + disabled(state.status === "done"))}<select data-field="duration" aria-label="${t("Длительность речи", "Speech duration")}">${options({ 30: "0:30", 60: "1:00", 90: "1:30", 120: "2:00", 180: "3:00" }, state.timer.duration)}</select></div></div>
+      <p id="urbanMessage" class="uc-warning" role="status">${escH(message)}</p>
+      ${setupMarkup()}${nightMarkup()}${playersMarkup()}
+      ${state.phase === "vote" ? `<section class="uc-panel"><h2>${t("Итоги голосования", "Vote totals")}</h2><div class="uc-targets">${state.candidates.map((id) => {
+        const p = state.players.find((p2) => p2.uid === id);
+        return `<span>${escH(playerLabel(p))}: <b>${Object.values(state.votes).filter((x) => x === id).length}</b></span>`;
+      }).join("") || t("Выставьте кандидатов кнопкой ☝ в карточках.", "Nominate candidates with ☝ on their cards.")}</div><p>${t("При равенстве назначьте переголосование или следуйте своим правилам. Выбытие отмечается вручную в карточке.", "On a tie, revote or follow your house rules. Mark elimination manually in the player card.")}</p>${btn("clearVotes", t("Новый тур — очистить голоса", "New ballot — clear votes"))}</section>` : ""}
+      <details class="uc-panel" id="urbanHistory"><summary>${t("История ночей", "Night history")} · ${state.nights.filter((n) => n.closed).length}</summary>${privateView ? state.nights.filter((n) => n.closed).map((n) => `<h3>${t("Ночь", "Night")} ${n.number}</h3>${n.steps.map((s) => `<p>${escH(title(state.roles.find((r) => r.id === s.roleId)))} → ${s.targets.map((id) => escH(playerLabel(state.players.find((p) => p.uid === id)))).join(", ") || "—"} · ${escH(s.note)} · ${escH(s.status)}</p>`).join("")}`).join("") : t("Откройте приватный режим для просмотра.", "Open private mode to view.")}</details>
+      <footer class="uc-panel"><h2>${state.status === "done" ? t("Партия завершена", "Game finished") : t("Сохранение и следующая игра", "Save & next game")}</h2>${state.result ? `<p>${escH(state.result)}</p>` : ""}<div class="uc-actions">${state.status === "active" ? btn("finish", t("Завершить партию", "Finish game")) : ""}${btn("repeat", t("Новая игра с этим составом", "New game with this lineup"))}${btn("export", t("↓ Личная копия JSON", "↓ Private JSON backup"))}${btn("import", t("↑ Загрузить копию", "↑ Import backup"))}<input type="file" id="urbanImport" accept="application/json,.json" hidden></div><p class="uc-muted">${t("Личная копия содержит роли и ночные записи. Хранится локально, без облака.", "The private backup contains roles and night records. Local storage, no cloud.")}</p></footer>
+      <details class="uc-panel" id="urbanSources"><summary>${t("О вариантах игры и источниках", "Game variants & sources")}</summary><p>${t("Городская мафия не имеет одного набора ролей. Шаблон «Оборотни» — тематическая основа, не полный движок Ultimate Werewolf. One Night и Blood on the Clocktower имеют другие правила; их автоматическое проведение сюда не входит.", "Urban Mafia has no single role set. The Werewolf preset is a thematic starting point, not a complete Ultimate Werewolf engine. One Night and Blood on the Clocktower have different rules and are not automatically implemented here.")}</p><div class="uc-source-links"><a href="https://www.mosigra.ru/image/data/mosigra.product.other/543/439/mafia_pravila.pdf" target="_blank" rel="noopener">Magellan · Mafia</a><a href="https://hobbygames.ru/download/rules/Mafia_Rules.pdf" target="_blank" rel="noopener">Hobby World · Mafia</a><a href="https://wiki.mafiascum.net/index.php?title=Role" target="_blank" rel="noopener">MafiaScum · Roles</a><a href="https://beziergames.com/pages/uw-moderator-app-quick-start" target="_blank" rel="noopener">Ultimate Werewolf · Moderator</a></div></details>`;
+      if (!setup) root.querySelector("#urbanSetup").open = open.has("urbanSetup");
+      for (const id of open) {
+        const node = document.getElementById(id);
+        if (node && root.contains(node)) node.open = true;
+      }
+      root.querySelector(".uc-timer").insertAdjacentHTML("beforeend", btn("next", "→", `aria-label="${t("Следующий говорящий", "Next speaker")}"` + disabled(state.status === "done" || state.phase === "night" || !state.players.some((p) => p.alive))));
+      if (focusKey) root.querySelector("#" + CSS.escape(focusKey))?.focus({ preventScroll: true });
+      updateTimer();
+    }
+    function hide() {
+      if (privateView) {
+        privateView = false;
+        render();
+      }
+    }
+    function updateTimer() {
+      const remaining = state.timer.endAt ? Math.max(0, Math.ceil((state.timer.endAt - Date.now()) / 1e3)) : state.timer.remaining;
+      const node = root.querySelector("#urbanTimer");
+      if (!node) return;
+      node.textContent = Math.floor(remaining / 60) + ":" + String(remaining % 60).padStart(2, "0");
+      root.querySelector("#urbanTimerToggle").textContent = state.timer.endAt ? "Ⅱ" : "▶";
+      const p = state.players.find((p2) => p2.uid === state.timer.speaker);
+      root.querySelector("#urbanSpeaker").textContent = p ? "№" + (state.players.indexOf(p) + 1) : "";
+    }
+    root.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-action]");
+      if (!b || b.disabled) return;
+      const a = b.dataset.action, id = b.dataset.id;
+      if (a === "back") {
+        hide();
+        show2("menu");
+        return;
+      }
+      if (a === "privacy") {
+        privateView = !privateView;
+        render();
+        return;
+      }
+      if (a === "undo") {
+        if (state.undo.length) {
+          const stack = state.undo.slice(0, -1);
+          state = { ...state.undo.at(-1), undo: stack };
+          persist2();
+          render();
+        }
+        return;
+      }
+      if (a === "export") {
+        const url = URL.createObjectURL(new Blob([JSON.stringify({ ...state, undo: [] }, null, 2)], { type: "application/json" })), link = document.createElement("a");
+        link.href = url;
+        link.download = "mafia-tool-urban-" + state.gameId + ".json";
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1e3);
+        return;
+      }
+      if (a === "import") {
+        root.querySelector("#urbanImport").click();
+        return;
+      }
+      if (a === "repeat") {
+        if (!persist2()) return;
+        state = repeatUrban(state);
+        privateView = false;
+        persist2();
+        render();
+        return;
+      }
+      if (a === "finish") {
+        const result = prompt(t("Кто победил? Итог определяет ведущий.", "Who won? The host determines the result."));
+        if (result === null) return;
+        act({ type: "finish", value: result });
+        return;
+      }
+      if (a === "preset" || a === "deal") {
+        if (state.players.some((p) => p.roleId) && !confirm(t("Заменить записанные роли? Действие можно отменить.", "Replace recorded roles? You can undo this."))) return;
+        privateView = false;
+        act({ type: a, value: b.dataset.value });
+        return;
+      }
+      if (a === "fill") {
+        const count = state.players.length - state.roles.filter((r) => r.id !== "town").reduce((a2, r) => a2 + r.count, 0);
+        if (count < 0) {
+          message = t("Сначала уменьшите число активных ролей.", "Reduce special role counts first.");
+          render();
+          return;
+        }
+        act({ type: "role", id: "town", field: "count", value: count });
+        return;
+      }
+      if (a === "custom") {
+        act({ type: "custom", name: root.querySelector("#urbanCustomName").value });
+        return;
+      }
+      if (a === "next") {
+        const start = state.players.findIndex((p2) => p2.uid === state.timer.speaker), p = Array.from({ length: state.players.length }, (_, i) => state.players[(start + 1 + i) % state.players.length]).find((p2) => p2.alive);
+        if (p) act({ type: "speech", id: p.uid });
+        return;
+      }
+      if (a === "alive") {
+        const p = state.players.find((p2) => p2.uid === id);
+        act({ type: a, id, value: !p.alive });
+        return;
+      }
+      if (a === "target") {
+        const s = state.nights.at(-1).steps.find((s2) => s2.key === b.dataset.step);
+        act({ type: "step", id: s.key, field: "targets", value: s.targets.includes(id) ? s.targets.filter((x) => x !== id) : [...s.targets, id] });
+        return;
+      }
+      if (a === "step") {
+        const value = b.dataset.value;
+        act({ type: "step", id, field: "status", value });
+        if (value !== "pending") {
+          const detail = document.getElementById("urban-step-" + id);
+          if (detail) detail.open = false;
+        }
+        return;
+      }
+      act({ type: a, id, delta: Number(b.dataset.delta), value: b.dataset.value });
+      if (a === "start") root.querySelector("#urbanSetup").open = false;
+    });
+    function inputAction(el2, redraw) {
+      if (el2.dataset.field) act({ type: el2.dataset.field, value: el2.value }, redraw);
+      else if (el2.dataset.playerField) act({ type: "player", id: el2.dataset.id, field: el2.dataset.playerField, value: el2.value || (el2.dataset.playerField === "roleId" ? null : "") }, redraw);
+      else if (el2.dataset.roleField) act({ type: "role", id: el2.dataset.role, field: el2.dataset.roleField, value: el2.value }, redraw);
+      else if (el2.dataset.stepNote) act({ type: "step", id: el2.dataset.stepNote, field: "note", value: el2.value }, redraw);
+      else if (el2.dataset.voter) act({ type: "vote", id: el2.dataset.voter, value: el2.value }, redraw);
+    }
+    root.addEventListener("input", (e) => {
+      if (e.target.matches("textarea,input:not([type=number]):not([type=file])")) inputAction(e.target, false);
+    });
+    root.addEventListener("change", async (e) => {
+      if (e.target.id === "urbanImport") {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+          if (file.size > 5e6) throw Error("large");
+          const imported = validateUrban(JSON.parse(await file.text()));
+          if (!persist2()) return;
+          imported.gameId = defaultUrban().gameId;
+          imported.createdAt = Date.now();
+          imported.updatedAt = Date.now();
+          imported.name = (imported.name || t("Импорт", "Import")) + " · " + t("копия", "copy");
+          imported.timer.endAt = null;
+          state = imported;
+          privateView = false;
+          persist2();
+          message = t("Загружено как отдельная партия.", "Imported as a separate game.");
+        } catch {
+          message = t("Не удалось загрузить: неверная копия городской мафии. Текущая партия сохранена.", "Import failed: invalid Urban Mafia backup. Current game retained.");
+        }
+        render();
+        return;
+      }
+      if (e.target.matches("select,input[type=number]")) inputAction(e.target, true);
+    });
+    window.addEventListener("blur", hide);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) hide();
+    });
+    document.addEventListener("protocol:screen", hide);
+    document.addEventListener("protocol:language", render);
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hide();
+    });
+    setInterval(updateTimer, 250);
+    render();
+    return { open() {
+      persist2();
+      show2("urban");
+      render();
+    }, openGame(s) {
+      if (!persist2()) return;
+      state = validateUrban(s);
+      privateView = false;
+      persist2();
+      show2("urban");
+      render();
+    }, getState: () => state };
   }
 
   // app/js/state/storage.js
@@ -2535,6 +3456,583 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     const archiveOK = saveGames(games);
     const currentOK = writeLive(live);
     return archiveOK && currentOK;
+  }
+
+  // app/js/i18n.js
+  var STORAGE_KEY = "protocol-language";
+  var entries = [
+    ["интерактивный стол · v1.7", "interactive table · v1.7"],
+    ["Протокол", "Mafia-tool.com"],
+    ["Помощник по мафии", "Mafia Game Assistant"],
+    ["Бесплатный инструмент для мафии: веди онлайн- или живую партию, записывай голоса, проверки шерифа и версии ролей. Тренируй дедукцию на игровых задачах — без регистрации.", "A free Mafia companion: run an online or in-person game, record votes, Sheriff checks, and role reads. Practice deduction with game puzzles — no sign-up required."],
+    ["Бесплатный инструмент для мафии: веди онлайн- или живую партию, записывай голоса, проверки шерифа и версии ролей.", "A free Mafia companion: run an online or in-person game, record votes, Sheriff checks, and role reads."],
+    ["Во время игры", "During the game"],
+    ["главный режим", "main mode"],
+    ["Ведущий", "Host"],
+    ["Вести игру", "Host a game"],
+    ["Записывать просмотр", "Track a game"],
+    ["Мои игры", "My games"],
+    ["Инструменты", "Tools"],
+    ["Основная навигация", "Main navigation"],
+    ["Открыть меню", "Open menu"],
+    ["Mafia-tool.com, главная", "Mafia-tool.com, home"],
+    ["Управляй игрой: речи, таймер, фолы, выставления и голосование.", "Run the game: speeches, timer, fouls, nominations, and voting."],
+    ["Открыть пульт →", "Open host console →"],
+    ["Просмотр игры", "Game tracker"],
+    ["Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.", "Track votes, roles, checks, attacks, and trust by round. Everything saves automatically."],
+    ["Начать отслеживание", "Start tracking"],
+    ["Разбор игроков", "Player analysis"],
+    ["сигналы и аргументы по каждому", "signals and evidence for every player"],
+    ["Прогресс", "Progress"],
+    ["результаты тренировок", "training results"],
+    ["Правила", "Rules"],
+    ["короткая памятка", "quick reference"],
+    ["Тренировка", "Training"],
+    ["задачи на дедукцию", "deduction puzzles"],
+    ["Решить задачу", "Solve a case"],
+    ["Вычисли трёх мафиози по протоколу голосований.", "Identify the three Mafia players from the voting record."],
+    ["сложность", "difficulty"],
+    ["новичок", "beginner"],
+    ["лёгкая", "easy"],
+    ["средняя", "medium"],
+    ["сложная", "hard"],
+    ["набор правил", "rule set"],
+    ["классика", "classic"],
+    ["заявки", "claims"],
+    ["разлад", "split vote"],
+    ["сбивание", "table talk"],
+    ["Начать задачу", "Start case"],
+    ["Задача дня", "Daily case"],
+    ["Новая задача каждый день.", "A new case every day."],
+    ["Курс", "Course"],
+    ["Постепенное усложнение механик.", "Mechanics get progressively harder."],
+    ["Режим на время", "Timed mode"],
+    ["Без подсказок, с личным рекордом.", "No hints, with a personal best."],
+    ["Настройки", "Settings"],
+    ["Предложить улучшение ↗", "Suggest an improvement ↗"],
+    ["Инструменты для игры в мафию", "Tools for playing Mafia"],
+    ["Mafia-tool.com объединяет трекер партии, заметки по игрокам и тренажёр дедукции. Записывай речи и голосования по кругам, отмечай связи и сравнивай версии. Партии сохраняются в текущем браузере; между устройствами они автоматически не переносятся.", "Mafia-tool.com combines a game tracker, player notes, and deduction training. Record speeches and votes by round, mark connections, and compare reads. Games are saved in this browser and do not sync automatically across devices."],
+    ["Помощник для мафии онлайн", "Online Mafia assistant"],
+    ["Справочник по мафии: роли, термины и тактика", "Mafia guide: roles, terms, and strategy"],
+    ["Можно ли играть в мафию онлайн?", "Can you play Mafia online?"],
+    ["Используй трекер рядом с вашей игровой площадкой: вноси наблюдения вручную во время партии. Игровых комнат и видеосвязи здесь нет. Для самостоятельной тренировки доступны головоломки, курс и задача дня.", "Use the tracker alongside your game platform and enter observations manually while you play. It does not provide game rooms or video calls. For solo practice, use the puzzles, course, and daily case."],
+    ["Как тренажёр помогает учиться?", "How does the trainer help you learn?"],
+    ["Вычисляй трёх мафиози по протоколу голосований и проверяй выводы в разборе решения. Ограничения головоломок — например, запрет мафии голосовать против своих — относятся только к задачам. В настоящей партии такое поведение возможно.", "Identify three Mafia players from the voting record, then check your reasoning in the solution walkthrough. Puzzle constraints — such as Mafia never voting against teammates — apply only to the cases. That behavior is possible in a real game."],
+    ["← меню", "← menu"],
+    ["← Меню", "← Menu"],
+    ["свободная игра", "free play"],
+    ["Дело раскрыто", "Case solved"],
+    ["инструмент:", "tool:"],
+    ["метки", "marks"],
+    ["связи", "links"],
+    ["голос (выбранный раунд)", "vote (selected round)"],
+    ["метка: мафия", "mark: Mafia"],
+    ["метка: мирный", "mark: Town"],
+    ["связь: одна команда", "link: same team"],
+    ["Кликай по игроку: пусто → мафия → мирный → пусто", "Click a player: empty → Mafia → Town → empty"],
+    ["Обвинить троих", "Accuse three"],
+    ["Осведомитель", "Informant"],
+    ["Новое дело", "New case"],
+    ["Разбор", "Walkthrough"],
+    ["Дальше →", "Next →"],
+    ["Протокол голосований", "Voting record"],
+    ["запись секретаря клуба", "club secretary’s record"],
+    ["Переименовать", "Rename"],
+    ["Завершить", "Finish"],
+    ["Библиотека игр", "Game library"],
+    ["Новая игра", "New game"],
+    ["↩ отменить", "↩ undo"],
+    ["Простой", "Simple"],
+    ["Подробный", "Detailed"],
+    ["Список", "List"],
+    ["Стол", "Table"],
+    ["Записать голосование", "Record votes"],
+    ["Слушай игрока — собирай картину", "Listen to each player — build the picture"],
+    ["Нажми номер: отметь свою версию, запиши речь и соедини возможную команду.", "Tap a number to record your read, note their speech, and connect a possible team."],
+    ["Продолжить по кругу →", "Continue around the table →"],
+    ["Основное", "Essentials"],
+    ["Отношения", "Connections"],
+    ["Оценки и проверки", "Reads & checks"],
+    ["Выбывание и ластик", "Elimination & erase"],
+    ["основное", "essentials"],
+    ["отношения", "connections"],
+    ["метка", "mark"],
+    ["голос", "vote"],
+    ["выставил", "nominated"],
+    ["команда", "team"],
+    ["атака", "attack"],
+    ["поддержка", "support"],
+    ["противовес", "counterweight"],
+    ["оценка", "read"],
+    ["+ доверие", "+ trust"],
+    ["− доверие", "− trust"],
+    ["проверка Ш1", "Sheriff 1 check"],
+    ["проверка Ш2", "Sheriff 2 check"],
+    ["состояние", "status"],
+    ["заголосован", "voted out"],
+    ["застрелен", "shot"],
+    ["ластик", "erase"],
+    ["просмотр векторов и действий", "show connections and actions"],
+    ["текущий круг", "current round"],
+    ["накопительно", "cumulative"],
+    ["все круги", "all rounds"],
+    ["👍 голос (текущий круг)", "👍 vote (current round)"],
+    ["метка: мафия / дон", "mark: Mafia / Don"],
+    ["Обозначения на столе", "Table legend"],
+    ["Журнал наблюдателя", "Observer log"],
+    ["твои записи по ходу игры · сохраняется автоматически", "your notes during the game · saved automatically"],
+    ["К столу ↑", "To table ↑"],
+    ["Кандидат", "Candidate"],
+    ["Выбери номер", "Choose a number"],
+    ["Нажми номера голосующих. Повторное нажатие снимает голос; выбор другого кандидата переносит его.", "Tap the voters’ numbers. Tap again to remove a vote; choosing another candidate moves it."],
+    ["Заметки", "Notes"],
+    ["короткие однострочные пометки по ходу игры", "short one-line notes during the game"],
+    ["записать", "add note"],
+    ["Хронология и копирование", "Timeline and copy"],
+    ["пронумерованные события игры в хронологическом порядке", "numbered game events in chronological order"],
+    ["скопировать хронологию", "copy timeline"],
+    ["Анализ игроков", "Player analysis"],
+    ["📡 в эфир", "📡 tracker"],
+    ["Итоговое чтение", "Overall read"],
+    ["сводка по каждому игроку: баланс сигналов за все круги", "summary for each player: signal balance across all rounds"],
+    ["Аргументы по игрокам", "Evidence by player"],
+    ["по каждому из 10: слева — за то, что он мафия, справа — за то, что мирный · сохраняется автоматически", "for each of 10 players: Mafia evidence on the left, Town evidence on the right · saved automatically"],
+    ["📋 скопировать (Markdown)", "📋 copy (Markdown)"],
+    ["⬇ экспорт .md", "⬇ export .md"],
+    ["Кампания", "Campaign"],
+    ["Статистика", "Statistics"],
+    ["Отключить анимацию", "Disable animation"],
+    ["Печать и переходы без движения", "Stamp and transitions without motion"],
+    ["Сброс прогресса", "Reset progress"],
+    ["Стереть кампанию, стрики и статистику. Безвозвратно.", "Erase campaign progress, streaks, and statistics. This cannot be undone."],
+    ["Стереть", "Erase"],
+    ["Разбор дела", "Case walkthrough"],
+    ["пошаговая логика решения", "step-by-step solution logic"],
+    ["Закрыть", "Close"],
+    ["Моя версия", "My read"],
+    ["Насколько я уверен", "Confidence"],
+    ["Две независимые оценки от 0 до 10 за текущий круг. Они не меняют выбранную роль.", "Two independent scores from 0 to 10 for the current round. They do not change the selected role."],
+    ["Красный", "Town"],
+    ["Чёрный", "Mafia"],
+    ["Что сказал, кого считает красным или чёрным, что проверил", "What they said, who they read as Town or Mafia, and what they checked"],
+    ["Его слова об игроках", "Their reads on players"],
+    ["Назвался шерифом", "Claimed Sheriff"],
+    ["Кого он считает", "They read them as"],
+    ["Красным", "Town"],
+    ["Чёрным", "Mafia"],
+    ["Возможная команда", "Possible team"],
+    ["Нажми номер, чтобы соединить. Повтор — убрать связь. Цепочка связей образует команду.", "Tap a number to connect players. Tap again to remove the link. A chain of links forms a team."],
+    ["Записи по кругам", "Round history"],
+    ["Заметка сохраняется при выходе из поля", "The note saves when you leave the field"],
+    ["Записал → следующий", "Saved → next"],
+    ["Сохранённые игры", "Saved games"],
+    ["хранятся локально в этом браузере", "stored locally in this browser"],
+    ["Поиск по названию", "Search by name"],
+    ["Статус", "Status"],
+    ["Все партии", "All games"],
+    ["В процессе", "In progress"],
+    ["Завершённые", "Finished"],
+    ["Как играть", "How to play"],
+    ["памятка начинающего детектива", "a beginner detective’s guide"],
+    ["MAFIA-TOOL.COM / ВЕДУЩИЙ", "MAFIA-TOOL.COM / HOST"],
+    ["Игра под контролем", "Game under control"],
+    ["Отменить", "Undo"],
+    ["Повторить", "Redo"],
+    ["Этап", "Phase"],
+    ["Подготовка", "Setup"],
+    ["Речи", "Speeches"],
+    ["Голосование", "Voting"],
+    ["Ночь", "Night"],
+    ["+ Круг", "+ Round"],
+    ["Изменения сохраняются автоматически", "Changes save automatically"],
+    ["10 МЕСТ · ЖИВАЯ ПАРТИЯ", "10 SEATS · LIVE GAME"],
+    ["Ники", "Names"],
+    ["Слово игроку", "Player speaking"],
+    ["Следующий игрок ▶", "Next player ▶"],
+    ["◉ Удерживать — роли", "◉ Hold — roles"],
+    ["Нажми место · перетащи ник для обмена", "Tap a seat · drag a name to swap"],
+    ["Настроить", "Configure"],
+    ["Речь + таймер", "Speech + timer"],
+    ["Рука", "Hand"],
+    ["ВЫБРАННЫЙ ИГРОК", "SELECTED PLAYER"],
+    ["Игрок №1", "Player #1"],
+    ["Никнейм", "Nickname"],
+    ["▶ Речь · старт", "▶ Speech · start"],
+    ["Выставить", "Nominate"],
+    ["Фолы", "Fouls"],
+    ["Без замечаний", "No warnings"],
+    ["Назначить роль", "Assign role"],
+    ["· просмотр — удержанием на столе", "· hold on the table to reveal"],
+    ["В игре", "In game"],
+    ["Заголосован", "Voted out"],
+    ["Убит ночью", "Killed at night"],
+    ["Удалён", "Removed"],
+    ["Обмен местами", "Swap seats"],
+    ["⇄ Обменять", "⇄ Swap"],
+    ["Кто в кого голосует", "Who votes for whom"],
+    ["+ Тур", "+ Vote round"],
+    ["Перенести голос", "Move vote"],
+    ["Отмена", "Cancel"],
+    ["Повтор снимает руку", "Tap again to lower the hand"],
+    ["Завершить тур ✓", "Finish vote round ✓"],
+    ["СОБЫТИЯ ПАРТИИ", "GAME EVENTS"],
+    ["Журнал", "Log"],
+    ["Новая партия ведущего", "New host game"],
+    ["Не назначена", "Unassigned"],
+    ["Без роли", "No role"],
+    ["Мирный", "Town"],
+    ["Мафия", "Mafia"],
+    ["Дон", "Don"],
+    ["Шериф", "Sheriff"],
+    ["например: №3 путается в показаниях…", "for example: #3 keeps changing their story…"],
+    ["Например: назвался шерифом, проверил №7 красным; играет с №3", "For example: claimed Sheriff, checked #7 as Town; teams with #3"],
+    ["Найти партию", "Find a game"],
+    ["выдели текст и нажми Ctrl/Cmd+C", "select the text and press Ctrl/Cmd+C"],
+    ["Начать свободную головоломку", "Start a free-play puzzle"],
+    ["Материалы по мафии", "Mafia resources"],
+    ["Меню партии", "Game menu"],
+    ["Режим записи", "Recording mode"],
+    ["Представление игроков", "Player view"],
+    ["Группы инструментов", "Tool groups"],
+    ["Круглый стол с игроками и стрелками голосов", "Round table with players and vote arrows"],
+    ["Стол наблюдателя: 10 игроков", "Observer table: 10 players"],
+    ["Круглый стол ведущего", "Host’s round table"],
+    ["Номер говорящего", "Speaker number"],
+    ["Осталось времени", "Time remaining"],
+    ["Запустить таймер", "Start timer"],
+    ["Сбросить таймер", "Reset timer"],
+    ["Минималистичный стол для мафии на 10 игроков и ведущего", "Minimal Mafia table for 10 players and a host"],
+    ["Десять игроков и ведущий сидят за круглым столом для мафии", "Ten players and a host seated at a round Mafia table"],
+    ["Следующие возможности", "Coming next"],
+    ["Развиваем Mafia-tool.com", "Building Mafia-tool.com"],
+    ["Сначала делаем инструменты для партии быстрее и надёжнее. Эти направления появятся после проверки нового хаба.", "We are making the game tools faster and more reliable first. These features will follow after the new hub is proven."],
+    ["Планируем", "Planned"],
+    ["Игры в облаке", "Cloud games"],
+    ["Аккаунт, резервные копии и доступ к своей библиотеке с разных устройств.", "An account, backups, and access to your library across devices."],
+    ["Страницы клубов", "Club pages"],
+    ["Каталог настоящих клубов, контакты, форматы и актуальное расписание.", "A directory of real clubs, contacts, formats, and current schedules."],
+    ["Городская мафия", "Casual Mafia"],
+    ["Настраиваемый состав ролей и ночной помощник для ведущего.", "Custom role lineups and a night assistant for the host."],
+    ["Длительность речи", "Speech length"],
+    ["Действие при нажатии на место", "Action when tapping a seat"],
+    ["Роль скрыта", "Role hidden"],
+    ["Имя игрока", "Player name"],
+    ["Снять фол", "Remove foul"],
+    ["Добавить фол", "Add foul"],
+    ["Обменять места", "Swap seats"],
+    ["Отменить последнее действие", "Undo last action"],
+    ["Повторить действие", "Redo action"],
+    ["Название", "Name"],
+    ["Новая партия", "New game"],
+    ["Круг", "Circle"],
+    ["Начать игру", "Start game"],
+    ["Завершить игру", "Finish game"],
+    ["Повторить состав", "Repeat lineup"],
+    ["+ Добавить", "+ Add"],
+    ["− Убрать", "− Remove"],
+    ["Активные партии", "Active games"],
+    ["Продолжить →", "Continue →"],
+    ["Гибкий состав", "Flexible lineup"],
+    ["Свои роли и правила, игроки в колонках, ночной помощник ведущего.", "Custom roles and rules, player columns, and a night assistant."],
+    ["Открыть городскую мафию →", "Open Urban Mafia →"],
+    ["Доступно", "Available"]
+  ];
+  var exact = new Map(entries);
+  var originalText = /* @__PURE__ */ new WeakMap();
+  var translatedText = /* @__PURE__ */ new WeakMap();
+  var originalAttrs = /* @__PURE__ */ new WeakMap();
+  var language = "ru";
+  var observer = null;
+  var rules = [
+    [/^Игрок №(\d+)$/, "Player #$1"],
+    [/^Круг (\d+)$/, "Round $1"],
+    [/^Раунд (\d+)$/, "Round $1"],
+    [/^Круг (\d+) · речи отмечены (\d+) из (\d+)$/, "Round $1 · speeches recorded: $2 of $3"],
+    [/^№(\d+) · (.+?)( ✓)?( · выбыл)?$/, (m, n, role2, seen, out) => `#${n} · ${translate(role2)}${seen ? " ✓" : ""}${out ? " · out" : ""}`],
+    [/^Красный (\d+) · Чёрный (\d+)$/, "Town $1 · Mafia $2"],
+    [/^Ошибок: (\d+)/i, "Errors: $1"],
+    [/^ошибок: (\d+)/, "errors: $1"],
+    [/^подсказок: (\d+)/, "hints: $1"],
+    [/^Раунд (\d+) ·$/, "Round $1 ·"],
+    [/^Раунд (\d+)$/, "Round $1"],
+    [/^КРУГ (\d+) · ТУР (\d+)( · ЗАВЕРШЁН)?$/, (m, r, v, done) => `ROUND ${r} · VOTE ${v}${done ? " · COMPLETE" : ""}`],
+    [/^Игрок (\d+)$/, "Player $1"],
+    [/^Игра (.+)$/, "Game $1"],
+    [/^Текущая партия$/, "Current game"],
+    [/^Без названия$/, "Untitled"],
+    [/^Продолжить$/, "Continue"],
+    [/^Открыть$/, "Open"],
+    [/^Удалить$/, "Delete"],
+    [/^Вернуться к игре$/, "Return to game"],
+    [/^Начат круг (\d+)$/, "Round $1 started"],
+    [/^Тур голосования (\d+) завершён$/, "Vote round $1 completed"],
+    [/^Сохранено в этом браузере$/, "Saved in this browser"],
+    [/^✓ Сохранено$/, "✓ Saved"],
+    [/^Роль скрыта$/, "Role hidden"],
+    [/^нет записи$/, "not recorded"],
+    [/^все отмечены$/, "all recorded"],
+    [/^выбыл$/, "out"],
+    [/^кандидат$/, "candidate"],
+    [/^(\d+) ф\.$/, "$1 f."],
+    [/^Считает красными: (.+)\. Чёрными: (.+)\.$/, "Reads as Town: $1. Mafia: $2."],
+    [/^Мои команды: (.+)$/, "My teams: $1"],
+    [/^Голоса всех оставшихся игроков отмечены\.$/, "Votes from all remaining players are recorded."],
+    [/^Ещё не отмечены: (.+)$/, "Not recorded yet: $1"],
+    [/^Стрик: (\d+) 🔥$/, "Streak: $1 🔥"],
+    [/^Лучшее время: (.+)$/, "Best time: $1"],
+    [/^Осведомитель \((\d+)\)$/, "Informant ($1)"],
+    [/^Дело №(.+)$/, "Case #$1"]
+  ];
+  var partials = [
+    ["Кликай по игроку: пусто →", "Click a player: empty →"],
+    ["Соедини двоих, кого считаешь", "Connect two players you believe are"],
+    ["одной командой", "on the same team"],
+    ["Повторно — разорвать связь.", "Tap again to remove the link."],
+    ["Столбцы — игроки, строки — круги.", "Columns are players; rows are rounds."],
+    ["Авто-данные", "Automatic data"],
+    ["берутся из «Прямого эфира».", "comes from the game tracker."],
+    ["Ручные оценки — тап по чипу: пусто →", "For manual reads, tap a chip: empty →"],
+    ["мирный сигнал", "Town signal"],
+    ["мафский сигнал", "Mafia signal"],
+    ["спорно", "uncertain"],
+    ["красный пунктир — атака", "red dashed line — attack"],
+    ["зелёный пунктир — поддержка", "green dashed line — support"],
+    ["повторы утолщают", "repeats make it thicker"],
+    ["золото — противовес", "gold — counterweight"],
+    ["обводка: золотая", "outline: gold"],
+    ["красная", "red"],
+    ["ластик", "eraser"],
+    ["стирает по одному", "removes one at a time"],
+    ["проверки шерифов", "Sheriff checks"],
+    ["красный или чёрный", "Town or Mafia"],
+    ["наведи курсор на игрока", "hover over a player"],
+    ["останутся только его векторы", "to isolate their connections"],
+    ["Задача", "Objective"],
+    ["За столом 10 игроков, трое — мафия.", "There are 10 players at the table; three are Mafia."],
+    ["Тебе дан протокол голосований: кто в кого голосовал, кто выбыл и кем оказался.", "You have the voting record: who voted for whom, who was eliminated, and their revealed team."],
+    ["Вычисли тройку и обвини её.", "Identify the trio and accuse them."],
+    ["Решение всегда ровно одно — и выводится логикой, без угадайки.", "There is always exactly one solution, reached by logic rather than guessing."],
+    ["Железные правила", "Core rules"],
+    ["Мафия никогда не голосует в своих.", "Mafia never votes for teammates."],
+    ["Все живые мафиози в раунде голосуют в одну цель.", "All living Mafia vote for the same target in a round."],
+    ["Выбывает большинством", "The player with the most votes is eliminated"],
+    ["его команда раскрывается.", "their team is revealed."],
+    ["Мирные голосуют произвольно.", "Town may vote however they like."],
+    ["Приёмы детектива", "Detective techniques"],
+    ["Голос во вскрытую мафию — оправдание.", "A vote against revealed Mafia clears the voter."],
+    ["голосовавший не может быть её напарником.", "the voter cannot be their teammate."],
+    ["Разные цели — не напарники.", "Different targets mean they are not teammates."],
+    ["Куда смотрела вскрытая мафия.", "Follow the revealed Mafia player’s vote."],
+    ["Фиксируй невозможное.", "Record what is impossible."],
+    ["Поздние правила", "Advanced rules"],
+    ["Заявки:", "Claims:"],
+    ["Разлад:", "Split vote:"],
+    ["Сбивание:", "Table talk:"],
+    ["Оценка", "Scoring"],
+    ["без ошибок и подсказок", "no errors or hints"],
+    ["одна ошибка или подсказка", "one error or hint"],
+    ["дело раскрыто", "case solved"],
+    ["Круг", "Round"],
+    ["Раунд", "Round"],
+    ["Игрок", "Player"],
+    ["Выбыл", "Eliminated"],
+    ["вскрытие:", "reveal:"],
+    ["МАФИЯ", "MAFIA"],
+    ["мирный", "Town"],
+    ["мафия", "Mafia"],
+    ["голосов", "votes"],
+    ["руки:", "voters:"],
+    ["ошибок:", "errors:"],
+    ["осведомитель:", "informant:"],
+    ["За столом до голосования", "At the table before voting"],
+    ["я шериф, проверил", "I am Sheriff; I checked"],
+    ["настоящий шериф не врёт", "the real Sheriff does not lie"],
+    ["фальшивый шериф — мафия", "the fake Sheriff is Mafia"],
+    ["мирные не врут", "Town players do not lie"],
+    ["Что известно наверняка:", "What is known for certain:"],
+    ["Прокурору нужны ровно трое", "The case needs exactly three suspects"],
+    ["Сейчас меткой «мафия» отмечено:", "Players currently marked “Mafia”:"],
+    ["Отметь троих подозреваемых.", "Mark three suspects."],
+    ["Дело развалилось в суде", "The case did not hold up"],
+    ["Из троих обвинённых мафией оказались:", "Of the three accused, actual Mafia:"],
+    ["Пересмотри улики", "Review the evidence"],
+    ["Следующее дело главы открыто.", "The next case in this chapter is unlocked."],
+    ["Глава пройдена!", "Chapter complete!"],
+    ["Новый рекорд экзамена!", "New timed-mode record!"],
+    ["Мафия:", "Mafia:"],
+    ["подсказок:", "hints:"],
+    ["время:", "time:"],
+    ["В меню", "Menu"],
+    ["Следующее дело →", "Next case →"],
+    ["К главам", "Chapters"],
+    ["Новое дело →", "New case →"],
+    ["Шепнули на ухо", "A quiet tip"],
+    ["Почему:", "Why:"],
+    ["Осведомитель берёт плату звёздами.", "The informant costs stars."],
+    ["Отправная точка", "Starting point"],
+    ["возможных троек среди 10 игроков:", "possible trios among 10 players:"],
+    ["доказано:", "proven:"],
+    ["кандидатов:", "candidates:"],
+    ["раунд ничего не исключил", "this round ruled nothing out"],
+    ["Единственный выживший мир", "The only remaining world"],
+    ["Продолжить просмотр игры", "Continue tracking"],
+    ["Записи сохранены в этом браузере.", "Notes are saved in this browser."],
+    ["Вернуться к игре", "Return to game"],
+    ["Начать отслеживание", "Start tracking"],
+    ["Сегодняшнее дело раскрыто.", "Today’s case is solved."],
+    ["Возвращайся завтра — или перерешай.", "Come back tomorrow, or solve it again."],
+    ["Одна головоломка на всех.", "The same puzzle for everyone."],
+    ["Сегодняшняя дата — сегодняшний сид.", "Today’s date determines today’s seed."],
+    ["дел раскрыто", "cases solved"],
+    ["без ошибок и подсказок", "without errors or hints"],
+    ["стрик «дела дня»", "daily-case streak"],
+    ["ежедневных решено", "daily cases solved"],
+    ["рекорд экзамена", "timed-mode record"],
+    ["звонков осведомителю", "informant calls"],
+    ["сложность:", "difficulty:"],
+    ["Сохраняю заметку…", "Saving note…"],
+    ["Пересмотреть записи", "Review notes"],
+    ["Не знаю", "Unknown"],
+    ["не определился", "unknown"],
+    ["речь отмечена", "speech recorded"],
+    ["очки за красного", "Town score"],
+    ["очки за чёрного", "Mafia score"],
+    ["назвался шерифом", "claimed Sheriff"],
+    ["заявление шерифа снято", "Sheriff claim removed"],
+    ["заметка обновлена", "note updated"],
+    ["возможно одна команда", "possibly the same team"],
+    ["связь снята", "link removed"],
+    ["Сохранено", "Saved"],
+    ["Не удалось сохранить", "Could not save"],
+    ["Речь идёт", "Speech in progress"],
+    ["Лимит · решение за ведущим", "Limit reached · host decides"],
+    ["Замечания записаны", "Warnings recorded"],
+    ["Снять кандидатуру", "Withdraw"],
+    ["Выбери место на столе и нажми «Выставить».", "Select a seat at the table and tap “Nominate”."],
+    ["Выбери кандидата", "Select a candidate"],
+    ["затем отмечай руки на столе или по номерам ниже.", "then record raised hands at the table or with the numbers below."],
+    ["Нет записи:", "Not recorded:"],
+    ["ЗАВЕРШЁН", "COMPLETE"],
+    ["Фолы, речи и голоса появятся здесь автоматически.", "Fouls, speeches, and votes will appear here automatically."],
+    ["Луи", "Louis"],
+    ["Соня", "Sonya"],
+    ["Крест", "Krest"],
+    ["Ада", "Ada"],
+    ["Молчун", "Silent"],
+    ["Вера", "Vera"],
+    ["Туз", "Ace"],
+    ["Марго", "Margot"],
+    ["Феликс", "Felix"],
+    ["Ирма", "Irma"]
+  ];
+  function translate(value) {
+    const trimmed = value.trim();
+    if (!trimmed) return value;
+    let result = exact.get(trimmed);
+    if (result === void 0) {
+      result = trimmed;
+      for (const [pattern, replacement] of rules) {
+        if (pattern.test(result)) {
+          result = result.replace(pattern, replacement);
+          break;
+        }
+      }
+      for (const [from, to] of partials) result = result.replaceAll(from, to);
+    }
+    if (result === trimmed) return value;
+    const start = value.match(/^\s*/)?.[0] || "", end = value.match(/\s*$/)?.[0] || "";
+    return start + result + end;
+  }
+  function translateText(node) {
+    if (node.parentElement?.closest("[data-i18n-owned]")) return;
+    if (node.parentElement?.closest("[data-user-content]")) return;
+    const current = node.nodeValue || "";
+    if (translatedText.get(node) === current) return;
+    const next = translate(current);
+    if (next === current) return;
+    originalText.set(node, current);
+    translatedText.set(node, next);
+    node.nodeValue = next;
+  }
+  var translatedAttributes = ["aria-label", "placeholder", "title"];
+  function translateElement(el2) {
+    if (el2.closest?.("[data-i18n-owned]")) return;
+    let originals = originalAttrs.get(el2);
+    for (const attr of translatedAttributes) {
+      if (!el2.hasAttribute?.(attr)) continue;
+      const current = el2.getAttribute(attr), next = translate(current);
+      if (next === current) continue;
+      if (!originals) {
+        originals = /* @__PURE__ */ new Map();
+        originalAttrs.set(el2, originals);
+      }
+      originals.set(attr, current);
+      el2.setAttribute(attr, next);
+    }
+  }
+  function translateTree(root) {
+    if (root.nodeType === Node.TEXT_NODE) {
+      translateText(root);
+      return;
+    }
+    if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_NODE) return;
+    if (root.nodeType === Node.ELEMENT_NODE) translateElement(root);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+    let node;
+    while (node = walker.nextNode()) node.nodeType === Node.TEXT_NODE ? translateText(node) : translateElement(node);
+  }
+  function restoreRussian() {
+    observer?.disconnect();
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+    const nodes = [document.body];
+    let node;
+    while (node = walker.nextNode()) nodes.push(node);
+    for (const item of nodes) {
+      if (item.nodeType === Node.TEXT_NODE && originalText.has(item)) item.nodeValue = originalText.get(item);
+      if (item.nodeType === Node.ELEMENT_NODE) {
+        const attrs = originalAttrs.get(item);
+        if (attrs) for (const [name, value] of attrs) item.setAttribute(name, value);
+      }
+    }
+    originalText.clear?.();
+    translatedText.clear?.();
+  }
+  function observe() {
+    observer = new MutationObserver((mutations) => {
+      if (language !== "en") return;
+      observer.disconnect();
+      for (const mutation of mutations) {
+        if (mutation.type === "characterData") translateText(mutation.target);
+        else if (mutation.type === "attributes") translateElement(mutation.target);
+        else mutation.addedNodes.forEach(translateTree);
+      }
+      observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: translatedAttributes });
+    });
+    observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: translatedAttributes });
+  }
+  function applyLanguage(next) {
+    language = next === "en" ? "en" : "ru";
+    const button = document.getElementById("languageSwitch");
+    document.documentElement.lang = language;
+    localStorage.setItem(STORAGE_KEY, language);
+    if (language === "en") {
+      document.title = "Mafia-tool.com — Mafia Game Assistant";
+      translateTree(document.body);
+      observe();
+      button.textContent = "RU";
+      button.setAttribute("aria-label", "Переключить сайт на русский язык");
+    } else {
+      restoreRussian();
+      document.title = "Mafia-tool.com — помощник по мафии";
+      button.textContent = "EN";
+      button.setAttribute("aria-label", "Switch site language");
+    }
+    document.dispatchEvent(new CustomEvent("protocol:language", { detail: language }));
+  }
+  function setupI18n() {
+    const button = document.getElementById("languageSwitch");
+    button.addEventListener("click", () => applyLanguage(language === "ru" ? "en" : "ru"));
+    applyLanguage(localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "ru");
   }
 
   // app/inline-entry.js
@@ -3105,7 +4603,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   }
   function renderMenu() {
     const hasLiveProgress = LIVE.rounds.length > 1 || LIVE.journal.length > 0 || LIVE.notes.length > 0 || !!LIVE.meta.name;
-    $("liveCardTitle").textContent = hasLiveProgress ? "Продолжить партию" : "Открыть стол";
+    $("liveCardTitle").textContent = hasLiveProgress ? "Продолжить просмотр игры" : "Просмотр игры";
     $("liveCardDescription").textContent = hasLiveProgress ? `${LIVE.meta.name || "Текущая партия"} · круг ${LIVE.cur + 1}. Записи сохранены в этом браузере.` : "Отмечай голоса, роли, проверки, атаки и доверие по кругам. Всё сохраняется автоматически.";
     $("liveCardCta").innerHTML = (hasLiveProgress ? "Вернуться к игре" : "Начать отслеживание") + ' <span aria-hidden="true">→</span>';
     const key = dailyKey();
@@ -3980,7 +5478,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     const d = /* @__PURE__ */ new Date();
     const pad = (n) => String(n).padStart(2, "0");
     const stamp = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
-    let md = "# Аргументы по игрокам — Протокол\n\n_Круг " + (LIVE.cur + 1) + " из " + LIVE.rounds.length + " · выгружено " + stamp + "_\n";
+    let md = "# Аргументы по игрокам — Mafia-tool.com\n\n_Круг " + (LIVE.cur + 1) + " из " + LIVE.rounds.length + " · выгружено " + stamp + "_\n";
     for (let i = 0; i < N; i++) {
       const a = LIVE.args[i] || {};
       const s = argSignals(i);
@@ -4062,7 +5560,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     LIVE.notes.forEach((n, idx) => {
       const d = document.createElement("div");
       d.className = "note-row";
-      d.innerHTML = '<span class="nr-k">К' + (n.r + 1) + "</span><span>" + escH(n.txt) + "</span>";
+      d.innerHTML = '<span class="nr-k">К' + (n.r + 1) + "</span><span data-user-content>" + escH(n.txt) + "</span>";
       const del = document.createElement("button");
       del.textContent = "✕";
       del.title = "удалить заметку";
@@ -4172,11 +5670,60 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
     box.innerHTML = "";
     const search = $("gamesSearch").value.trim().toLocaleLowerCase("ru");
     const filter = $("gamesFilter").value;
+    const urbanGames = urbanLibrary().filter((game) => (game.name || "Городская мафия").toLocaleLowerCase("ru").includes(search) && (filter === "all" || (game.status === "done" ? "done" : "active") === filter));
+    urbanGames.forEach((game) => {
+      const row = document.createElement("div");
+      row.className = "games-row";
+      const title = document.createElement("b");
+      title.textContent = "Городская мафия · " + (game.name || "Без названия");
+      title.dataset.userContent = "true";
+      const info = document.createElement("span");
+      info.className = "gr-d";
+      info.textContent = new Date(game.updatedAt).toLocaleString() + " · " + game.players.length + " · " + (game.status === "done" ? "Завершена" : "В процессе");
+      const open = document.createElement("button");
+      open.className = "btn slim";
+      open.textContent = "Открыть";
+      open.onclick = () => {
+        $("gamesModal").classList.remove("on");
+        urbanUI.openGame(game);
+      };
+      row.append(title, info, open);
+      box.appendChild(row);
+    });
+    const hostGames = loadHostGames().filter((game) => String(game.name || "Новая партия").toLocaleLowerCase("ru").includes(search) && (filter === "all" || (game.status === "done" ? "done" : "active") === filter));
     const ids = Object.keys(games).filter((id) => {
       const g = games[id];
       return g && g.state && Array.isArray(g.state.rounds) && String(g.name || "").toLocaleLowerCase("ru").includes(search) && (filter === "all" || (g.state.meta?.status || "active") === filter);
     }).sort((a, b) => games[b].ts - games[a].ts);
-    if (!ids.length) {
+    hostGames.forEach((game) => {
+      const row = document.createElement("div");
+      row.className = "games-row";
+      const title = document.createElement("b");
+      title.textContent = "Ведущий · " + (game.name || "Новая партия");
+      const info = document.createElement("span");
+      info.className = "gr-d";
+      info.textContent = new Date(game.updatedAt || game.createdAt).toLocaleString("ru-RU") + " · игроков: " + game.players.length + " · " + (game.status === "done" ? "Завершена" : game.status === "setup" ? "Подготовка" : "В процессе");
+      const open = document.createElement("button");
+      open.className = "btn slim";
+      open.textContent = game.gameId === hostUI.getState().gameId ? "Продолжить" : "Открыть";
+      open.onclick = () => {
+        $("gamesModal").classList.remove("on");
+        hostUI.openGame(game);
+      };
+      const del = document.createElement("button");
+      del.className = "btn slim danger";
+      del.textContent = "Удалить";
+      del.disabled = game.gameId === hostUI.getState().gameId;
+      del.onclick = () => {
+        if (confirm("Удалить сохранение ведущего?")) {
+          deleteHostGame(game.gameId);
+          renderGamesModal();
+        }
+      };
+      row.append(title, info, open, del);
+      box.appendChild(row);
+    });
+    if (!ids.length && !hostGames.length && !urbanGames.length) {
       box.textContent = "Партий не найдено. Новые партии сохраняются автоматически.";
       return;
     }
@@ -4202,6 +5749,7 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
         voteTarget = null;
         livePersist();
         $("gamesModal").classList.remove("on");
+        show("live");
         renderLive();
       };
       const del = document.createElement("button");
@@ -4317,6 +5865,50 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   $("advUndo").addEventListener("click", liveUndo);
   var casualUI = setupCasual({ getLive: () => LIVE, act: liveAct, refresh: renderLive });
   var hostUI = setupHost({ show });
+  var urbanUI = setupUrban({ show });
+  $("urbanOpen").onclick = () => urbanUI.open();
+  $("urbanRoadmapOpen").onclick = () => urbanUI.open();
+  function renderRecentGames() {
+    const box = $("recentGames"), cards = [], host = hostUI.getState();
+    if (host.status !== "done") cards.push(`<button class="recent-game" data-recent="host"><b>Ведущий<span>${escH(host.name || "Новая партия")} · ${host.players.length} игроков</span></b><em>Продолжить →</em></button>`);
+    if (LIVE.meta?.status !== "done") cards.push(`<button class="recent-game" data-recent="live"><b>Просмотр игры<span>${escH(LIVE.meta?.name || "Без названия")} · круг ${LIVE.cur + 1}</span></b><em>Продолжить →</em></button>`);
+    box.innerHTML = cards.join("");
+    box.classList.toggle("on", cards.length > 0);
+  }
+  $("recentGames").onclick = (e) => {
+    const button = e.target.closest("[data-recent]");
+    if (!button) return;
+    if (button.dataset.recent === "host") hostUI.openGame(hostUI.getState());
+    else show("live");
+  };
+  renderRecentGames();
+  $("siteHostNav").onclick = () => $("hostOpen").click();
+  $("siteLiveNav").onclick = () => show("live");
+  $("siteGamesNav").onclick = () => {
+    renderGamesModal();
+    $("gamesModal").classList.add("on");
+    $("gamesSearch").focus();
+  };
+  $("siteToolsNav").onclick = () => {
+    show("menu");
+    requestAnimationFrame(() => $("training").scrollIntoView({ behavior: save.settings.motion ? "smooth" : "auto", block: "center" }));
+  };
+  $("siteMenuToggle").onclick = () => {
+    const on = $("siteNav").classList.toggle("on");
+    $("siteMenuToggle").setAttribute("aria-expanded", String(on));
+    if (on) $("siteNav").querySelector("button")?.focus();
+  };
+  $("siteNav").addEventListener("click", () => {
+    $("siteNav").classList.remove("on");
+    $("siteMenuToggle").setAttribute("aria-expanded", "false");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("siteNav").classList.contains("on")) {
+      $("siteNav").classList.remove("on");
+      $("siteMenuToggle").setAttribute("aria-expanded", "false");
+      $("siteMenuToggle").focus();
+    }
+  });
   $("workspaceSwitch").addEventListener("click", (e) => {
     const b = e.target.closest("[data-view]");
     if (!b) return;
@@ -4335,6 +5927,8 @@ summary{cursor:pointer;min-height:44px;align-content:center;font-weight:700}
   syncSettings();
   renderMenu();
   if (location.hash === "#screen-live") show("live");
+  if (location.hash === "#screen-urban") urbanUI.open();
+  setupI18n();
 })();
 
 </script>
