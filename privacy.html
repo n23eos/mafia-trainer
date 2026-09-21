@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Конфиденциальность и данные | Mafia-tool.com</title>
+<meta name="description" content="Как Mafia-tool.com хранит партии и настройки в браузере, когда включает аналитику и какие данные передаются через форму обратной связи.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mafia-tool.com/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Mafia-tool.com">
+<meta property="og:title" content="Конфиденциальность и данные | Mafia-tool.com">
+<meta property="og:description" content="Как Mafia-tool.com хранит партии и настройки в браузере, когда включает аналитику и какие данные передаются через форму обратной связи.">
+<meta property="og:url" content="https://mafia-tool.com/privacy.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Конфиденциальность и данные | Mafia-tool.com">
+<meta name="twitter:description" content="Как Mafia-tool.com хранит партии и настройки в браузере, когда включает аналитику и какие данные передаются через форму обратной связи.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Mafia-tool.com","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/privacy.html#webpage","url":"https://mafia-tool.com/privacy.html","name":"Конфиденциальность и данные | Mafia-tool.com","description":"Как Mafia-tool.com хранит партии и настройки в браузере, когда включает аналитику и какие данные передаются через форму обратной связи.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mafia-tool.com","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Конфиденциальность и данные | Mafia-tool.com","item":"https://mafia-tool.com/privacy.html"}]}]}</script><!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' — Mafia-tool.com' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
+<style>*{box-sizing:border-box}body{margin:0;background:#0b1d14;color:#f4ecdc;font:17px/1.75 system-ui,sans-serif}main,header,footer{max-width:850px;margin:auto;padding:24px}header{border-bottom:1px solid #39513e}footer{margin-top:32px;border-top:1px solid #39513e}a{color:#f0cf7e;text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid #f0cf7e;outline-offset:4px}h1{font-size:clamp(30px,6vw,46px);line-height:1.2}h2{margin-top:40px;line-height:1.3}h3{line-height:1.4}dt{font-weight:700;color:#f0cf7e}dd{margin:0 0 18px}li{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:12px}.cta{display:inline-block;padding:12px 16px;border-radius:8px;background:#d5ad61;color:#211e18;font-weight:700;text-decoration:none}.verified{padding:12px 16px;border-left:3px solid #d5ad61;background:#10271b;font-size:14px}.checklist{list-style:'✓  ';padding-left:28px}.language{display:flex;justify-content:flex-end}.language button{min-width:48px;min-height:44px;border:1px solid #8c784e;border-radius:9px;background:#10271b;color:#f0cf7e;font:700 14px system-ui;cursor:pointer}.footer-note{margin:14px 0 0;color:#bdb7a9;font-size:13px}</style></head><body><header><a href="./">Mafia-tool.com — открыть помощник по мафии</a></header><main><div class="language"><button type="button" id="pageLanguage" aria-label="Switch page language">EN</button></div><article data-page-language="ru">
+<h1>Конфиденциальность и данные</h1>
+<p class="verified">Обновлено 8 сентября 2026 года. Эта страница описывает текущее техническое поведение сайта.</p>
+<h2>Игры, заметки и настройки</h2>
+<p>Партии, имена игроков, заметки, выбранный язык и настройки интерфейса сохраняются локально в хранилище вашего браузера. Гостевые партии не отправляются в облако. В сборке с подключённым облаком после входа через Google или email новые партии сохраняются также в выбранном личном пространстве или клубе на сервере Supabase. Перенос гостевой партии выполняется кнопкой «Сохранить в облако». Клуб закрыт по умолчанию; при открытии клуба его администратором ники и статистика завершённых игр доступны посетителям. Приватные заметки и снимки партий не входят в публичную страницу. Очистка данных сайта в браузере может удалить сохранения.</p>
+<h2>Аналитика и файлы cookie</h2>
+<p>Google Analytics 4 загружается только после вашего явного согласия на официальном HTTPS-сайте. Она помогает понять посещаемость и использование функций и может применять cookie и передавать Google технические данные. Имена игроков и тексты заметок в события аналитики намеренно не включаются. Согласие можно изменить через ссылку «Настройки аналитики» внизу страницы.</p>
+<h2>Обратная связь и внешние сервисы</h2>
+<p>Форма обратной связи размещена в Google Forms. При её открытии действуют правила Google; мы получаем только то, что вы сами отправите. Не передавайте в заметках или форме лишние персональные и чувствительные данные.</p>
+<h2>Хранение и обращение</h2>
+<p>Локальные данные остаются до их удаления вами или браузером. Сроки хранения аналитики и ответов формы зависят от настроек соответствующих сервисов. Запрос по данным можно отправить через <a href="contacts.html">страницу контактов</a>. Юридические реквизиты оператора должны быть дополнены до запуска аккаунтов, облачного хранения или платных функций.</p></article><article data-page-language="en" lang="en" hidden>
+<h1>Privacy and data</h1>
+<p class="verified">Updated September 8, 2026. This page describes the website’s current technical behavior.</p>
+<h2>Games, notes, and preferences</h2>
+<p>Games, player names, notes, language, and interface preferences are stored locally in your browser. Guest games are not uploaded. In a cloud-enabled build, after Google or email sign-in, new games are also saved to the selected personal workspace or club on Supabase. Guest games are uploaded only with the Save to cloud action. Clubs are private by default; when an administrator makes a club public, visitors can see nicknames and finished-game statistics. Private notes and game snapshots are excluded from the public page. Clearing browser site data may delete your saves.</p>
+<h2>Analytics and cookies</h2>
+<p>Google Analytics 4 loads only after your explicit consent on the official HTTPS website. It helps us understand visits and feature usage, may use cookies, and may send technical data to Google. Player names and note contents are intentionally excluded from analytics events. You can change consent through “Analytics settings” at the bottom of the page.</p>
+<h2>Feedback and external services</h2>
+<p>The feedback form is hosted by Google Forms. Google’s terms apply when you open it; we receive only what you submit. Do not include unnecessary personal or sensitive information in notes or the form.</p>
+<h2>Retention and requests</h2>
+<p>Local data remains until you or the browser deletes it. Analytics and form-response retention depend on the respective service settings. Send data questions through the <a href="contacts.html">contact page</a>. Operator legal details must be added before accounts, cloud storage, or paid features launch.</p></article></main><footer><nav aria-label="Разделы сайта"><a href="./">Трекер и тренажёр</a><a href="mafia-online.html">Мафия онлайн</a><a href="spravochnik-mafii.html">Справочник</a><a href="contacts.html">Контакты</a><a href="privacy.html">Конфиденциальность</a><a href="terms.html">Условия</a></nav><p class="footer-note">© 2026 Mafia-tool.com · Публичный e-mail появится после настройки доменной почты.</p></footer><script>(()=>{const button=document.getElementById('pageLanguage'),articles=[...document.querySelectorAll('[data-page-language]')];function apply(value){const lang=value==='en'?'en':'ru';document.documentElement.lang=lang;articles.forEach(article=>article.hidden=article.dataset.pageLanguage!==lang);button.textContent=lang==='ru'?'EN':'RU';button.setAttribute('aria-label',lang==='ru'?'Switch page language':'Переключить язык страницы')}let saved='ru';try{saved=localStorage.getItem('protocol-language')||'ru'}catch{}apply(saved);button.addEventListener('click',()=>{const next=document.documentElement.lang==='ru'?'en':'ru';try{localStorage.setItem('protocol-language',next)}catch{}apply(next)})})()</script></body></html>
