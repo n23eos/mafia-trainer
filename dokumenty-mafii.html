@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Документы и источники правил мафии | Mafia-tool.com</title>
+<meta name="description" content="Где искать первоисточники правил мафии: ФСМ, каталоги MediaGame и ФИИМ, как проверить редакцию и не смешать разные системы.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mafia-tool.com/dokumenty-mafii.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Mafia-tool.com">
+<meta property="og:title" content="Документы и источники правил мафии | Mafia-tool.com">
+<meta property="og:description" content="Где искать первоисточники правил мафии: ФСМ, каталоги MediaGame и ФИИМ, как проверить редакцию и не смешать разные системы.">
+<meta property="og:url" content="https://mafia-tool.com/dokumenty-mafii.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Документы и источники правил мафии | Mafia-tool.com">
+<meta name="twitter:description" content="Где искать первоисточники правил мафии: ФСМ, каталоги MediaGame и ФИИМ, как проверить редакцию и не смешать разные системы.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Mafia-tool.com","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/dokumenty-mafii.html#webpage","url":"https://mafia-tool.com/dokumenty-mafii.html","name":"Документы и источники правил мафии | Mafia-tool.com","description":"Где искать первоисточники правил мафии: ФСМ, каталоги MediaGame и ФИИМ, как проверить редакцию и не смешать разные системы.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mafia-tool.com","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Документы и источники правил мафии | Mafia-tool.com","item":"https://mafia-tool.com/dokumenty-mafii.html"}]}]}</script><!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' - Mafia-tool.com' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
+<style>*{box-sizing:border-box}body{overflow-wrap:anywhere;margin:0;background:#0b1d14;color:#f4ecdc;font:17px/1.75 system-ui,sans-serif}main,header,footer{max-width:850px;margin:auto;padding:24px}header{border-bottom:1px solid #39513e}footer{margin-top:32px;border-top:1px solid #39513e}a{color:#f0cf7e;text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid #f0cf7e;outline-offset:4px}h1{font-size:clamp(30px,6vw,46px);line-height:1.2}h2{margin-top:40px;line-height:1.3}h3{line-height:1.4}dt{font-weight:700;color:#f0cf7e}dd{margin:0 0 18px}li{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:12px}.cta{display:inline-block;padding:12px 16px;border-radius:8px;background:#d5ad61;color:#211e18;font-weight:700;text-decoration:none}.verified{padding:12px 16px;border-left:3px solid #d5ad61;background:#10271b;font-size:14px}.checklist{list-style:'✓  ';padding-left:28px}.language{display:flex;justify-content:flex-end}.language button{min-width:48px;min-height:44px;border:1px solid #8c784e;border-radius:9px;background:#10271b;color:#f0cf7e;font:700 14px system-ui;cursor:pointer}.library-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}.library-card{padding:18px;border:1px solid #39513e;border-radius:12px;background:#10271b;text-decoration:none}.library-card strong,.library-card span{display:block}.library-card span{color:#bdb7a9;font-size:15px;margin-top:6px}.library-card:hover{border-color:#d5ad61}@media print{body{background:white;color:black;font-size:12pt}header,footer,.language,.cta,#analytics-choice,#analytics-settings{display:none!important}main{max-width:none;padding:0}a{color:inherit}.verified{background:none;border-color:black}h2,h3{break-after:avoid}}.footer-note{margin:14px 0 0;color:#bdb7a9;font-size:13px}</style></head><body><header><a href="./" data-label-ru="Mafia-tool.com - открыть помощник по мафии" data-label-en="Mafia-tool.com - open Mafia tools">Mafia-tool.com - открыть помощник по мафии</a></header><main><div class="language"><button type="button" id="pageLanguage" aria-label="Switch page language">EN</button></div><article data-page-language="ru">
+<h1>Документы и источники правил мафии</h1>
+<p>У мафии нет одного документа для всех клубов, турниров и домашних столов. Перед игрой выберите систему, найдите редакцию на сайте издателя и отдельно запишите изменения организатора. Эта страница помогает выбрать источник, но не объявляет любой каталог актуальным.</p>
+<nav aria-label="Содержание статьи"><strong>Содержание</strong><ul><li><a href="#choose">Как выбрать документ</a></li><li><a href="#catalog">Каталог источников</a></li><li><a href="#verify">Что проверить</a></li><li><a href="#own">Домашние памятки</a></li><li><a href="#sources">Дата проверки</a></li></ul></nav>
+<h2 id="choose">Сначала назовите систему правил</h2>
+<p>Фраза «играем по спортивным правилам» недостаточно точна. Попросите ссылку, издателя, дату редакции и список локальных изменений. Если турнир публикует собственный регламент, он может уточнять расписание, дисциплину и спорные процедуры поверх основного документа.</p>
+<p>Сохраните ссылку до начала игры. Скриншот отдельного пункта полезен как быстрый ориентир, но без названия и редакции он теряет контекст.</p>
+<h2 id="catalog">Каталог первоисточников</h2>
+<dl><dt>ФСМ</dt><dd><a href="https://gomafia.pro/fsm-rules.pdf" rel="external noreferrer">Правила ФСМ в PDF</a>. Файл прочитан для этой библиотеки; на нем указана редакция 17.10.2022. На сайте мы используем из него только короткие базовые сведения о составе и голосовании.</dd><dt>MediaGame</dt><dd><a href="https://mediagame.by/documents" rel="external noreferrer">Каталог документов MediaGame</a>. Страница содержит ссылки на правила и регламенты. Полные тексты связанных файлов для этой статьи не прочитаны, поэтому их редакция и актуальность здесь не подтверждаются.</dd><dt>ФИИМ</dt><dd><a href="https://fiim.world/fiim-rules" rel="external noreferrer">Каталог правил ФИИМ</a>. В нем представлены ссылки на правила, разъяснения и материалы для судей. Содержание связанных документов для этой статьи не прочитано, а их актуальность не обещается.</dd></dl>
+<p>Наличие ссылки в каталоге не означает, что документ подходит вашей игре. Откройте сам файл и сопоставьте его с объявлением организатора.</p>
+<h2 id="verify">Пять проверок перед использованием</h2>
+<ol><li>Совпадает ли издатель с системой, которую назвал ведущий?</li><li>Есть ли на документе дата, номер версии или история изменений?</li><li>Ведет ли ссылка на полный текст, а не на пересказ или старый снимок?</li><li>Опубликованы ли отдельные разъяснения, которые дополняют документ?</li><li>Перечислил ли организатор локальные изменения и приоритет документов при конфликте?</li></ol>
+<p>Если ответ неизвестен, так и запишите. Пометка «редакция не подтверждена» полезнее уверенного, но неподтвержденного заявления об актуальности.</p>
+<h2 id="own">Как использовать собственную памятку</h2>
+<p>Памятка ведущего может сокращать выбранный регламент для работы за столом: порядок команд, места для голосов, таймеры и контрольный список ночи. Подпишите ее как собственный материал и оставьте ссылку на первоисточник.</p>
+<p>Не добавляйте домашнее правило в памятку ФСМ или ФИИМ без отдельной маркировки. Например, иной набор ролей можно использовать на домашнем столе, но нельзя выдавать его за состав конкретной федерации.</p>
+<p>Для начала чтения откройте <a href="pravila-sportivnoj-mafii.html">краткое введение в спортивную мафию</a>. Организатору подойдет <a href="kak-provesti-mafiyu.html">собственный чек-лист ведущего Mafia-tool.com</a>.</p>
+<p><a class="cta" data-analytics-action="open_host_from_documents" href="./#screen-host">Открыть пульт ведущего</a></p>
+<p><a href="spravochnik-mafii.html">Вернуться в справочник мафии</a></p>
+<h2 id="sources">Дата и объем проверки</h2>
+<p class="verified">Проверено 4 октября 2026 года. PDF ФСМ прочитан. У MediaGame и ФИИМ проверены страницы каталогов, но не полные тексты связанных документов. Перед игрой самостоятельно откройте нужный файл и проверьте его редакцию.</p></article><article data-page-language="en" lang="en" hidden>
+<h1>Mafia rules documents and sources</h1>
+<p>There is no single Mafia document for every club, tournament, and home table. Before a game, choose a system, find an edition on the publisher's website, and record the organizer's changes separately. This page helps you select a source but does not declare every listed document current.</p>
+<nav aria-label="Article contents"><strong>Contents</strong><ul><li><a href="#en-choose">How to select a document</a></li><li><a href="#en-catalog">Source directory</a></li><li><a href="#en-verify">What to verify</a></li><li><a href="#en-own">Your own reference sheet</a></li><li><a href="#en-sources">Date checked</a></li></ul></nav>
+<h2 id="en-choose">Name the rules system first</h2>
+<p>Saying "we use sport rules" is not precise enough. Ask for a link, publisher, edition date, and list of local changes. A tournament may publish its own regulations for scheduling, discipline, and disputed procedures in addition to the main rules document.</p>
+<p>Save the link before the game begins. A screenshot of one section can be a quick reference, but without its title and edition it loses context.</p>
+<h2 id="en-catalog">Primary source directory</h2>
+<dl><dt>FSM</dt><dd><a href="https://gomafia.pro/fsm-rules.pdf" rel="external noreferrer">FSM rules PDF</a>. This file was read for the library and is marked as the edition dated October 17, 2022. The website uses only short basic details about table composition and voting from it.</dd><dt>MediaGame</dt><dd><a href="https://mediagame.by/documents" rel="external noreferrer">MediaGame document directory</a>. The page links to rules and tournament regulations. The linked files were not read in full for this article, so their editions and current status are not confirmed here.</dd><dt>FIIM</dt><dd><a href="https://fiim.world/fiim-rules" rel="external noreferrer">FIIM rules directory</a>. It lists rules, clarifications, and materials for officials. The linked documents were not read for this article, and their current status is not guaranteed.</dd></dl>
+<p>A link in a directory does not mean the document fits your game. Open the file itself and compare it with the organizer's announcement.</p>
+<h2 id="en-verify">Five checks before use</h2>
+<ol><li>Does the publisher match the system named by the host?</li><li>Does the document show a date, version number, or change history?</li><li>Does the link open the full text rather than a summary or old snapshot?</li><li>Are there separate clarifications that supplement the document?</li><li>Has the organizer listed local changes and document priority in case of conflict?</li></ol>
+<p>If the answer is unknown, record it as unknown. "Edition not confirmed" is more useful than a confident but unsupported claim that a document is current.</p>
+<h2 id="en-own">How to use your own reference sheet</h2>
+<p>A host reference sheet can condense the selected ruleset for table use: command order, spaces for votes, timers, and a night checklist. Label it as your own material and keep a link to the primary source.</p>
+<p>Do not add a home rule to an FSM or FIIM reference sheet without a separate label. A different role set may work at a home table, but it should not be presented as a federation's composition.</p>
+<p>Start with the <a href="pravila-sportivnoj-mafii.html">short introduction to Sport Mafia</a>. Organizers can use Mafia-tool.com's original <a href="kak-provesti-mafiyu.html">host checklist</a>.</p>
+<p><a class="cta" data-analytics-action="open_host_from_documents" href="./#screen-host">Open the host console</a></p>
+<p><a href="spravochnik-mafii.html">Back to the Mafia guide</a></p>
+<h2 id="en-sources">Date and scope of review</h2>
+<p class="verified">Checked October 4, 2026. The FSM PDF was read. The MediaGame and FIIM directory pages were checked, but the linked documents were not read in full. Before a game, open the required file and verify its edition yourself.</p></article></main><footer><nav aria-label="Разделы сайта"><a href="./" data-label-ru="Трекер и тренажёр" data-label-en="Tracker and puzzles">Трекер и тренажёр</a><a href="mafia-online.html" data-label-ru="Мафия онлайн" data-label-en="Online Mafia">Мафия онлайн</a><a href="spravochnik-mafii.html" data-label-ru="Справочник" data-label-en="Guide">Справочник</a><a href="dokumenty-mafii.html" data-label-ru="Документы" data-label-en="Documents">Документы</a><a href="contacts.html" data-label-ru="Контакты" data-label-en="Contact">Контакты</a><a href="privacy.html" data-label-ru="Конфиденциальность" data-label-en="Privacy">Конфиденциальность</a><a href="terms.html" data-label-ru="Условия" data-label-en="Terms">Условия</a></nav><p class="footer-note">© 2026 Mafia-tool.com · Публичный e-mail появится после настройки доменной почты.</p></footer><script>(()=>{const button=document.getElementById('pageLanguage'),articles=[...document.querySelectorAll('[data-page-language]')];function apply(value){const lang=value==='en'?'en':'ru';document.documentElement.lang=lang;articles.forEach(article=>article.hidden=article.dataset.pageLanguage!==lang);document.querySelectorAll('[data-label-ru]').forEach(el=>el.textContent=lang==='en'?el.dataset.labelEn:el.dataset.labelRu);button.textContent=lang==='ru'?'EN':'RU';button.setAttribute('aria-label',lang==='ru'?'Switch page language':'Переключить язык страницы')}let saved='ru';try{saved=localStorage.getItem('protocol-language')||'ru'}catch{}apply(saved);button.addEventListener('click',()=>{const next=document.documentElement.lang==='ru'?'en':'ru';try{localStorage.setItem('protocol-language',next)}catch{}apply(next)})})()</script></body></html>

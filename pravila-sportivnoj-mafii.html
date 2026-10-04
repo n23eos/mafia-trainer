@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Правила спортивной мафии для первой игры | Mafia-tool.com</title>
+<meta name="description" content="Краткая схема спортивной мафии: состав стола, день, ночь и вопросы, которые новичку стоит задать ведущему до начала партии.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mafia-tool.com/pravila-sportivnoj-mafii.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Mafia-tool.com">
+<meta property="og:title" content="Правила спортивной мафии для первой игры | Mafia-tool.com">
+<meta property="og:description" content="Краткая схема спортивной мафии: состав стола, день, ночь и вопросы, которые новичку стоит задать ведущему до начала партии.">
+<meta property="og:url" content="https://mafia-tool.com/pravila-sportivnoj-mafii.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Правила спортивной мафии для первой игры | Mafia-tool.com">
+<meta name="twitter:description" content="Краткая схема спортивной мафии: состав стола, день, ночь и вопросы, которые новичку стоит задать ведущему до начала партии.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Mafia-tool.com","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/pravila-sportivnoj-mafii.html#webpage","url":"https://mafia-tool.com/pravila-sportivnoj-mafii.html","name":"Правила спортивной мафии для первой игры | Mafia-tool.com","description":"Краткая схема спортивной мафии: состав стола, день, ночь и вопросы, которые новичку стоит задать ведущему до начала партии.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mafia-tool.com","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Правила спортивной мафии для первой игры | Mafia-tool.com","item":"https://mafia-tool.com/pravila-sportivnoj-mafii.html"}]}]}</script><!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' - Mafia-tool.com' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
+<style>*{box-sizing:border-box}body{overflow-wrap:anywhere;margin:0;background:#0b1d14;color:#f4ecdc;font:17px/1.75 system-ui,sans-serif}main,header,footer{max-width:850px;margin:auto;padding:24px}header{border-bottom:1px solid #39513e}footer{margin-top:32px;border-top:1px solid #39513e}a{color:#f0cf7e;text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid #f0cf7e;outline-offset:4px}h1{font-size:clamp(30px,6vw,46px);line-height:1.2}h2{margin-top:40px;line-height:1.3}h3{line-height:1.4}dt{font-weight:700;color:#f0cf7e}dd{margin:0 0 18px}li{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:12px}.cta{display:inline-block;padding:12px 16px;border-radius:8px;background:#d5ad61;color:#211e18;font-weight:700;text-decoration:none}.verified{padding:12px 16px;border-left:3px solid #d5ad61;background:#10271b;font-size:14px}.checklist{list-style:'✓  ';padding-left:28px}.language{display:flex;justify-content:flex-end}.language button{min-width:48px;min-height:44px;border:1px solid #8c784e;border-radius:9px;background:#10271b;color:#f0cf7e;font:700 14px system-ui;cursor:pointer}.library-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}.library-card{padding:18px;border:1px solid #39513e;border-radius:12px;background:#10271b;text-decoration:none}.library-card strong,.library-card span{display:block}.library-card span{color:#bdb7a9;font-size:15px;margin-top:6px}.library-card:hover{border-color:#d5ad61}@media print{body{background:white;color:black;font-size:12pt}header,footer,.language,.cta,#analytics-choice,#analytics-settings{display:none!important}main{max-width:none;padding:0}a{color:inherit}.verified{background:none;border-color:black}h2,h3{break-after:avoid}}.footer-note{margin:14px 0 0;color:#bdb7a9;font-size:13px}</style></head><body><header><a href="./" data-label-ru="Mafia-tool.com - открыть помощник по мафии" data-label-en="Mafia-tool.com - open Mafia tools">Mafia-tool.com - открыть помощник по мафии</a></header><main><div class="language"><button type="button" id="pageLanguage" aria-label="Switch page language">EN</button></div><article data-page-language="ru">
+<h1>Правила спортивной мафии для первой игры</h1>
+<p>Перед первой партией достаточно понять три вещи: кто играет за какую команду, что происходит днем и ночью и по какому регламенту работает ведущий. Детали вроде фолов и спорных голосований лучше уточнить до раздачи ролей.</p>
+<nav aria-label="Содержание статьи"><strong>Содержание</strong><ul><li><a href="#composition">Состав стола</a></li><li><a href="#flow">Ход партии</a></li><li><a href="#before">Что уточнить заранее</a></li><li><a href="#practice">Как учиться в первой игре</a></li><li><a href="#sources">Источники и границы</a></li></ul></nav>
+<h2 id="composition">Состав стола в редакции ФСМ 17.10.2022</h2>
+<p>В редакции ФСМ 17.10.2022 базовый стол состоит из 10 игроков: семи красных с шерифом и трех черных с доном.</p>
+<p>Это описание относится именно к указанной редакции ФСМ. В клубе, домашней игре или турнире другой организации роли, таймеры и процедуры могут отличаться.</p>
+<h2 id="flow">Как устроены день и ночь</h2>
+<p>Практически удобно мыслить раундами. Днем игроки говорят по очереди, выдвигают версии и участвуют в голосовании. Ночью активные роли выполняют свои действия, а ведущий сохраняет скрытую информацию. После объявления результата начинается следующий дневной круг.</p>
+<p>Игроку полезно разделять три слоя: подтвержденный ведущим факт, публичное заявление другого игрока и собственную версию. Например, слова «я шериф» остаются заявлением, пока формат игры не дает проверяемого подтверждения.</p>
+<h2 id="before">Что спросить у ведущего до раздачи</h2>
+<ul><li>Какой регламент и какая редакция используются?</li><li>Сколько длится речь и можно ли передавать остаток времени?</li><li>Как выставляется кандидат и можно ли отозвать кандидатуру?</li><li>Как ведущий проводит ничью и повторное голосование?</li><li>Какие действия считаются фолом и что происходит после предупреждений?</li><li>Разрешены ли телефон, заметки и трекер во время партии?</li></ul>
+<p>Ответы ведущего важнее этой краткой статьи для конкретного стола. Если правило влияет на решение игрока, попросите назвать документ или пункт до начала спорной ситуации.</p>
+<h2 id="practice">Как учиться в первой игре</h2>
+<p>Не пытайтесь сразу запомнить все связи. После каждой речи запишите одну короткую мысль: кого игрок считает красным, кого черным и на каком основании. После голосования сравните действие с речью.</p>
+<p><strong>Вымышленный учебный пример.</strong> Игрок №4 назвал №7 главным подозреваемым, но проголосовал в №2. Это не доказывает роль №4. Уточните, изменилось ли его мнение после следующих речей, был ли №7 выставлен и какой выбор реально оставался на голосовании.</p>
+<p>Для отдельного разбора процедуры откройте статью <a href="golosovanie-v-mafii.html">о голосовании и ничьей</a>. Ведущему пригодится <a href="kak-provesti-mafiyu.html">чек-лист подготовки стола</a>.</p>
+<p><a class="cta" data-analytics-action="open_host_from_sport_rules" href="./#screen-host">Открыть пульт ведущего</a></p>
+<p><a href="spravochnik-mafii.html">Вернуться в справочник мафии</a></p>
+<h2 id="sources">Источники и границы материала</h2>
+<p class="verified">Проверено 4 октября 2026 года. Источник правил: <a href="https://gomafia.pro/fsm-rules.pdf" rel="external noreferrer">PDF ФСМ, редакция 17.10.2022</a>. Пояснения, вопросы к ведущему и учебный пример подготовлены Mafia-tool.com и не являются официальным толкованием ФСМ.</p></article><article data-page-language="en" lang="en" hidden>
+<h1>Sport Mafia rules for your first game</h1>
+<p>Before your first game, focus on three things: which teams are at the table, what happens during the day and night, and which ruleset the host follows. Ask about details such as fouls and disputed votes before roles are dealt.</p>
+<nav aria-label="Article contents"><strong>Contents</strong><ul><li><a href="#en-composition">Table composition</a></li><li><a href="#en-flow">How a game proceeds</a></li><li><a href="#en-before">What to clarify first</a></li><li><a href="#en-practice">How to learn in your first game</a></li><li><a href="#en-sources">Sources and scope</a></li></ul></nav>
+<h2 id="en-composition">Table composition in the FSM rules dated October 17, 2022</h2>
+<p>In the FSM edition dated October 17, 2022, a standard table has 10 players: seven red players with a Sheriff and three black players with a Don.</p>
+<p>This description applies specifically to that FSM edition. A club, home game, or tournament run by another organization may use different roles, timers, and procedures.</p>
+<h2 id="en-flow">How day and night work</h2>
+<p>A practical way to understand the game is as a series of rounds. During the day, players speak in order, present their reads, and vote. At night, active roles perform their actions while the host keeps hidden information private. The next day begins after the result is announced.</p>
+<p>It helps to separate three layers: a fact confirmed by the host, another player's public claim, and your own theory. For example, saying "I am the Sheriff" remains a claim unless the game format provides verifiable confirmation.</p>
+<h2 id="en-before">What to ask before roles are dealt</h2>
+<ul><li>Which ruleset and edition are being used?</li><li>How long is each speech, and can unused time be passed on?</li><li>How is a candidate nominated, and can a nomination be withdrawn?</li><li>How does the host resolve a tie and conduct a revote?</li><li>Which actions count as fouls, and what follows repeated warnings?</li><li>Are phones, notes, and trackers allowed during the game?</li></ul>
+<p>For the game at your table, the host's answers take priority over this short guide. If a rule can affect a decision, ask for the document or section before a dispute begins.</p>
+<h2 id="en-practice">How to learn in your first game</h2>
+<p>Do not try to remember every connection at once. After each speech, write one short note: whom the player reads as red, whom they read as black, and why. After the vote, compare the action with the speech.</p>
+<p><strong>Fictional training example.</strong> Player 4 called Player 7 their main suspect but voted for Player 2. This does not prove Player 4's role. Check whether their opinion changed after later speeches, whether Player 7 was nominated, and which choices were actually available.</p>
+<p>For a focused explanation of procedure, read the guide to <a href="golosovanie-v-mafii.html">voting and ties</a>. Hosts can use the <a href="kak-provesti-mafiyu.html">table preparation checklist</a>.</p>
+<p><a class="cta" data-analytics-action="open_host_from_sport_rules" href="./#screen-host">Open the host console</a></p>
+<p><a href="spravochnik-mafii.html">Back to the Mafia guide</a></p>
+<h2 id="en-sources">Sources and scope</h2>
+<p class="verified">Checked October 4, 2026. Rules source: <a href="https://gomafia.pro/fsm-rules.pdf" rel="external noreferrer">FSM PDF, edition dated October 17, 2022</a>. The explanations, questions for the host, and training example were created by Mafia-tool.com and are not an official FSM interpretation.</p></article></main><footer><nav aria-label="Разделы сайта"><a href="./" data-label-ru="Трекер и тренажёр" data-label-en="Tracker and puzzles">Трекер и тренажёр</a><a href="mafia-online.html" data-label-ru="Мафия онлайн" data-label-en="Online Mafia">Мафия онлайн</a><a href="spravochnik-mafii.html" data-label-ru="Справочник" data-label-en="Guide">Справочник</a><a href="dokumenty-mafii.html" data-label-ru="Документы" data-label-en="Documents">Документы</a><a href="contacts.html" data-label-ru="Контакты" data-label-en="Contact">Контакты</a><a href="privacy.html" data-label-ru="Конфиденциальность" data-label-en="Privacy">Конфиденциальность</a><a href="terms.html" data-label-ru="Условия" data-label-en="Terms">Условия</a></nav><p class="footer-note">© 2026 Mafia-tool.com · Публичный e-mail появится после настройки доменной почты.</p></footer><script>(()=>{const button=document.getElementById('pageLanguage'),articles=[...document.querySelectorAll('[data-page-language]')];function apply(value){const lang=value==='en'?'en':'ru';document.documentElement.lang=lang;articles.forEach(article=>article.hidden=article.dataset.pageLanguage!==lang);document.querySelectorAll('[data-label-ru]').forEach(el=>el.textContent=lang==='en'?el.dataset.labelEn:el.dataset.labelRu);button.textContent=lang==='ru'?'EN':'RU';button.setAttribute('aria-label',lang==='ru'?'Switch page language':'Переключить язык страницы')}let saved='ru';try{saved=localStorage.getItem('protocol-language')||'ru'}catch{}apply(saved);button.addEventListener('click',()=>{const next=document.documentElement.lang==='ru'?'en':'ru';try{localStorage.setItem('protocol-language',next)}catch{}apply(next)})})()</script></body></html>

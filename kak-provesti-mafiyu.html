@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Как провести мафию на 10 человек: чек-лист ведущего | Mafia-tool.com</title>
+<meta name="description" content="Практический чек-лист ведущего мафии: подготовка стола, роли, таймер, журнал, день, ночь и разбор после игры.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mafia-tool.com/kak-provesti-mafiyu.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Mafia-tool.com">
+<meta property="og:title" content="Как провести мафию на 10 человек: чек-лист ведущего | Mafia-tool.com">
+<meta property="og:description" content="Практический чек-лист ведущего мафии: подготовка стола, роли, таймер, журнал, день, ночь и разбор после игры.">
+<meta property="og:url" content="https://mafia-tool.com/kak-provesti-mafiyu.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Как провести мафию на 10 человек: чек-лист ведущего | Mafia-tool.com">
+<meta name="twitter:description" content="Практический чек-лист ведущего мафии: подготовка стола, роли, таймер, журнал, день, ночь и разбор после игры.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Mafia-tool.com","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/kak-provesti-mafiyu.html#webpage","url":"https://mafia-tool.com/kak-provesti-mafiyu.html","name":"Как провести мафию на 10 человек: чек-лист ведущего | Mafia-tool.com","description":"Практический чек-лист ведущего мафии: подготовка стола, роли, таймер, журнал, день, ночь и разбор после игры.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mafia-tool.com","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Как провести мафию на 10 человек: чек-лист ведущего | Mafia-tool.com","item":"https://mafia-tool.com/kak-provesti-mafiyu.html"}]}]}</script><!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' - Mafia-tool.com' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
+<style>*{box-sizing:border-box}body{overflow-wrap:anywhere;margin:0;background:#0b1d14;color:#f4ecdc;font:17px/1.75 system-ui,sans-serif}main,header,footer{max-width:850px;margin:auto;padding:24px}header{border-bottom:1px solid #39513e}footer{margin-top:32px;border-top:1px solid #39513e}a{color:#f0cf7e;text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid #f0cf7e;outline-offset:4px}h1{font-size:clamp(30px,6vw,46px);line-height:1.2}h2{margin-top:40px;line-height:1.3}h3{line-height:1.4}dt{font-weight:700;color:#f0cf7e}dd{margin:0 0 18px}li{margin-bottom:12px}nav{display:flex;flex-wrap:wrap;gap:12px}.cta{display:inline-block;padding:12px 16px;border-radius:8px;background:#d5ad61;color:#211e18;font-weight:700;text-decoration:none}.verified{padding:12px 16px;border-left:3px solid #d5ad61;background:#10271b;font-size:14px}.checklist{list-style:'✓  ';padding-left:28px}.language{display:flex;justify-content:flex-end}.language button{min-width:48px;min-height:44px;border:1px solid #8c784e;border-radius:9px;background:#10271b;color:#f0cf7e;font:700 14px system-ui;cursor:pointer}.library-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}.library-card{padding:18px;border:1px solid #39513e;border-radius:12px;background:#10271b;text-decoration:none}.library-card strong,.library-card span{display:block}.library-card span{color:#bdb7a9;font-size:15px;margin-top:6px}.library-card:hover{border-color:#d5ad61}@media print{body{background:white;color:black;font-size:12pt}header,footer,.language,.cta,#analytics-choice,#analytics-settings{display:none!important}main{max-width:none;padding:0}a{color:inherit}.verified{background:none;border-color:black}h2,h3{break-after:avoid}}.footer-note{margin:14px 0 0;color:#bdb7a9;font-size:13px}</style></head><body><header><a href="./" data-label-ru="Mafia-tool.com - открыть помощник по мафии" data-label-en="Mafia-tool.com - open Mafia tools">Mafia-tool.com - открыть помощник по мафии</a></header><main><div class="language"><button type="button" id="pageLanguage" aria-label="Switch page language">EN</button></div><article data-page-language="ru">
+<h1>Как провести мафию на 10 человек</h1>
+<p>Хорошая работа ведущего начинается до раздачи. Выберите регламент, подготовьте роли и журнал, вслух объясните спорные процедуры и только после этого запускайте игру. Ниже находится собственный рабочий чек-лист Mafia-tool.com, его можно распечатать средствами браузера.</p>
+<nav aria-label="Содержание статьи"><strong>Содержание</strong><ul><li><a href="#prepare">Подготовка</a></li><li><a href="#briefing">Инструктаж игроков</a></li><li><a href="#game">Работа во время игры</a></li><li><a href="#finish">Завершение и разбор</a></li><li><a href="#sources">Источники и границы</a></li></ul></nav>
+<h2 id="prepare">Подготовка стола</h2>
+<ul class="checklist"><li>Назовите систему правил и редакцию. Если используете клубные изменения, перечислите их отдельно.</li><li>Проверьте комплект ролей, номера мест и способ случайной раздачи.</li><li>Подготовьте таймер, тихий сигнал окончания речи и резервный способ считать время.</li><li>Откройте журнал для голосов, предупреждений, ночных действий и выбывших игроков.</li><li>Уберите подсказки, по которым игроки могут заметить роль соседа.</li><li>Проверьте свет, звук и доступность места, если игра проходит очно.</li></ul>
+<p>Для стола на десять мест заранее выберите точный формат. Если это спортивная мафия по конкретной редакции, покажите участникам ссылку на нее. Если это домашний вариант, назовите его домашним и опишите роли своими словами.</p>
+<h2 id="briefing">Короткий инструктаж перед раздачей</h2>
+<p>Объясните порядок речи, способ выставления кандидата, момент фиксации голоса и процедуру ничьей. Отдельно проговорите фолы, использование телефона, заметок и допустимые жесты. Попросите игроков задать вопросы сейчас, пока ответы не раскрывают игровую информацию.</p>
+<p>Полезная формула ведущего: «Играем по такому-то документу, с такими-то изменениями клуба. Спорную ситуацию решаю по этому регламенту и называю решение всему столу». Она снимает ожидание, что разные системы правил можно смешивать по ходу партии.</p>
+<h2 id="game">Во время игры</h2>
+<ol><li>Объявляйте этап и активного игрока одинаковой формулировкой.</li><li>Запускайте таймер только после понятного сигнала начала речи.</li><li>Сначала записывайте действие, затем объявляйте результат.</li><li>При споре остановите процедуру, сверяйтесь с выбранным документом и сообщайте одно решение всему столу.</li><li>Не комментируйте качество версии и не подсказывайте скрытую информацию интонацией.</li><li>Перед ночью сверьте живых игроков, активные роли и записи текущего дня.</li></ol>
+<p><strong>Вымышленный учебный пример.</strong> Игрок №6 назвал номер кандидата одновременно с сигналом конца речи. Ведущий не должен импровизировать, исходя из симпатии к игроку. Он применяет заранее объявленное правило фиксации, коротко сообщает решение и продолжает игру.</p>
+<h2 id="finish">После завершения партии</h2>
+<ul class="checklist"><li>Объявите результат и раскройте роли в предусмотренном формате порядке.</li><li>Сохраните журнал до окончания вопросов.</li><li>Отделите ошибку процедуры от тактической ошибки игрока.</li><li>Запишите один пункт, который нужно яснее объяснить перед следующей игрой.</li></ul>
+<p>Подробности состава стола собраны в статье <a href="pravila-sportivnoj-mafii.html">о правилах спортивной мафии</a>. Для подготовки спорных случаев откройте материал <a href="golosovanie-v-mafii.html">о голосовании</a>.</p>
+<p><a class="cta" data-analytics-action="open_host_from_host_guide" href="./#screen-host">Открыть пульт ведущего</a></p>
+<p><a href="spravochnik-mafii.html">Вернуться в справочник мафии</a></p>
+<h2 id="sources">Источники и границы материала</h2>
+<p class="verified">Проверено 4 октября 2026 года. Этот чек-лист создан Mafia-tool.com и не является регламентом ФСМ, ФИИМ, MediaGame или отдельного клуба. Для решений за столом используйте выбранный первоисточник из <a href="dokumenty-mafii.html">каталога документов</a>.</p></article><article data-page-language="en" lang="en" hidden>
+<h1>How to host a 10-player Mafia game</h1>
+<p>Good hosting starts before the roles are dealt. Choose a ruleset, prepare the cards and game log, explain disputed procedures aloud, and only then begin. The checklist below is an original Mafia-tool.com resource that you can print with your browser.</p>
+<nav aria-label="Article contents"><strong>Contents</strong><ul><li><a href="#en-prepare">Preparation</a></li><li><a href="#en-briefing">Player briefing</a></li><li><a href="#en-game">Running the game</a></li><li><a href="#en-finish">Ending and review</a></li><li><a href="#en-sources">Sources and scope</a></li></ul></nav>
+<h2 id="en-prepare">Prepare the table</h2>
+<ul class="checklist"><li>Name the ruleset and edition. List any club changes separately.</li><li>Check the role cards, seat numbers, and random dealing method.</li><li>Prepare a timer, a quiet end-of-speech signal, and a backup way to track time.</li><li>Open a log for votes, warnings, night actions, and eliminated players.</li><li>Remove clues that could let players notice a neighbor's role.</li><li>Check light, sound, and physical access if the game is in person.</li></ul>
+<p>For a ten-seat table, select the exact format in advance. If you use a particular edition of Sport Mafia rules, share its link with the players. If you use a home variant, call it a home variant and describe its roles in your own words.</p>
+<h2 id="en-briefing">Give a short briefing before the deal</h2>
+<p>Explain the speaking order, nomination method, the moment a vote becomes final, and the tie procedure. Cover fouls, phone and note use, and permitted gestures separately. Invite questions now, while the answers cannot reveal game information.</p>
+<p>A useful host script is: "We are using this document with these club changes. I will resolve disputed situations under this ruleset and announce each decision to the whole table." This prevents players from expecting different systems to be mixed during the game.</p>
+<h2 id="en-game">Run the game consistently</h2>
+<ol><li>Announce each stage and active player with the same wording.</li><li>Start the timer only after a clear signal that the speech has begun.</li><li>Record the action before announcing its result.</li><li>When a dispute occurs, pause the procedure, consult the selected document, and give one ruling to the whole table.</li><li>Do not evaluate a player's theory or reveal hidden information through tone.</li><li>Before night, verify the living players, active roles, and the current day's notes.</li></ol>
+<p><strong>Fictional training example.</strong> Player 6 names a candidate at the same moment as the end-of-speech signal. The host should not improvise based on sympathy for the player. Apply the previously announced rule for recording the nomination, state the ruling briefly, and continue.</p>
+<h2 id="en-finish">After the game</h2>
+<ul class="checklist"><li>Announce the result and reveal roles in the order required by the format.</li><li>Keep the game log until questions are finished.</li><li>Separate a procedural error from a player's tactical mistake.</li><li>Write down one point to explain more clearly before the next game.</li></ul>
+<p>Read the <a href="pravila-sportivnoj-mafii.html">Sport Mafia rules guide</a> for table composition. To prepare for disputed situations, use the guide to <a href="golosovanie-v-mafii.html">voting</a>.</p>
+<p><a class="cta" data-analytics-action="open_host_from_host_guide" href="./#screen-host">Open the host console</a></p>
+<p><a href="spravochnik-mafii.html">Back to the Mafia guide</a></p>
+<h2 id="en-sources">Sources and scope</h2>
+<p class="verified">Checked October 4, 2026. This checklist was created by Mafia-tool.com and is not an FSM, FIIM, MediaGame, or individual club ruleset. Use the selected primary source from the <a href="dokumenty-mafii.html">document directory</a> when ruling at the table.</p></article></main><footer><nav aria-label="Разделы сайта"><a href="./" data-label-ru="Трекер и тренажёр" data-label-en="Tracker and puzzles">Трекер и тренажёр</a><a href="mafia-online.html" data-label-ru="Мафия онлайн" data-label-en="Online Mafia">Мафия онлайн</a><a href="spravochnik-mafii.html" data-label-ru="Справочник" data-label-en="Guide">Справочник</a><a href="dokumenty-mafii.html" data-label-ru="Документы" data-label-en="Documents">Документы</a><a href="contacts.html" data-label-ru="Контакты" data-label-en="Contact">Контакты</a><a href="privacy.html" data-label-ru="Конфиденциальность" data-label-en="Privacy">Конфиденциальность</a><a href="terms.html" data-label-ru="Условия" data-label-en="Terms">Условия</a></nav><p class="footer-note">© 2026 Mafia-tool.com · Публичный e-mail появится после настройки доменной почты.</p></footer><script>(()=>{const button=document.getElementById('pageLanguage'),articles=[...document.querySelectorAll('[data-page-language]')];function apply(value){const lang=value==='en'?'en':'ru';document.documentElement.lang=lang;articles.forEach(article=>article.hidden=article.dataset.pageLanguage!==lang);document.querySelectorAll('[data-label-ru]').forEach(el=>el.textContent=lang==='en'?el.dataset.labelEn:el.dataset.labelRu);button.textContent=lang==='ru'?'EN':'RU';button.setAttribute('aria-label',lang==='ru'?'Switch page language':'Переключить язык страницы')}let saved='ru';try{saved=localStorage.getItem('protocol-language')||'ru'}catch{}apply(saved);button.addEventListener('click',()=>{const next=document.documentElement.lang==='ru'?'en':'ru';try{localStorage.setItem('protocol-language',next)}catch{}apply(next)})})()</script></body></html>
