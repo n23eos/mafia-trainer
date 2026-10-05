@@ -80,6 +80,17 @@
     document.body.append(ui);
     const panel = ui.querySelector('#analytics-choice');
     const settings = ui.querySelector('#analytics-settings');
+    const russianMessage = panel.querySelector('p').textContent;
+    function localize() {
+      const english = document.documentElement.lang === 'en';
+      panel.setAttribute('aria-label',english ? 'Visit analytics' : 'Статистика посещений');
+      settings.textContent = english ? 'Analytics settings' : 'Настройки статистики';
+      panel.querySelector('p').textContent = english ? 'Allow Google Analytics to collect statistics about visits and section usage? Google receives technical visit data and uses cookies. We do not send player names or game notes. You can change your choice at the bottom of the page.' : russianMessage;
+      panel.querySelector('[data-analytics="yes"]').textContent = english ? 'Allow' : 'Разрешить';
+      panel.querySelector('[data-analytics="no"]').textContent = english ? 'Do not allow' : 'Не разрешать';
+    }
+    localize();
+    new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
     settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
     ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
       const value = button.dataset.analytics;
