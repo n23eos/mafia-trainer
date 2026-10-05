@@ -1,0 +1,117 @@
+/* Observer: permanent editor and fast statements, sharing the existing game model. */
+#screen-live .session-bar{position:relative;top:auto;grid-template-columns:auto minmax(0,1fr) auto auto;box-shadow:none}
+.observer-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:8px 0 16px}
+.observer-toolbar .live-summary{margin:0;display:flex;align-items:center;gap:12px;order:3;margin-left:auto}
+.observer-toolbar #liveSaveStatus{font-size:11px;max-width:230px}
+.observer-toolbar #liveMode,.observer-toolbar .workspace-switch{margin:0;width:auto}
+.observer-toolbar button{min-height:44px}
+#casualPanel{padding:0;border:0;background:transparent}
+.observer-roundbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:0 0 12px}
+.observer-roundbar .tabs{margin:0;gap:5px;flex:1;flex-wrap:wrap}
+.observer-roundbar .tab{min-height:44px;margin:0}
+.observer-roundbar #casualProgress{margin:0;font-size:12px}
+.observer-roundbar #casualContinue{font-size:12px}
+.observer-grid{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(480px,1.4fr);gap:20px;align-items:start}
+.observer-grid>*{min-width:0}
+.observer-roster{border:1px solid var(--line);border-radius:14px;padding:16px;background:#0e251a}
+#casualPanel .observer-roster h2{font:700 14px 'Manrope',sans-serif;display:inline}
+#casualPanel .observer-roster-hint{display:inline;margin-left:12px;font-size:12px}
+#casualSeats{grid-template-columns:1fr;gap:5px;margin:14px 0 0}
+#casualSeats button{display:flex;align-items:center;text-align:left;gap:12px;padding:6px 10px;min-height:46px;min-width:0;border:1px solid transparent;background:#142f22;position:relative;font-size:13px}
+#casualSeats button[aria-pressed=true]{border-color:var(--brass);background:#274431;box-shadow:inset 3px 0 var(--brass)}
+#casualSeats button[data-role=red] .seat-number{background:#813a36;color:#fff1ec}
+#casualSeats button[data-role=black] .seat-number{background:#191b21;color:#d9d9dd;border:1px solid #878b94}
+#casualSeats button[data-role=sheriff] .seat-number,#casualSeats button[data-role=don] .seat-number{border:1px solid var(--gold)}
+.seat-number{display:grid;place-items:center;flex-shrink:0;width:30px;height:30px;border-radius:8px;background:#244632;font-weight:800;font-size:16px}
+.seat-content{min-width:0;display:block}.seat-role{font-weight:700}.seat-relations{display:block;font-size:11px;line-height:1.4;color:var(--cream-dim);overflow-wrap:anywhere}
+#casualSeats .seat-confidence{font-size:10px;margin:2px 0 0}.seat-mobile-status{display:none}
+#casualSeats .seat-out{opacity:.6}#casualTeams:empty{display:none}
+#playerCard.observer-inline{position:static;display:block;width:100%;max-width:none;max-height:none;margin:0;overflow:visible;padding:18px;border-radius:14px;background:#112b1e;box-sizing:border-box}
+#playerCard.observer-inline header{min-height:42px}
+#playerCard [hidden]{display:none!important}
+#playerCard h2{font:700 19px 'Manrope',sans-serif}
+.observer-eyebrow{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:5px}
+#playerCard h3{font-size:12px;margin:12px 0 7px;font-weight:700}
+.observer-relations{padding-bottom:6px;border-bottom:1px solid var(--line)}
+.observer-targets{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}
+#playerCard .observer-targets button{min-width:0;padding:0;min-height:44px;font-size:15px;font-weight:700;border-color:#58725f}
+#playerCard #playerSuspects [aria-pressed=true]{background:#4d2729;color:#ffd8d1;border-color:#db8b81;box-shadow:inset 0 -3px #db8b81}
+#playerCard #playerTrusts [aria-pressed=true]{background:#284a3d;color:#dcf5e7;border-color:#9ac5a9;box-shadow:inset 0 -3px #9ac5a9}
+#playerCard .observer-targets button:disabled{opacity:.25;cursor:default}
+#playerCard .observer-relation-hint{font-size:11px;margin:8px 0 4px}
+#playerCard .card-choices{gap:6px}
+#playerCard #playerRoles button{padding:8px 6px;font-size:13px}
+#playerCard .observer-claim{display:flex;align-items:center;gap:8px;font-size:12px;margin:12px 0}
+#playerCard label[for=playerNote]{margin:10px 0 6px;font-size:12px}
+#playerNote{min-height:62px;padding:9px 10px;line-height:1.4}
+#playerCard footer{position:static;padding:12px 0 6px;gap:8px}
+#playerCard footer span{font-size:10px;max-width:48%;line-height:1.4}
+#playerCard footer #playerNext{font-size:13px;padding:10px 14px;white-space:nowrap}
+#playerCard .optional-block{margin-top:8px}
+#playerCard .optional-block>summary{font-size:12px;min-height:44px;display:flex;align-items:center;cursor:pointer}
+#observerVoteSlot{padding:18px;background:var(--cream);color:var(--ink);border-radius:14px}
+#observerVoteSlot[hidden],#observerEditorSlot[hidden]{display:none}
+#observerVoteSlot .vote-entry{margin:0;padding:0;border:0}
+#observerVoteSlot .vote-entry>summary{pointer-events:none;font:700 18px 'Manrope',sans-serif;list-style:none;margin-bottom:14px}
+#observerVoteSlot .vote-entry>summary::-webkit-details-marker{display:none}
+#observerVoteSlot .voter-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+#observerVoteSlot #tableJump{display:block;margin-bottom:12px}
+#observerVoteSlot p{color:#514636}
+#screen-live button:focus-visible,#playerCard button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media(max-width:750px){.observer-targets{grid-template-columns:repeat(5,minmax(44px,1fr))}}
+@media(min-width:1100px){.observer-roster{position:sticky;top:86px}}
+@media(max-width:1099px){
+ .observer-grid{grid-template-columns:minmax(195px,.55fr) minmax(440px,1.45fr);gap:12px}
+ .observer-roster{padding:12px}.observer-roster-hint{display:none!important}
+ #casualSeats button{min-height:48px;padding:6px;gap:7px}
+ #playerCard.observer-inline{padding:14px}.observer-targets{gap:3px}
+ .observer-toolbar{gap:8px}.observer-toolbar .live-summary{gap:8px}
+}
+@media(max-width:739px){
+ .observer-grid{grid-template-columns:minmax(0,1fr);gap:10px}
+ #screen-live .session-bar{padding:6px;gap:6px;margin-bottom:8px}
+ #screen-live .session-bar .backbtn{font-size:11px;padding:4px}
+ #screen-live .session-title strong{font-size:12px}
+ #screen-live .session-title span{font-size:9px}
+ #screen-live #liveCustomize{font-size:11px;padding:6px}
+ .observer-toolbar{margin:6px 0 10px;gap:6px}
+ .observer-toolbar #liveMode{flex:1;gap:4px}.observer-toolbar #liveMode button{font-size:11px;padding:6px}
+ .observer-toolbar .workspace-switch{padding:2px}.observer-toolbar .workspace-switch button{padding:6px 10px;font-size:11px}
+ .observer-toolbar #voteJump{font-size:11px;padding:6px 10px}
+ .observer-toolbar .live-summary{flex:1;justify-content:flex-end}
+ .observer-toolbar #liveSaveStatus{font-size:9px;max-width:110px}
+ .observer-toolbar #liveUndo{font-size:11px;padding:6px 10px}
+ .observer-roundbar{gap:6px;padding-bottom:8px}.observer-roundbar .tabs{flex:1 1 100%}
+ .observer-roundbar #casualProgress{font-size:10px;flex:1}.observer-roundbar #casualContinue{font-size:10px;padding:4px 8px}
+ .observer-roster{padding:10px}.observer-roster h2{font-size:12px!important}
+ #casualSeats{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-top:8px}
+ #casualSeats button{min-height:44px;justify-content:center;padding:4px;gap:4px}
+ .seat-number{width:25px;height:28px;font-size:15px}.seat-content{display:none}.seat-mobile-status{display:inline;font-size:11px}
+ #casualTeams{font-size:10px!important;margin-bottom:0!important}
+ #playerCard.observer-inline{padding:12px}
+ .observer-targets{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+ #playerCard h2{font-size:17px}.observer-eyebrow{font-size:9px}
+ #playerCard #playerRoles button{font-size:11px;padding:7px 4px}
+ #playerCard footer{flex-wrap:nowrap}#playerCard footer #playerNext{width:auto;font-size:12px;padding:10px}
+ #playerCard .confidence-column{grid-template-columns:1fr 50px 92px;padding:8px}
+ #playerCard .confidence-track{display:none}
+}
+@media(prefers-reduced-motion:reduce){#screen-live *{scroll-behavior:auto}}
+.observer-roundbar .tab{color:var(--cream);border-color:var(--brass-dim)}
+.observer-roundbar .tab.active{background:#304735;color:var(--cream);border-color:var(--brass)}
+@media(max-width:739px){
+ .observer-toolbar .live-summary{flex-wrap:nowrap;flex:0 0 auto;margin-left:auto}
+ .observer-toolbar #liveSaveStatus{display:none}
+ .observer-toolbar #liveSaveStatus.save-error{display:block;max-width:160px}
+ .observer-roundbar .tabs{flex:1 1 auto}
+ .observer-roundbar #casualProgress{flex:0 1 110px;line-height:1.5}
+ .observer-roundbar #casualContinue{display:none}
+ .observer-roster{padding:8px}
+ #casualPanel .observer-roster h2{display:none}
+ #casualSeats{margin:0}
+}
+.observer-editor{container-type:inline-size}
+@container(max-width:510px){.observer-targets{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}}
+@media(max-width:739px){
+ .observer-roster{position:sticky;top:74px;z-index:10;box-shadow:0 6px 12px #071a1299}
+}

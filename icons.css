@@ -1,0 +1,10 @@
+/* Shared, decorative artwork. Controls retain their existing touch targets. */
+.mt-icon{display:inline-block;width:20px;height:20px;flex:0 0 auto;vertical-align:-.2em;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+button>.mt-icon+span{margin-left:6px}
+button>.mt-icon{vertical-align:middle}
+.uc-role .mt-icon,.uc-private-role>.mt-icon{color:#e6c88d;width:22px;height:22px}
+.uc-state .mt-icon{width:15px;height:15px;margin-right:3px}
+#playerRoles .mt-icon{width:18px;height:18px;margin-right:3px}
+.hd-start-marker .mt-icon{width:12px;height:12px}
+.hd-clock-controls .mt-icon,.hd-audio-player .mt-icon{width:18px;height:18px}
+.legend .mt-icon,.lg .mt-icon,.ln .mt-icon{width:15px;height:15px}

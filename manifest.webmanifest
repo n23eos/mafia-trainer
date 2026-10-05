@@ -1,0 +1,19 @@
+{
+  "name": "Mafia-tool.com - пульт ведущего",
+  "short_name": "Mafia-tool",
+  "description": "Локальный пульт ведущего для игры в мафию",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4efe4",
+  "theme_color": "#172019",
+  "icons": [
+    {
+      "src": "assets/icons/role-don.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
