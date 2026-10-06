@@ -101,7 +101,8 @@ export function applyHomeMetadata(value,documentRef=globalThis.document){
 }
 
 const path=typeof location==='undefined'?'':location.pathname.split('/').pop()||'';
-const english=englishPages[path];
+const embeddedEnglish=typeof document==='undefined'?null:document.getElementById('pageEnglishMetadata');
+const english=englishPages[path]||(embeddedEnglish?JSON.parse(embeddedEnglish.textContent):null);
 const button=typeof document==='undefined'?null:document.getElementById('pageLanguage');
 
 if(english&&button){
