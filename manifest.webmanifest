@@ -10,7 +10,13 @@
   "theme_color": "#172019",
   "icons": [
     {
-      "src": "assets/icons/role-don.svg",
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/role-mafia.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
