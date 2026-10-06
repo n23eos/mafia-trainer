@@ -1,4 +1,8 @@
 const englishPages={
+  'help.html':{
+    title:'Site help: OBS, consoles and tools | Mafia-tool.com',
+    description:'Step-by-step Mafia-tool.com guides: connect OBS, upload player photos, use sports and urban consoles, manage game evenings, timers, music and saved data.',
+  },
   'contacts.html':{
     title:'Contact and feedback | Mafia-tool.com',
     description:'How to contact the Mafia-tool.com team, report a bug, or suggest an improvement to tools for Mafia hosts and players.',
@@ -108,7 +112,8 @@ const button=typeof document==='undefined'?null:document.getElementById('pageLan
 if(english&&button){
   const replacement=button.cloneNode(true);
   button.replaceWith(replacement);
-  const articles=[...document.querySelectorAll('[data-page-language]')];
+  const main=document.querySelector('main');
+  const articles=[...(main?.querySelectorAll('[data-page-language]')||[])];
   const metadata={
     title:document.title,
     description:document.querySelector('meta[name="description"]')?.content||'',
@@ -119,16 +124,22 @@ if(english&&button){
     ru:{
       brand:'Mafia-tool.com, главная',
       navigation:'Основная навигация',
+      libraryNavigation:'Статьи справочника',
+      sidebar:'Навигация сайта',
       switcher:'Переключить страницу на английский',
       menu:'Открыть меню',
+      closeMenu:'Закрыть меню',
       footer:'Разделы сайта',
       footerNote:'© 2026 Mafia-tool.com · Публичный e-mail появится после настройки доменной почты.',
     },
     en:{
       brand:'Mafia-tool.com, home',
       navigation:'Primary navigation',
+      libraryNavigation:'Library articles',
+      sidebar:'Site navigation',
       switcher:'Switch page to Russian',
       menu:'Open menu',
+      closeMenu:'Close menu',
       footer:'Site sections',
       footerNote:'© 2026 Mafia-tool.com · A public email address will be added after domain email is configured.',
     },
@@ -156,6 +167,20 @@ if(english&&button){
     return data;
   }
 
+  // The help generator gives each language its own IDs. Keep shared links usable
+  // when a saved language differs from the language encoded in the fragment.
+  function syncHelpAnchor(lang){
+    if(path!=='help.html'||!location.hash)return;
+    let anchor;
+    try{anchor=decodeURIComponent(location.hash.slice(1));}catch{return;}
+    const section=anchor.replace(/^en-/,'');
+    const targetId=(lang==='en'?'en-':'')+section;
+    const target=document.getElementById(targetId);
+    if(!target)return;
+    if(anchor!==targetId)history.replaceState(null,'',location.pathname+location.search+'#'+targetId);
+    requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));
+  }
+
   function apply(value){
     const lang=value==='en'?'en':'ru';
     const copy=common[lang];
@@ -172,20 +197,26 @@ if(english&&button){
     setMeta(document,'meta[property="og:locale"]',lang==='en'?'en_US':'ru_RU');
     setMeta(document,'meta[name="twitter:title"]',page.title);
     setMeta(document,'meta[name="twitter:description"]',page.description);
-    document.querySelector('.site-brand')?.setAttribute('aria-label',copy.brand);
-    document.querySelector('.site-header .site-nav')?.setAttribute('aria-label',copy.navigation);
+    document.querySelectorAll('.site-brand,.site-mobile-brand').forEach(brand=>brand.setAttribute('aria-label',copy.brand));
+    document.querySelector('.site-nav[data-navigation="global"]')?.setAttribute('aria-label',copy.navigation);
+    document.querySelector('.site-library-nav')?.setAttribute('aria-label',copy.libraryNavigation);
+    document.getElementById('siteSidebar')?.setAttribute('aria-label',copy.sidebar);
     document.getElementById('siteMenuToggle')?.setAttribute('aria-label',copy.menu);
+    document.querySelector('.site-sidebar-backdrop')?.setAttribute('aria-label',copy.closeMenu);
     document.querySelector('footer nav')?.setAttribute('aria-label',copy.footer);
     const footerNote=document.querySelector('.footer-note');
     if(footerNote) footerNote.textContent=copy.footerNote;
     replacement.textContent=lang==='ru'?'EN':'RU';
     replacement.setAttribute('aria-label',copy.switcher);
     if(structuredNode) structuredNode.textContent=JSON.stringify(localizedStructuredData(lang));
+    document.dispatchEvent(new CustomEvent('protocol:language',{detail:lang}));
+    syncHelpAnchor(lang);
   }
 
   let saved='ru';
   try{saved=localStorage.getItem('protocol-language')||'ru';}catch{}
   apply(saved);
+  if(path==='help.html')window.addEventListener('hashchange',()=>syncHelpAnchor(document.documentElement.lang));
   replacement.addEventListener('click',()=>{
     const next=document.documentElement.lang==='ru'?'en':'ru';
     try{localStorage.setItem('protocol-language',next);}catch{}

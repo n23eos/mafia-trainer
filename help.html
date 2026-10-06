@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Помощь по сайту: OBS, пульт и инструменты | Mafia-tool.com</title>
+<meta name="description" content="Пошаговые инструкции Mafia-tool.com: подключение OBS, фотографии игроков, спортивный и городской пульты, игровые вечера, таймер, музыка и сохранение данных.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mafia-tool.com/help.html">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+<link rel="icon" type="image/svg+xml" sizes="any" href="assets/icons/role-mafia.svg">
+<link rel="apple-touch-icon" sizes="192x192" href="favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Mafia-tool.com">
+<meta property="og:title" content="Помощь по сайту: OBS, пульт и инструменты | Mafia-tool.com">
+<meta property="og:description" content="Пошаговые инструкции Mafia-tool.com: подключение OBS, фотографии игроков, спортивный и городской пульты, игровые вечера, таймер, музыка и сохранение данных.">
+<meta property="og:url" content="https://mafia-tool.com/help.html">
+<meta property="og:image" content="https://mafia-tool.com/assets/mafia-noir-header-v1.webp">
+<meta property="og:image:alt" content="Mafia-tool.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mafia-tool.com/assets/mafia-noir-header-v1.webp">
+<meta name="twitter:image:alt" content="Mafia-tool.com">
+<meta name="twitter:title" content="Помощь по сайту: OBS, пульт и инструменты | Mafia-tool.com">
+<meta name="twitter:description" content="Пошаговые инструкции Mafia-tool.com: подключение OBS, фотографии игроков, спортивный и городской пульты, игровые вечера, таймер, музыка и сохранение данных.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mafia-tool.com/#website","url":"https://mafia-tool.com/","name":"Mafia-tool.com","alternateName":"Mafia Tool","inLanguage":"ru"},{"@type":"WebPage","@id":"https://mafia-tool.com/help.html#webpage","url":"https://mafia-tool.com/help.html","name":"Помощь по сайту: OBS, пульт и инструменты | Mafia-tool.com","description":"Пошаговые инструкции Mafia-tool.com: подключение OBS, фотографии игроков, спортивный и городской пульты, игровые вечера, таймер, музыка и сохранение данных.","inLanguage":"ru","isPartOf":{"@id":"https://mafia-tool.com/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mafia-tool.com","item":"https://mafia-tool.com/"},{"@type":"ListItem","position":2,"name":"Помощь по сайту: OBS, пульт и инструменты | Mafia-tool.com","item":"https://mafia-tool.com/help.html"}]}]}</script><!-- ANALYTICS_START --><script>(function analyticsRuntime(id, siteUrl) {
+  const site = new URL(siteUrl);
+  if (location.protocol !== 'https:' || location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const consentKey = 'protocol:analytics-consent:v1';
+  const screens = {menu:'Главная',live:'Трекер игры',game:'Головоломка',advanced:'Анализ игроков',campaign:'Кампания',stats:'Статистика',settings:'Настройки'};
+  let allowed = false, started = false, lastPage = '', currentScreen = 'menu';
+  const canonical = document.querySelector('link[rel="canonical"]')?.href || siteUrl;
+  const home = canonical === siteUrl;
+  const safeReferrer = (() => {
+    try { const ref = new URL(document.referrer); return ref.origin + ref.pathname; } catch { return ''; }
+  })();
+  window.dataLayer = window.dataLayer || [];
+  function tag() { window.dataLayer.push(arguments); }
+  // No Google script or request until an explicit analytics opt-in.
+  function view() {
+    if (!allowed) return;
+    const url = home && currentScreen !== 'menu' ? canonical + '#screen-' + currentScreen : canonical;
+    if (url === lastPage) return;
+    const pageData = {
+      page_location:url,
+      page_title:home ? screens[currentScreen] + ' - Mafia-tool.com' : document.title,
+      page_referrer:lastPage || safeReferrer,
+      ...(home ? {screen_name:currentScreen} : {}),
+    };
+    tag('set',pageData);
+    tag('event','page_view',pageData);
+    lastPage = url;
+  }
+  function start() {
+    window['ga-disable-' + id] = false;
+    if (!started) {
+      tag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+      tag('js',new Date());
+      tag('config',id,{send_page_view:false,page_location:canonical,page_referrer:safeReferrer,page_title:document.title,allow_google_signals:false,allow_ad_personalization_signals:false,cookie_path:site.pathname});
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+      document.head.append(script);
+      started = true;
+    } else tag('consent','update',{analytics_storage:'granted'});
+    view();
+  }
+  document.addEventListener('protocol:screen',event=>{
+    if (!home || !Object.hasOwn(screens,event.detail)) return;
+    currentScreen = event.detail;
+    view();
+  });
+  document.addEventListener('click',event=>{
+    const target = event.target.closest?.('[data-analytics-action]');
+    if (!allowed || !target) return;
+    const action = target.dataset.analyticsAction;
+    if (!/^[a-z0-9_]{1,40}$/.test(action)) return;
+    tag('event','tool_cta',{cta_action:action,source_page:new URL(canonical).pathname});
+  },true);
+  function init() {
+    if (home) {
+      const active = document.querySelector('.screen.on')?.id?.replace('screen-','');
+      if (Object.hasOwn(screens,active)) currentScreen = active;
+    }
+    let choice;
+    try { choice = localStorage.getItem(consentKey); } catch { /* Browser storage may be unavailable. */ }
+    const ui = document.createElement('div');
+    ui.innerHTML = `<style>
+#analytics-choice{position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;z-index:10000;padding:18px;background:#10271b;color:#f4ecdc;border:1px solid #d5ad61;border-radius:12px;box-shadow:0 5px 30px #0008;font:14px/1.6 system-ui,sans-serif}
+#analytics-choice[hidden]{display:none}#analytics-choice p{margin:0 0 12px}#analytics-choice button,#analytics-settings{font:inherit;cursor:pointer;padding:8px 12px;border:1px solid #d5ad61;border-radius:6px;background:#10271b;color:#f4ecdc}#analytics-choice button{margin:0 8px 6px 0}#analytics-settings{display:block;margin:24px auto;font:12px system-ui,sans-serif}#analytics-choice button:focus-visible,#analytics-settings:focus-visible{outline:3px solid #f0cf7e;outline-offset:3px}
+</style><section id="analytics-choice" aria-label="Статистика посещений" hidden><p>Разрешить Google Analytics собирать статистику посещений и использования разделов? Google получает технические данные посещения и использует cookies. Имена игроков и игровые заметки мы не отправляем. Выбор можно изменить внизу страницы.</p><button type="button" data-analytics="yes">Разрешить</button><button type="button" data-analytics="no">Не разрешать</button></section><button type="button" id="analytics-settings">Настройки статистики</button>`;
+    document.body.append(ui);
+    const panel = ui.querySelector('#analytics-choice');
+    const settings = ui.querySelector('#analytics-settings');
+    const russianMessage = panel.querySelector('p').textContent;
+    function localize() {
+      const english = document.documentElement.lang === 'en';
+      panel.setAttribute('aria-label',english ? 'Visit analytics' : 'Статистика посещений');
+      settings.textContent = english ? 'Analytics settings' : 'Настройки статистики';
+      panel.querySelector('p').textContent = english ? 'Allow Google Analytics to collect statistics about visits and section usage? Google receives technical visit data and uses cookies. We do not send player names or game notes. You can change your choice at the bottom of the page.' : russianMessage;
+      panel.querySelector('[data-analytics="yes"]').textContent = english ? 'Allow' : 'Разрешить';
+      panel.querySelector('[data-analytics="no"]').textContent = english ? 'Do not allow' : 'Не разрешать';
+    }
+    localize();
+    new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+    settings.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button').focus();});
+    ui.querySelectorAll('[data-analytics]').forEach(button=>button.addEventListener('click',()=>{
+      const value = button.dataset.analytics;
+      allowed = value === 'yes';
+      try { localStorage.setItem(consentKey,value); } catch { /* Keep the choice for this page only. */ }
+      if (allowed) start();
+      else {
+        if (started) tag('consent','update',{analytics_storage:'denied'});
+        window['ga-disable-' + id] = true;
+        lastPage = '';
+      }
+      panel.hidden=true;
+      settings.focus();
+    }));
+    allowed = choice === 'yes';
+    if (allowed) start();
+    else panel.hidden = choice === 'no';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})("G-2QRS3Q7P2X","https://mafia-tool.com/");</script><!-- ANALYTICS_END -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;600;800&family=PT+Mono&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}html,body{margin:0}[hidden]{display:none!important}.help-page h2{scroll-margin-top:90px}.help-page h3{margin-top:26px}.help-kicker{font:700 12px system-ui;letter-spacing:.1em;color:#d5ad61}.help-intro{font-size:19px;color:#d9d4c9}.help-reference{color:#bdb7a9}.help-topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:28px 0 36px}.help-topics a{display:block;text-decoration:none;padding:17px;border:1px solid #39513e;border-radius:12px;background:#10271b;min-width:0}.help-topics a:hover{border-color:#d5ad61}.help-topics strong,.help-topics span{display:block}.help-topics span{margin-top:5px;font-size:14px;color:#bdb7a9;line-height:1.5}.help-guides h2{border-top:1px solid #39513e;padding-top:22px}.help-guides h2:target{border-top-color:#d5ad61}.help-guides li{padding-left:3px}.help-guides code{font-size:.9em;overflow-wrap:anywhere}.help-guides a{overflow-wrap:anywhere}.help-end{padding:18px;border-radius:10px;background:#10271b}@media(max-width:540px){.help-topics{grid-template-columns:1fr}.help-topics a{padding:14px}.help-page h2{scroll-margin-top:78px}}@media print{.help-topics{display:none}.help-guides>section{break-inside:auto}.help-guides h2{break-after:avoid}.help-kicker{color:inherit}}:root{
+  --site-sidebar-width:256px;
+  --site-mobile-bar-height:58px;
+  --site-shell-bg:#0b1d14;
+  --site-shell-surface:#10271b;
+  --site-shell-text:#f4ecdc;
+  --site-shell-muted:#bdb7a9;
+  --site-shell-line:rgba(244,236,220,.14);
+  --site-shell-gold:#d5ad61;
+  --site-shell-gold-bright:#f0cf7e;
+}
+.site-mobile-bar{display:none}
+.site-sidebar{position:fixed;inset:0 auto 0 0;z-index:100;display:flex;flex-direction:column;width:var(--site-sidebar-width);max-width:100%;margin:0;padding:0;border:0;border-right:1px solid var(--site-shell-line);background:#0b2419;color:var(--site-shell-text);box-shadow:8px 0 32px rgba(0,0,0,.13)}
+.site-sidebar-head{padding:22px 20px 15px;border-bottom:1px solid var(--site-shell-line)}
+.site-brand,.site-mobile-brand{color:var(--site-shell-text);font:400 20px/1.25 Prata,serif;text-decoration:none;white-space:nowrap}
+.site-brand i,.site-mobile-brand i{color:var(--site-shell-gold);font-style:normal}
+.site-beta{margin-left:4px;padding:2px 5px;border:1px solid var(--site-shell-gold);border-radius:3px;color:var(--site-shell-gold);font:700 9px Manrope,sans-serif;vertical-align:middle}
+.site-sidebar-subtitle{margin:7px 0 0;color:var(--site-shell-muted);font:500 11px/1.4 Manrope,sans-serif}
+.site-sidebar-scroll{min-height:0;overflow-x:hidden;overflow-y:auto;padding:12px 9px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#496354 transparent}
+.site-sidebar .site-nav,.site-library-nav{position:static;inset:auto;display:block;flex:none;width:auto;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.site-nav-group,.site-library-group{display:grid;gap:1px;margin:0 0 13px;padding:0}
+.site-nav-label{margin:0;padding:5px 10px;color:#91a397;font:700 10px/1.3 'PT Mono',monospace;letter-spacing:.09em;text-transform:uppercase}
+.site-nav-link,.site-library-link{position:relative;display:flex;align-items:center;gap:10px;min-width:0;min-height:38px;margin:0;padding:7px 10px;border:0;border-radius:4px;background:transparent;color:#d5d0c5;font:600 12px/1.35 Manrope,sans-serif;text-align:left;text-decoration:none;cursor:pointer}
+button.site-nav-link{width:100%}
+.site-nav-link .mt-icon{flex:0 0 auto;width:18px;height:18px;color:#aebdb3}
+.site-nav-link span,.site-library-link span{min-width:0;overflow-wrap:anywhere}
+.site-nav-link:hover,.site-library-link:hover{background:rgba(244,236,220,.055);color:var(--site-shell-text)}
+.site-nav-link[aria-current="page"],.site-library-link[aria-current="page"]{background:rgba(213,173,97,.12);color:#fff8e9}
+.site-nav-link[aria-current="page"]::before,.site-library-link[aria-current="page"]::before{content:'';position:absolute;inset:6px auto 6px 0;width:3px;border-radius:2px;background:var(--site-shell-gold)}
+.site-nav-link[aria-current="page"] .mt-icon{color:var(--site-shell-gold-bright)}
+.site-library-nav{margin-top:5px;padding-top:13px;border-top:1px solid var(--site-shell-line)}
+.site-library-link{min-height:0;padding:5px 10px 5px 17px;color:#bfc8c1;font-size:11px;font-weight:500}
+.site-sidebar-foot{display:flex;align-items:center;padding:11px 18px;border-top:1px solid var(--site-shell-line)}
+.language-switch{display:inline-flex;align-items:center;justify-content:center;min-width:46px;min-height:36px;padding:6px 10px;border:1px solid rgba(244,236,220,.25);border-radius:4px;background:transparent;color:var(--site-shell-text);font:700 12px 'PT Mono',monospace;cursor:pointer}
+.language-switch:hover{border-color:var(--site-shell-gold);color:var(--site-shell-gold-bright)}
+.site-sidebar-toggle{display:none}.site-sidebar-backdrop{display:none}
+body.flat-shell{overflow-wrap:anywhere}
+body.flat-shell-app{padding-left:calc(var(--site-sidebar-width) + 18px);background:var(--site-shell-bg)}
+.flat-shell-app .site-shell-main,.flat-shell-app>.wrap{width:100%;max-width:1280px;margin-right:auto;margin-left:auto}
+body.flat-shell-static{padding-left:var(--site-sidebar-width);background:var(--site-shell-bg);color:var(--site-shell-text);font:16px/1.68 Manrope,system-ui,sans-serif}
+.flat-shell-static main,.flat-shell-static footer{width:min(100%,940px);margin:0 auto;padding:32px clamp(22px,4vw,48px)}
+.flat-shell-static main{min-height:70vh}.flat-shell-static footer{margin-top:18px;padding-top:20px;border-top:1px solid var(--site-shell-line)}
+.flat-shell-static footer nav{display:flex;flex-wrap:wrap;gap:7px 18px}
+.flat-shell-static main a,.flat-shell-static footer a{color:var(--site-shell-gold-bright);text-underline-offset:3px}
+.flat-shell-static a:focus-visible,.flat-shell-static button:focus-visible{outline:3px solid var(--site-shell-gold-bright);outline-offset:3px}
+.flat-shell-static main h1{max-width:820px;margin:0 0 13px;font:400 clamp(28px,4vw,40px)/1.16 Prata,serif;letter-spacing:.01em}
+.flat-shell-static main h2{margin:32px 0 11px;font-size:clamp(21px,2.5vw,28px);line-height:1.25;scroll-margin-top:24px}
+.flat-shell-static main h3{margin:24px 0 9px;font-size:18px;line-height:1.35;scroll-margin-top:24px}
+.flat-shell-static main p,.flat-shell-static main ul,.flat-shell-static main ol,.flat-shell-static main dl{margin-top:0;margin-bottom:16px}
+.flat-shell-static main li{margin-bottom:7px}.flat-shell-static main dt{color:var(--site-shell-gold-bright);font-weight:800}.flat-shell-static main dd{margin:0 0 14px}
+.flat-shell-static main article>nav{display:block;margin:20px 0 25px;padding:3px 0 3px 16px;border-left:2px solid var(--site-shell-gold);color:var(--site-shell-muted)}
+.flat-shell-static main article>nav strong{display:block;margin-bottom:6px;color:var(--site-shell-text);font-size:13px}
+.flat-shell-static main article>nav ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 22px;margin:0;padding-left:18px}
+.flat-shell-static main article>nav li{margin:0}
+.flat-shell-static .cta{display:inline-block;padding:9px 13px;border:1px solid var(--site-shell-gold);border-radius:4px;background:var(--site-shell-gold);color:#172219;font-weight:800;text-decoration:none}
+.flat-shell-static .verified{padding:10px 0 10px 14px;border-left:2px solid var(--site-shell-gold);background:transparent;color:#d6d0c4;font-size:13px}
+.flat-shell-static .checklist{padding-left:25px;list-style:'✓  '}
+.flat-shell-static .library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin-bottom:20px}
+.flat-shell-static .library-card{display:block;padding:11px 0;border:0;border-bottom:1px solid var(--site-shell-line);border-radius:0;background:transparent;color:var(--site-shell-text);text-decoration:none}
+.flat-shell-static .library-card strong,.flat-shell-static .library-card span{display:block}
+.flat-shell-static .library-card strong{font-size:14px;line-height:1.4}.flat-shell-static .library-card span{margin-top:3px;color:var(--site-shell-muted);font-size:12px;line-height:1.45}
+.flat-shell-static .library-card:hover strong{color:var(--site-shell-gold-bright)}
+.flat-shell-static .footer-note{margin:13px 0 0;color:var(--site-shell-muted);font-size:12px}
+@media(max-width:980px){
+  body.flat-shell-app,body.flat-shell-static{padding-left:0}body.site-sidebar-open{overflow:hidden}
+  .site-header.site-mobile-bar{position:sticky;top:0;z-index:95;display:flex;align-items:center;gap:12px;min-height:var(--site-mobile-bar-height);margin:0;padding:9px 14px;border:0;border-bottom:1px solid var(--site-shell-line);background:rgba(8,29,19,.96);backdrop-filter:blur(14px)}
+  .site-header.site-mobile-bar .site-header-inner{display:flex;width:100%;max-width:none;min-height:0;margin:0;padding:0}
+  .site-sidebar-toggle{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid var(--site-shell-line);border-radius:4px;background:transparent;color:var(--site-shell-text);cursor:pointer}
+  .site-sidebar-toggle .mt-icon{width:20px;height:20px}.site-mobile-brand{font-size:17px}
+  .site-mobile-bar>.language-switch{margin-left:auto}
+  .site-sidebar{position:static;width:100%;height:auto;max-height:none;border-right:0;border-bottom:1px solid var(--site-shell-line);box-shadow:none}.site-sidebar-scroll{overflow:visible}
+  html.site-sidebar-ready .site-sidebar{position:fixed;inset:0 auto 0 0;width:min(86vw,300px);height:100dvh;max-height:100dvh;border-right:1px solid var(--site-shell-line);border-bottom:0;box-shadow:16px 0 45px rgba(0,0,0,.45);transform:translateX(-104%);transition:transform .18s ease;visibility:hidden}
+  html.site-sidebar-ready .site-sidebar.is-open{transform:translateX(0);visibility:visible}html.site-sidebar-ready .site-sidebar-scroll{overflow-y:auto}
+  .site-sidebar-backdrop{position:fixed;inset:0;z-index:99;display:block;width:100%;height:100%;padding:0;border:0;background:rgba(0,0,0,.58);cursor:pointer}.site-sidebar-backdrop[hidden]{display:none}
+  .flat-shell-static main,.flat-shell-static footer{padding:24px 18px}.flat-shell-static main h1{font-size:clamp(27px,8vw,36px)}
+  .flat-shell-static main article>nav ul,.flat-shell-static .library-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){html.site-sidebar-ready .site-sidebar{transition:none}}
+@media print{body.flat-shell-app,body.flat-shell-static{padding:0;background:#fff;color:#000;font-size:12pt}.site-mobile-bar,.site-sidebar,.site-sidebar-backdrop,.language-switch,.cta,#analytics-choice,#analytics-settings,footer{display:none!important}.flat-shell-static main{width:auto;max-width:none;padding:0}.flat-shell-static main a{color:inherit}.flat-shell-static .verified{background:none;border-color:#000;color:#000}.flat-shell-static main h2,.flat-shell-static main h3{break-after:avoid}}
+.flat-shell-static main article>nav>a{display:inline-block;margin:3px 12px 3px 0}
+</style></head><body class="flat-shell flat-shell-static"><header class="site-header site-mobile-bar"><button class="site-sidebar-toggle" id="siteMenuToggle" type="button" aria-label="Открыть меню" aria-controls="siteSidebar" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line fill="none" x1="4" y1="7" x2="20" y2="7"/><line fill="none" x1="4" y1="12" x2="20" y2="12"/><line fill="none" x1="4" y1="17" x2="20" y2="17"/></svg></button><a class="site-mobile-brand" href="./" aria-label="Mafia-tool.com, главная">Mafia<i>-tool</i>.com</a></header>
+<button class="site-sidebar-backdrop" id="siteSidebarBackdrop" type="button" aria-label="Закрыть меню" hidden></button>
+<aside class="site-sidebar site-header" id="siteSidebar" aria-label="Навигация сайта">
+  <div class="site-sidebar-head"><a class="site-brand" href="./" aria-label="Mafia-tool.com, главная">Mafia<i>-tool</i>.com <small class="site-beta" data-label-ru="Бета" data-label-en="Beta">Бета</small></a><p class="site-sidebar-subtitle" data-label-ru="Инструменты для игры в мафию" data-label-en="Tools for Mafia games">Инструменты для игры в мафию</p></div>
+  <div class="site-sidebar-scroll"><nav class="site-nav" id="siteNav" data-navigation="global" aria-label="Основная навигация"><section class="site-nav-group"><h2 class="site-nav-label" id="siteNavGroup0" data-label-ru="Игра" data-label-en="Game">Игра</h2><a class="site-nav-link" id="siteCreateNav" href="./#screen-create"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="add" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle fill="none" cx="12" cy="12" r="8.5"/><line fill="none" x1="12" y1="8" x2="12" y2="16"/><line fill="none" x1="8" y1="12" x2="16" y2="12"/></svg><span data-label-ru="Создать игру" data-label-en="New game">Создать игру</span></a><a class="site-nav-link" id="siteHostNav" href="./#screen-host"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="timer" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle fill="none" cx="12" cy="13" r="7.75"/><line fill="none" x1="12" y1="13" x2="15.15" y2="10.8"/><line fill="none" x1="9.5" y1="3" x2="14.5" y2="3"/><line fill="none" x1="12" y1="3" x2="12" y2="5.25"/><path fill="none" opacity="0.42" d="m17.75 7.2 1.45-1.45"/></svg><span data-label-ru="Пульт ведущего" data-label-en="Host console">Пульт ведущего</span></a><a class="site-nav-link" id="siteUrbanNav" href="./#screen-urban"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="group" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle fill="none" cx="9" cy="8.5" r="3"/><circle fill="none" opacity="0.42" cx="16.75" cy="9.5" r="2.3"/><path fill="none" d="M3.5 19.5c.35-4 2.4-6 5.5-6s5.15 2 5.5 6"/><path fill="none" opacity="0.42" d="M14.5 14.2c3.6-.65 5.6 1.15 6 4.3"/></svg><span data-label-ru="Городская мафия" data-label-en="Home Mafia">Городская мафия</span></a><a class="site-nav-link" id="siteGamesNav" href="./#screen-games"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="list" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line fill="none" x1="9" y1="6" x2="20" y2="6"/><line fill="none" x1="9" y1="12" x2="20" y2="12"/><line fill="none" x1="9" y1="18" x2="20" y2="18"/><circle fill="none" cx="5" cy="6" r="0.8"/><circle fill="none" cx="5" cy="12" r="0.8"/><circle fill="none" cx="5" cy="18" r="0.8"/></svg><span data-label-ru="Мои игры" data-label-en="My games">Мои игры</span></a><a class="site-nav-link" id="siteEveningsNav" href="./#screen-evenings"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="club" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M3.5 10h17v10h-17z"/><path fill="none" d="M6 10V6.5l6-3 6 3V10"/><line fill="none" x1="7" y1="14" x2="7" y2="20"/><line fill="none" x1="12" y1="14" x2="12" y2="20"/><line fill="none" x1="17" y1="14" x2="17" y2="20"/><line fill="none" x1="2.5" y1="20" x2="21.5" y2="20"/></svg><span data-label-ru="Вечера и составы" data-label-en="Game evenings">Вечера и составы</span></a></section><section class="site-nav-group"><h2 class="site-nav-label" id="siteNavGroup1" data-label-ru="Инструменты" data-label-en="Tools">Инструменты</h2><a class="site-nav-link" id="siteBroadcastNav" href="./#screen-broadcast"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="broadcast" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M8.5 9.4v5.2l5 3V6.4z"/><path fill="none" opacity="0.42" d="M16 8.3a5.2 5.2 0 0 1 0 7.4M18.7 5.7a8.8 8.8 0 0 1 0 12.6"/><rect fill="none" x="3.5" y="10" width="2.5" height="4" rx="0.5"/></svg><span data-label-ru="Трансляция OBS" data-label-en="OBS broadcast">Трансляция OBS</span></a><a class="site-nav-link" id="siteLiveNav" href="./#screen-live"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="eye" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M2.6 12s3.35-5.25 9.4-5.25S21.4 12 21.4 12 18.05 17.25 12 17.25 2.6 12 2.6 12z"/><circle fill="none" cx="12" cy="12" r="2.55"/><path fill="none" opacity="0.42" d="M4.55 5.15 19.45 18.85"/></svg><span data-label-ru="Наблюдатель" data-label-en="Observer">Наблюдатель</span></a><a class="site-nav-link" id="siteToolsNav" href="./#screen-toolkit"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="audio" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M4 10h3l4-3.5v11L7 14H4z"/><path fill="none" opacity="0.42" d="M14.5 9.2a4 4 0 0 1 0 5.6M17.2 6.55a7.7 7.7 0 0 1 0 10.9"/></svg><span data-label-ru="Музыка и инструменты" data-label-en="Music and tools">Музыка и инструменты</span></a><a class="site-nav-link" id="siteDeviceNav" href="./#screen-device"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="settings" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle fill="none" cx="12" cy="12" r="3"/><path fill="none" opacity="0.42" d="M9.5 3.6h5l.6 2.15 1.75 1 2.15-.55 2.5 4.3-1.55 1.6v2l1.55 1.6-2.5 4.3-2.15-.55-1.75 1-.6 2.15h-5l-.6-2.15-1.75-1L5 20.4l-2.5-4.3 1.55-1.6v-2L2.5 10.9 5 6.6l2.15.55 1.75-1z"/></svg><span data-label-ru="Настройки" data-label-en="Settings">Настройки</span></a></section><section class="site-nav-group"><h2 class="site-nav-label" id="siteNavGroup2" data-label-ru="Справочник" data-label-en="Library">Справочник</h2><a class="site-nav-link" id="siteRulesNav" href="pravila-sportivnoj-mafii.html"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="file" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M6 2.8h8l4 4v14.4H6z"/><path fill="none" opacity="0.42" d="M14 2.8v4h4"/><line fill="none" x1="9" y1="11" x2="15" y2="11"/><line fill="none" x1="9" y1="15" x2="15" y2="15"/><line fill="none" x1="9" y1="18" x2="13" y2="18"/></svg><span data-label-ru="Правила" data-label-en="Rules">Правила</span></a><a class="site-nav-link" id="siteGuideNav" href="spravochnik-mafii.html"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="book" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path fill="none" d="M3.5 5.2c3.2-.9 5.9-.25 8.5 1.65v13c-2.6-1.9-5.3-2.55-8.5-1.65z"/><path fill="none" d="M20.5 5.2c-3.2-.9-5.9-.25-8.5 1.65v13c2.6-1.9 5.3-2.55 8.5-1.65z"/><line fill="none" opacity="0.42" x1="12" y1="6.85" x2="12" y2="19.85"/></svg><span data-label-ru="Все статьи" data-label-en="All articles">Все статьи</span></a><a class="site-nav-link" id="siteHelpNav" href="help.html" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" class="mt-icon" aria-hidden="true" focusable="false" data-icon="help" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle fill="none" cx="12" cy="12" r="8.5"/><path fill="none" d="M9.6 9.2a2.55 2.55 0 0 1 4.85 1.05c0 1.65-2.45 1.9-2.45 3.55"/><line fill="none" x1="12" y1="17.1" x2="12" y2="17.1"/></svg><span data-label-ru="Помощь по сайту" data-label-en="Site help">Помощь по сайту</span></a></section></nav></div>
+  <div class="site-sidebar-foot"><button class="language-switch" id="pageLanguage" type="button" aria-label="Переключить страницу на английский">EN</button></div>
+</aside><main class="site-shell-main"><article data-page-language="ru"><div class="help-page"><p class="help-kicker">MAFIA-TOOL.COM / ПОМОЩЬ ПО САЙТУ</p><h1>Помощь по сайту</h1><p class="help-intro">Выберите задачу. В каждой инструкции указано, куда перейти, что нажать и какой результат вы увидите.</p><p class="help-reference">Нужны правила игры? Откройте <a href="spravochnik-mafii.html">справочник по мафии</a>.</p><nav class="help-topics" aria-label="Темы помощи"><a href="#quick-start"><strong>Первые шаги</strong><span>Как начать и где найти свои игры</span></a><a href="#obs"><strong>Подключение OBS</strong><span>Ссылка, источник «Браузер» и настройки эфира</span></a><a href="#avatars"><strong>Фотографии игроков</strong><span>Загрузить фото и включить полосу портретов</span></a><a href="#sports"><strong>Спортивный пульт</strong><span>Подготовка, речи, голосование и ночь</span></a><a href="#urban"><strong>Городской пульт</strong><span>Свои роли, состав и ночные действия</span></a><a href="#evenings"><strong>Вечера, составы и итоги</strong><span>Объединить партии и сохранить результаты</span></a><a href="#observation"><strong>Запись просмотра</strong><span>Заметки, версии ролей и голоса</span></a><a href="#tools"><strong>Инструменты</strong><span>Таймер, музыка, экран и печать мест</span></a><a href="#data"><strong>Сохранение и работа без сети</strong><span>Резервная копия, перенос и обновления</span></a><a href="#obs-troubleshooting"><strong>Если OBS показывает пустой экран</strong><span>Что проверить перед эфиром</span></a></nav><div class="help-guides">
+<h2 id="obs">Подключение OBS</h2>
+<p>Модуль OBS доступен в подготовленной версии приложения с подключённым сервисом трансляции. Это обычная веб-страница для источника OBS «Браузер», устанавливать отдельный плагин не нужно.</p>
+<p class="verified">Для ведущего нужен кабинет, сохранённая партия и доступный сервис трансляции. Получателю вход в кабинет не нужен.</p>
+<h3>Подготовьте приложение</h3>
+<ol><li>Войдите в кабинет ведущего и создайте или продолжите сохранённую партию.</li><li>Откройте в пульте пункт «Трансляция OBS».</li><li>Выберите «Выход»: «Трансляция» или «Экран в зале». Для каждого выхода настройки и ссылка отдельные.</li><li>Выберите «Пульт»: «Спортивная мафия» или «Городская мафия».</li><li>Выберите «Оформление»: «Сетка» или «Портреты внизу».</li><li>Настройте «Режим показа», «Раскрытие ролей» и поля в блоке «Что показывать».</li><li>Нажмите «Запустить эфир», затем «Копировать ссылку».</li></ol>
+<h3>Добавьте экран в OBS</h3>
+<ol><li>В OBS откройте нужную сцену и в панели Sources нажмите «+».</li><li>Выберите источник «Браузер» и создайте новый источник.</li><li>Вставьте скопированную ссылку в поле URL. Для этой ссылки оставьте «Local file» выключенным.</li><li>Укажите Width «1920» и Height «1080».</li><li>Оставьте фон прозрачным. Не добавляйте к ссылке параметры или фрагмент вручную.</li><li>Поставьте источник «Браузер» выше видеоисточников в списке Sources, затем проверьте предпросмотр OBS и расположение источника в сцене.</li></ol>
+<p>Официальное описание полей Browser Source: <a href="https://obsproject.com/kb/browser-source" rel="external noreferrer">Browser Source в OBS</a>. OBS поддерживает источник «Браузер» на Windows, macOS и Linux; он загружает веб-страницу прямо в сцену.</p>
+<h3>Что показывать на экране</h3>
+<ul><li>«Скрытые роли» не передаёт роли, команды и проверки, в том числе после выбытия.</li><li>«Открытые роли» показывает известные роли. «Проверки шерифа» и «Проверки дона» включаются отдельными полями.</li><li>«Свои настройки» позволяет выбрать поля отдельно и раскрывать только выбывших.</li><li>Поля включаются независимо: «Номера мест», «Ники», «Живые и выбывшие», «Причины выбытия», «Роли», «Проверки шерифа», «Проверки дона», «Фолы», «Кандидаты», «Голоса», «Говорящий», «Таймер», «День и ночь».</li></ul>
+<p>В городском пульте результаты проверок не представлены отдельными полями и не извлекаются из приватных заметок. Приватные заметки и журнал в экран не попадают.</p>
+<h3>Во время и после эфира</h3>
+<ol><li>Ведите партию в выбранном пульте. Сохранённые изменения передаются на экран автоматически.</li><li>Если меняете видимость или оформление во время эфира, дождитесь подтверждения в статусе.</li><li>Для завершения нажмите «Остановить и отозвать ссылку». Старая ссылка перестанет давать доступ.</li><li>После перезагрузки страницы эфир не запускается сам. При смене партии запустите новый эфир и вставьте новую ссылку.</li></ol>
+<p>Ссылка даёт доступ к выбранному выходу. Делитесь ею только с нужным получателем, а после эфира отзовите ссылку.</p>
+<p><a href="./#screen-host">Вернуться к пульту ведущего</a> · <a href="#sports">Спортивная мафия</a> · <a href="#urban">Городская мафия</a></p>
+
+<h2 id="avatars">Фотографии игроков</h2>
+<p>Фотографии настраиваются в окне «Трансляция OBS» до запуска эфира. Для каждого игрока можно загрузить, заменить или удалить квадратную фотографию. Поддерживаются JPEG, PNG и WebP размером до 10 МБ.</p>
+<h3>Загрузите фотографии</h3>
+<ol><li>Откройте «Трансляция OBS» и выберите нужный выход: «Трансляция» или «Экран в зале».</li><li>Раскройте блок фотографий игроков.</li><li>Выберите файл у нужного игрока и дождитесь сообщения «Фото сохранено».</li><li>Приложение показывает центральную квадратную обрезку без растяжения.</li><li>После первой загрузки включается поле «Фотографии» и выбирается оформление «Портреты внизу».</li></ol>
+<p>Фотографии привязаны к участнику партии, поэтому перестановка мест не переносит портрет к другому участнику. Выходы независимы: фотография может быть включена в «Трансляция» и выключена в «Экран в зале».</p>
+<h3>Портреты и приватность</h3>
+<ul><li>В «Портреты внизу» карточки игроков располагаются нижней полосой экрана 1920x1080.</li><li>В «Сетке» фотографии остаются доступными, если поле «Фотографии» включено.</li><li>Фотографии не раскрывают роли. Режим «Скрытые роли» продолжает скрывать роли и проверки.</li><li>Удаление фотографии, выключение поля и отзыв ссылки убирают изображения с получателя.</li></ul>
+<p>Перед загрузкой проверьте, что это нужный игрок и нужный выход. Для проверки используйте предпросмотр, затем откройте ссылку в отдельном браузере.</p>
+
+<h2 id="obs-troubleshooting">Если экран не работает</h2>
+<h3>Сначала проверьте загрузку страницы</h3>
+<p>В окне «Трансляция OBS» скопируйте тестовую ссылку или откройте <a href="obs-test.html?lang=ru" target="_blank" rel="noopener noreferrer">тестовый экран OBS</a>. Вставьте его адрес в источник «Браузер» размером 1920x1080. Цветные полосы подтверждают загрузку страницы, движущиеся часы подтверждают работу JavaScript. Для теста не нужны вход и запущенный эфир. После проверки замените тестовый адрес ссылкой своей трансляции.</p>
+<p>Если тест тоже пустой, проверьте источник и сцену OBS. Если тест виден, а игровой экран нет, проверьте запуск эфира и его ссылку по шагам ниже.</p>
+<h3>Пустой или старый кадр</h3>
+<ol><li>Убедитесь, что эфир запущен и ссылка вставлена полностью.</li><li>Проверьте, что источник виден значком глаза и находится в активной сцене.</li><li>В свойствах Browser Source проверьте URL, Width 1920 и Height 1080.</li><li>Нажмите «Refresh cache of current page» в свойствах источника.</li><li>Если источник выгружается при смене сцены, отключите «Shutdown source when not visible» или вернитесь в активную сцену.</li><li>Откройте ту же ссылку в обычном браузере на этом компьютере. Если там нет свежего кадра, проблема находится до OBS: проверьте вход, сохранённую партию и сервис трансляции.</li></ol>
+<h3>Ограничения адреса и сервиса</h3>
+<p>Адрес localhost или 127.0.0.1 указывает на тот компьютер, где запущен OBS. Для второго компьютера, телефона или телевизора нужен доступный HTTPS адрес приложения и сервис трансляции. Удалённый сервис трансляции и публичный выпуск этой версии могут быть не настроены.</p>
+<p>Официальные подсказки по источникам и их порядку находятся в <a href="https://obsproject.com/kb/sources-guide" rel="external noreferrer">Руководство OBS по источникам</a>. Если после этих шагов источник остаётся пустым, запишите версию OBS и результат проверки той же ссылки в обычном браузере.</p>
+<p><a href="./#screen-host">Вернуться к пульту ведущего</a></p>
+<h2 id="quick-start">Быстрый старт</h2>
+<ol>
+  <li>На главной нажмите «＋ Новая партия» или откройте одну из карточек режима.</li>
+  <li>Выберите «Спортивная мафия» или «Городская мафия» и проверьте число игроков.</li>
+  <li>Заполните имена. В спортивной партии назначьте роль в строке игрока или используйте «Случайно распределить роли».</li>
+  <li>Перед началом проверьте состав и нажмите «Начать игру».</li>
+  <li>Во время партии выбирайте говорящего, запускайте таймер и отмечайте действия прямо в пульте.</li>
+  <li>После завершения укажите результат, если хотите увидеть его в игровых вечерах и статистике.</li>
+</ol>
+<p>Для учебного запуска используйте «Попробовать учебную партию». Она отделена от настоящих сохранений.</p>
+<h2 id="sports">Спортивная мафия</h2>
+<h3>Подготовка и раздача</h3>
+<ol>
+  <li>Откройте «Ведущий» и в разделе подготовки внесите имена игроков.</li>
+  <li>Назначьте роль в строке игрока или нажмите «Случайно распределить роли».</li>
+  <li>Для показа ролей по очереди нажмите «Цифровая раздача».</li>
+  <li>Каждый игрок показывает номер, а ведущий нажимает эту позицию среди оставшихся карт.</li>
+  <li>Игрок смотрит карточку один, нажимает «Следующий игрок №...», а последний игрок завершает раздачу.</li>
+</ol>
+<h3>День, голосование и ночь</h3>
+<ol>
+  <li>Выберите игрока и запустите таймер речи. «Пауза» сохраняет оставшееся время.</li>
+  <li>Фол добавляется отдельной кнопкой. «Выставить» добавляет игрока в кандидаты.</li>
+  <li>Откройте «Голосование», выберите кандидата и отметьте голоса местами игроков.</li>
+  <li>После подсчета отдельно подтвердите уход игрока.</li>
+  <li>В «Ночь» выберите «Отстрел», «Дон» или «Шериф», затем нажмите цель. Повторное нажатие отменяет действие, другая цель заменяет его.</li>
+  <li>Проверку можно скрыть кнопкой «Скрыть результат». После ночи нажмите «Перейти на следующий день».</li>
+</ol>
+<p>«Простой» вид оставляет основные действия и список игроков, а «Расширенный» добавляет настройки, журнал и дополнительные панели. Ник и место можно изменить во время игры.</p>
+<h2 id="urban">Городская мафия</h2>
+<ol>
+  <li>Откройте «Городская мафия», выберите число игроков от 3 до 30 и основу состава.</li>
+  <li>В «Добавьте роли» найдите роль через «Поиск роли» и фильтр «Команда», затем измените количество.</li>
+  <li>При необходимости откройте «Особые правила партии» или добавьте свою роль.</li>
+  <li>Назначьте роли кнопками «Случайно распределить» или через «Быстрая раздача».</li>
+  <li>В быстрой раздаче выберите роль, затем нажимайте места игроков. «Остальные места - мирные» заполняет оставшуюся квоту одной операцией.</li>
+  <li>Включите приватный режим, чтобы видеть назначения и заметки ведущего. В обычном режиме роль скрыта.</li>
+  <li>Днем ведите речи, фолы, кандидатов и голоса. Ночью откройте «Ночной помощник» и последовательно запишите цели ролей.</li>
+</ol>
+<p>Для каждого ночного хода можно открыть подробности, исправить цель, добавить заметку или сбросить ход. Итог ночи и победителя ведущий подтверждает вручную.</p>
+<h2 id="evenings">Игровые вечера и результаты</h2>
+<ol>
+  <li>Откройте «Игровые вечера» и нажмите «Создать вечер».</li>
+  <li>Введите название и дату, затем откройте созданный вечер.</li>
+  <li>Нажмите «+ Спортивная партия» или «+ Городская партия». При необходимости включите «Повторить последний состав этого режима».</li>
+  <li>Существующую игру добавьте через «Добавить существующую партию».</li>
+  <li>В карточке игры используйте «Открыть» или «Продолжить», а завершенной игре задайте результат через «Указать / исправить результат».</li>
+  <li>В разделе статистики проверьте участия, завершенные игры, известные исходы, победы и фолы.</li>
+  <li>Сохраните «Карточка итогов вечера» как текст или PNG.</li>
+</ol>
+<p>В сохраненном составе каждый участник остается отдельной записью, поэтому одинаковые имена сами по себе не объединяют людей. При повторе состава сохраняются участники и их принадлежность к составу, но роли, фолы и игровые события начинаются заново. Неподтвержденный исход не считается поражением.</p>
+<h2 id="observation">Наблюдение и разбор</h2>
+<ol>
+  <li>Откройте «Записывать просмотр» и выберите партию или создайте новую запись.</li>
+  <li>Выберите игрока в списке, чтобы открыть его редактор.</li>
+  <li>Запишите версию роли, оценку и личную заметку.</li>
+  <li>Для текущей речи нажмите «Записал → следующий»: запись сохранится, и редактор перейдет к следующему игроку.</li>
+  <li>В строках отношений отметьте, кого игрок подозревает и кому доверяет.</li>
+  <li>Во время партии фиксируйте кандидатов, голоса, проверки и статусы выбывания.</li>
+  <li>Откройте хронологию, скопируйте ее или выгрузите протокол аргументов в Markdown.</li>
+  <li>Назовите запись и при необходимости укажите ее результат.</li>
+</ol>
+<p>Наблюдение является отдельной локальной записью. Оно не синхронизирует скрытые заметки или версии с пультом ведущего.</p>
+<p><a href="#obs">Подключить экран OBS</a> · <a href="#avatars">Открыть настройки аватаров OBS</a></p>
+<h2 id="tools">Инструменты устройства</h2>
+<h3 id="timer">Отдельный таймер</h3>
+<ol><li>Откройте «Инструменты» и выберите длительность.</li><li>Нажмите «Старт».</li><li>Используйте «Пауза» и «Продолжить», чтобы сохранить оставшееся время.</li><li>Нажмите «Сбросить» перед новым отсчетом.</li></ol>
+<h3 id="music">Музыка</h3>
+<ol><li>Откройте «Музыка».</li><li>Добавьте свои файлы через «Добавить аудио» или готовый «ночной набор».</li><li>Выберите плейлист «Общий» или «Ночь».</li><li>Меняйте порядок кнопками «Выше» и «Ниже», включайте «Повторять плейлист».</li><li>«Автоматически включать ночью» работает только после явного включения.</li></ol>
+<h3 id="player-screen">Экран для игроков</h3>
+<ol><li>Сначала откройте нужную сохраненную партию.</li><li>Откройте «Музыка, без сети, экран».</li><li>В поле «Экран выбранной партии» выберите «Спортивная мафия» или «Городская мафия».</li><li>Нажмите «Экран для игроков / крупный таймер».</li><li>Разрешите всплывающее окно и перенесите его на отдельный экран.</li><li>При необходимости нажмите «Не гасить экран».</li></ol>
+<h3 id="night-checklist">Памятка ночи</h3>
+<p>В «Инструментах» используйте чек-лист, чтобы вручную отметить необходимые шаги ночной фазы.</p>
+<h3 id="print">Печать мест</h3>
+<p>Откройте номера мест и нажмите печать. Сохранение PDF выполняется в системном окне печати браузера.</p>
+<h2 id="data">Данные, копии и работа без сети</h2>
+<h3 id="backup">Личная резервная копия</h3>
+<ol><li>Откройте «Игровые вечера» -> «Копии».</li><li>Нажмите «Скачать личную копию».</li><li>Храните JSON отдельно от устройства.</li></ol>
+<p>Копия содержит спортивные и городские партии, сохраненные составы и игровые вечера. Музыка, наблюдение, аватары и другие настройки устройства в нее не входят.</p>
+<h3 id="restore">Восстановление</h3>
+<ol><li>Выберите файл через «Выбрать копию для проверки».</li><li>Дождитесь предварительного просмотра.</li><li>Нажмите «Добавить проверенные копии».</li></ol>
+<p>Импорт создает отдельные копии и не заменяет текущие партии. Поврежденный или слишком большой файл отклоняется.</p>
+<h3 id="offline">Работа без сети</h3>
+<ol><li>Откройте «Музыка, без сети, экран».</li><li>Нажмите «Скачать для работы без сети».</li><li>После сообщения о готовности приложение можно открыть без сети.</li><li>Обновление устанавливайте, когда партия не идет.</li></ol>
+<h3 id="autosave">Автосохранение</h3>
+<p>Партии и записи сохраняются локально автоматически. При ошибке хранилища интерфейс показывает сообщение, а существующие данные не должны заменяться.</p>
+<h3 id="what-not-included">Чего здесь нет</h3>
+<p>В описанных здесь локальных сценариях нет синхронизации наблюдения с пультом ведущего, автоматического определения результата ночи или общей учетной записи. Облачный кабинет и связанные с ним функции являются отдельным режимом. Музыка хранится отдельно и не входит в копию партий в формате JSON.</p></div><p class="help-end">Нужна помощь? <a href="contacts.html">Опишите проблему</a> и укажите, на каком шаге инструкции она возникла.</p></div></article><article data-page-language="en" lang="en" hidden><div class="help-page"><p class="help-kicker">MAFIA-TOOL.COM / SITE HELP</p><h1>Site help</h1><p class="help-intro">Choose a task. Each guide shows where to go, which buttons to press and what you will see.</p><p class="help-reference">Looking for game rules? Open the <a href="spravochnik-mafii.html">Mafia rules guide</a>.</p><nav class="help-topics" aria-label="Help topics"><a href="#en-quick-start"><strong>First steps</strong><span>Start a game and find saved games</span></a><a href="#en-obs"><strong>Connect OBS</strong><span>The viewer link, Browser Source and output settings</span></a><a href="#en-avatars"><strong>Player photos</strong><span>Upload photos and show the portrait strip</span></a><a href="#en-sports"><strong>Sports console</strong><span>Setup, speeches, voting and night</span></a><a href="#en-urban"><strong>Urban console</strong><span>Roles, lineup and night actions</span></a><a href="#en-evenings"><strong>Evenings, rosters and results</strong><span>Group games and save results</span></a><a href="#en-observation"><strong>Record a game</strong><span>Notes, role reads and votes</span></a><a href="#en-tools"><strong>Tools</strong><span>Timer, music, player screen and seat printouts</span></a><a href="#en-data"><strong>Data and offline use</strong><span>Backups, transfer and updates</span></a><a href="#en-obs-troubleshooting"><strong>If OBS shows a blank screen</strong><span>What to check before going live</span></a></nav><div class="help-guides">
+<h2 id="en-obs">Connect OBS</h2>
+<p>The OBS module is available in a prepared app build with the broadcast service connected. It uses the regular OBS Browser Source, so no separate plugin installation is required.</p>
+<p class="verified">The host needs an account, a saved game, and an available broadcast service. The viewer does not need an account.</p>
+<h3>Prepare the app</h3>
+<ol><li>Sign in as the host and create or continue a saved game.</li><li>Open «OBS broadcast» in the host console.</li><li>Choose «Output»: «Stream» or «Room display». Each output has its own settings and link.</li><li>Choose «Console»: «Sports Mafia» or «Urban Mafia».</li><li>Choose «Layout»: «Grid» or «Portrait strip».</li><li>Set «Visibility mode», «Role disclosure», and the fields under «Show on screen».</li><li>Click «Start broadcast», then «Copy link».</li></ol>
+<h3>Add the screen to OBS</h3>
+<ol><li>Open the target scene in OBS and click «+» in the Sources dock.</li><li>Choose «Browser Source» and create a new source.</li><li>Paste the copied link into URL. Leave «Local file» off for this link.</li><li>Set Width to «1920» and Height to «1080».</li><li>Keep the background transparent. Do not add parameters or edit the fragment by hand.</li><li>Move «Browser Source» above video sources in the Sources list, then check the OBS preview and position the source in the scene.</li></ol>
+<p>See the official <a href="https://obsproject.com/kb/browser-source" rel="external noreferrer">OBS Browser Source guide</a> for the source properties. Browser Source is available on Windows, macOS, and Linux and loads a web page directly in the scene.</p>
+<h3>Choose what appears</h3>
+<ul><li>«Hidden roles» sends no roles, teams, or checks, including after elimination.</li><li>«Open roles» shows known roles. «Sheriff checks» and «Don checks» are separate fields.</li><li>«Custom» lets you choose fields independently and reveal only eliminated roles.</li><li>Fields include «Seat numbers», «Nicknames», «Alive and eliminated», «Elimination reasons», «Roles», «Sheriff checks», «Don checks», «Fouls», «Candidates», «Votes», «Speaker», «Timer», and «Day and night».</li></ul>
+<p>The Urban Mafia console has no structured check results for this screen and does not read private notes. Private notes and the game log are excluded.</p>
+<h3>During and after the broadcast</h3>
+<ol><li>Run the game in the selected console. Saved changes are sent to the screen automatically.</li><li>When changing visibility or layout during a broadcast, wait for the status to confirm the update.</li><li>Click «Stop and revoke link» when finished. The old link will no longer provide access.</li><li>After a page reload the broadcast does not resume automatically. When changing games, start a new broadcast and paste the new link.</li></ol>
+<p>The link grants access to the selected output. Share it only with the intended viewer, then revoke it after the broadcast.</p>
+<p><a href="./#screen-host">Back to the host console</a> · <a href="#en-sports">Sports Mafia</a> · <a href="#en-urban">Urban Mafia</a></p>
+
+<h2 id="en-avatars">Player photos</h2>
+<p>Configure photos in «OBS broadcast» before starting the broadcast. You can upload, replace, or remove a square photo for each player. JPEG, PNG, and WebP files up to 10 MB are supported.</p>
+<h3>Upload photos</h3>
+<ol><li>Open «OBS broadcast» and choose the target output: «Stream» or «Room display».</li><li>Expand the player photos section.</li><li>Choose a file for the player and wait for «Photo saved».</li><li>The app shows a centered square crop without stretching.</li><li>After the first upload, «Photos» is enabled and «Portrait strip» is selected.</li></ol>
+<p>Photos are tied to the participant in this game, so moving seats does not move a portrait to another participant. Outputs are independent: photos can be enabled for «Stream» and disabled for «Room display».</p>
+<h3>Portraits and privacy</h3>
+<ul><li>«Portrait strip» places player cards along the bottom of the 1920x1080 screen.</li><li>In «Grid», photos remain available when «Photos» is enabled.</li><li>Photos do not reveal roles. «Hidden roles» continues to hide roles and checks.</li><li>Removing a photo, disabling «Photos», or revoking the link removes images from the viewer.</li></ul>
+<p>Before uploading, confirm the player and output. Use the preview, then open the link in a separate browser.</p>
+
+<h2 id="en-obs-troubleshooting">Troubleshooting</h2>
+<h3>First check that the page loads</h3>
+<p>Copy the test URL in «OBS broadcast» or open the <a href="obs-test.html?lang=en" target="_blank" rel="noopener noreferrer">OBS test screen</a>. Paste its address into a 1920x1080 Browser Source. Color bars confirm the page loaded; a moving clock confirms JavaScript is working. No sign-in or active broadcast is needed. After testing, replace this URL with your active broadcast URL.</p>
+<p>If the test is also blank, check the OBS source and scene. If the test works but the game does not appear, check the broadcast and its link using the steps below.</p>
+<h3>Blank or stale frame</h3>
+<ol><li>Make sure the broadcast is running and the full link was pasted.</li><li>Check that the source eye is visible and the source is in the active scene.</li><li>Verify URL, Width 1920, and Height 1080 in Browser Source properties.</li><li>Click «Refresh cache of current page» in the source properties.</li><li>If the source is unloaded when changing scenes, disable «Shutdown source when not visible» or return to the active scene.</li><li>Open the same link in a regular browser on this computer. If the frame is also missing there, check sign-in, the saved game, and the broadcast service before investigating OBS.</li></ol>
+<h3>Address and service limits</h3>
+<p>A localhost or 127.0.0.1 address points to the computer running OBS. A second computer, phone, or TV needs a reachable HTTPS app address and broadcast service. A remote broadcast service and public release may not be configured for your version.</p>
+<p>See the official <a href="https://obsproject.com/kb/sources-guide" rel="external noreferrer">OBS Sources Guide</a> for source order and visibility. If the source remains blank, record the OBS version and the result of opening the same link in a regular browser.</p>
+<p><a href="./#screen-host">Back to the host console</a></p>
+<h2 id="en-quick-start">Quick start</h2>
+<ol><li>On the home page, choose “＋ New game” or open a mode card.</li><li>Select “Sports Mafia” or “Urban Mafia” and check the player count.</li><li>Enter names. In Sports Mafia, assign a role in the player row or use “Randomly assign roles”.</li><li>Check the lineup and press “Start game”.</li><li>During the game, select the speaker, start the speech timer, and record actions in the console.</li><li>After the game, record an outcome if you want it in game evenings and statistics.</li></ol>
+<p>Use “Try a practice game” for a guided run. It is separate from real saves.</p>
+<h2 id="en-sports">Sports Mafia</h2>
+<h3>Setup and deal</h3>
+<ol><li>Open “Host” and enter player names in setup.</li><li>Assign a role in the player row or press “Randomly assign roles”.</li><li>For one-at-a-time private dealing, press “Digital deal”.</li><li>Each player shows a number; press that position among the remaining cards.</li><li>The player views the card, presses “Next player #...”, and the last player finishes the deal.</li></ol>
+<h3>Day, voting, and night</h3>
+<ol><li>Select a player and start the speech timer. “Pause” preserves the remaining time.</li><li>Add a foul with the foul action. “Nominate” adds a candidate.</li><li>Open “Voting”, choose a candidate, and record votes by player.</li><li>After counting, confirm the player's exit separately.</li><li>In “Night”, choose “Shooting”, “Don”, or “Sheriff”, then tap a target. Tap again to cancel or choose another target to replace it.</li><li>Use “Hide result” for a private check, then press “Go to the next day”.</li></ol>
+<p>“Simple” keeps the player list and main actions. “Advanced” adds settings, the journal, and extra panels. Names and seats can be changed during the game.</p>
+<h2 id="en-urban">Urban Mafia</h2>
+<ol><li>Open “Urban Mafia”, choose 3 to 30 players, and select a lineup base.</li><li>In “Add roles”, use “Search roles” and “Team”, then change role counts.</li><li>Open “House rules” or add a custom role when needed.</li><li>Use “Randomly assign” or “Quick assignment” to assign roles.</li><li>In quick assignment, choose a role and tap player seats. “Remaining seats - citizens” fills the remaining quota in one action.</li><li>Use private mode to see assignments and host notes. In the normal view, roles are hidden.</li><li>During the day record speeches, fouls, candidates, and votes. At night open “Night assistant” and record role targets in order.</li></ol>
+<p>Each night action can be opened, corrected, annotated, or reset. The host confirms the night outcome and winner manually.</p>
+<h2 id="en-evenings">Game evenings and results</h2>
+<ol><li>Open “Game evenings” and press “Create evening”.</li><li>Enter a name and date, then open the evening.</li><li>Press “+ Sports game” or “+ Urban game”. Enable “Reuse the last lineup of this mode” when useful.</li><li>Add an existing game with “Add an existing game”.</li><li>Use “Open” or “Continue” on a game card. For a finished game, use “Record / edit outcome”.</li><li>Review played games, finished games, known outcomes, wins, and fouls.</li><li>Save the “Evening result card” as text or PNG.</li></ol>
+<p>Each participant in a saved lineup remains a separate record, so matching names do not merge people by themselves. Reusing a lineup keeps the participants and their place in that lineup, while roles, fouls, and game events start fresh. An unconfirmed outcome is not counted as a loss.</p>
+<h2 id="en-observation">Track a game: observation and review</h2>
+<ol><li>Open “Track a game” and choose a game or create a new record.</li><li>Select a player to open the editor.</li><li>Record your role read, score, and private note.</li><li>For the current speech, press “Saved → next” to save it and move to the next player.</li><li>Use the relationship rows to mark who the player suspects and trusts.</li><li>Record candidates, votes, checks, and elimination statuses during the game.</li><li>Open the timeline, copy it, or export the argument protocol as Markdown.</li><li>Name the record and add its outcome when needed.</li></ol>
+<p>Observation is a separate local record. It does not sync hidden notes or reads with the host console.</p>
+<p><a href="#en-obs">Connect an OBS display</a> · <a href="#en-avatars">Open OBS avatar settings</a></p>
+<h2 id="en-tools">Device tools</h2>
+<h3 id="en-timer">Standalone timer</h3><ol><li>Open “Tools” and choose a duration.</li><li>Press “Start”.</li><li>Use “Pause” and “Continue” to preserve the remaining time.</li><li>Press “Reset” for a new countdown.</li></ol>
+<h3 id="en-music">Music</h3><ol><li>Open “Music”.</li><li>Use “Add audio” or add the included night pack.</li><li>Choose the “General” or “Night” playlist.</li><li>Move tracks with “Move up” and “Move down”, and enable “Repeat playlist” if needed.</li><li>“Start automatically at night” is opt-in.</li></ol>
+<h3 id="en-player-screen">Player screen</h3><ol><li>First open the saved game you want to show.</li><li>Open “Music, offline, screen”.</li><li>In “Screen for the selected game”, choose “Sports Mafia” or “Urban Mafia”.</li><li>Press “Player screen / large timer”.</li><li>Allow the popup and move it to a separate display.</li><li>Press “Keep screen awake” when supported.</li></ol>
+<h3 id="en-night-checklist">Night checklist</h3><p>Use the checklist in “Tools” to mark the manual steps of the night phase.</p>
+<h3 id="en-print">Seat printing</h3><p>Open seat numbers and press print. Saving a PDF is handled by the browser print dialog.</p>
+<h2 id="en-data">Data, backups, and offline access</h2>
+<h3 id="en-backup">Private backup</h3><ol><li>Open “Game evenings” -> “Backups”.</li><li>Press “Download private backup”.</li><li>Keep the JSON file separately from the device.</li></ol><p>The backup contains Sports and Urban games, saved lineups, and game evenings. Music, observation, avatars, and other device settings are not included.</p>
+<h3 id="en-restore">Restore</h3><ol><li>Choose a file with “Choose backup to preview”.</li><li>Wait for the preview.</li><li>Press “Add validated copies”.</li></ol><p>Import creates separate copies and does not replace current games. Damaged or oversized files are rejected.</p>
+<h3 id="en-offline">Offline access</h3><ol><li>Open “Music, offline, screen”.</li><li>Press “Download for offline”.</li><li>Wait for the ready message before going offline.</li><li>Install an update when no game is running.</li></ol>
+<h3 id="en-autosave">Autosave</h3><p>Games and observation records are saved locally as you work. Storage errors are shown, and existing data should remain intact.</p>
+<h3 id="en-what-not-included">What is not included</h3><p>In the local workflows described here, observation does not sync with the host console, night outcomes are not resolved automatically, and there is no shared account. The cloud workspace and its related features are a separate mode. Music is stored separately and is not included in the game JSON backup.</p></div><p class="help-end">Need more help? <a href="contacts.html">Describe the issue</a> and name the guide you followed.</p></div></article></main><footer><nav aria-label="Разделы сайта"><a href="./" data-label-ru="Пульт ведущего" data-label-en="Host console">Пульт ведущего</a><a href="mafia-online.html" data-label-ru="Мафия онлайн" data-label-en="Online Mafia">Мафия онлайн</a><a href="spravochnik-mafii.html" data-label-ru="Справочник" data-label-en="Guide">Справочник</a><a href="dokumenty-mafii.html" data-label-ru="Документы" data-label-en="Documents">Документы</a><a href="help.html" data-label-ru="Помощь по сайту" data-label-en="Site help">Помощь по сайту</a><a href="contacts.html" data-label-ru="Контакты" data-label-en="Contact">Контакты</a><a href="privacy.html" data-label-ru="Конфиденциальность" data-label-en="Privacy">Конфиденциальность</a><a href="terms.html" data-label-ru="Условия" data-label-en="Terms">Условия</a></nav><p class="footer-note">© 2026 Mafia-tool.com · Публичный e-mail появится после настройки доменной почты.</p></footer><script type="module">import {setupSiteSidebar} from "./js/ui/site-sidebar.js";setupSiteSidebar();</script><script type="module" src="js/seo-language.js"></script></body></html>

@@ -61,3 +61,131 @@
 /* Readable role portraits and balanced setup cards. */
 @media(min-width:951px){.uc-setup-grid{grid-template-columns:260px minmax(0,1fr)}}
 @media(max-width:760px){.uc-role{grid-template-columns:88px minmax(0,1fr);gap:12px;padding:12px}.uc-role-art{width:88px;height:132px}.uc-role-heading{display:grid;gap:6px}.uc-role-heading>b{font-size:16px}.uc-team-badge{justify-self:start}.uc-role-body>p{font-size:14px}.uc-role-count{grid-template-columns:44px 36px 44px}}
+
+/* Compact flat workspace. */
+#screen-urban{background:none;padding-bottom:24px}
+#screen-urban h1{font-size:clamp(28px,3vw,36px);line-height:1.05}
+#screen-urban h2{font-size:20px}
+#screen-urban h3{font-size:17px}
+.uc-header{margin:10px 0 0;padding:8px 0 12px;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:transparent;box-shadow:none}
+.uc-header h1{margin:0}
+.uc-header .uc-eyebrow,.uc-header p{display:none}
+.uc-header>.uc-actions{gap:8px}
+#screen-urban .uc-header>.uc-actions button{background:transparent;border-color:transparent;color:var(--uc-muted)}
+#screen-urban .uc-header>.uc-actions button:hover,#screen-urban .uc-header>.uc-actions button[aria-pressed=true]{background:#ffffff0a;border-color:var(--uc-line);color:#fff}
+.uc-session{display:grid;grid-template-columns:minmax(230px,420px) auto auto minmax(130px,1fr);gap:10px 18px;margin:0;padding:10px 0;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-session label{display:grid;grid-template-columns:auto minmax(150px,1fr);align-items:center;gap:8px;max-width:none;margin:0}
+.uc-session label input{min-height:40px;padding-block:7px;background:transparent;border-color:#ffffff2b}
+.uc-session>strong,.uc-session>span{align-self:center;white-space:nowrap}
+.uc-session #urbanSave{margin:0;text-align:right}
+.uc-toolbar{top:8px;display:flex;gap:16px;margin:0;padding:8px 0;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:#0b2118f2;box-shadow:none;backdrop-filter:blur(14px)}
+.uc-toolbar-leading{display:contents}
+.uc-toolbar-leading>.uc-actions{order:2;margin-left:auto}
+.uc-phase-nav{order:1;display:flex;gap:18px;padding:0;border:0;border-radius:0;background:transparent}
+#screen-urban .uc-phase-nav button{min-height:44px;padding:7px 2px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--uc-muted);font-weight:700}
+#screen-urban .uc-phase-nav button.uc-accent,#screen-urban .uc-phase-nav button[data-action=night]:not(:disabled){background:transparent;color:#efd294;border-color:transparent}
+#screen-urban .uc-phase-nav button[aria-current=step]{background:transparent;color:#fff;border-color:var(--uc-gold)}
+.uc-timer{order:3;gap:6px}
+.uc-timer output{font-size:25px;color:#fff}
+.uc-timer select{max-width:72px;min-height:44px;padding-inline:7px;background:transparent;border-color:#ffffff2b}
+#screen-urban #urbanTimerToggle{min-width:44px;border-color:var(--uc-gold);background:var(--uc-gold);color:#17271d;border-radius:50%}
+#screen-urban #urbanStart{padding-inline:18px;font-weight:800}
+#urbanSaveActions{padding:8px 0;border-bottom:1px solid var(--uc-line)}
+
+.uc-panel{margin:14px 0;padding:14px 0;border:0;border-top:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-roster{margin:8px 0 16px}
+.uc-roster>.uc-section-head{margin:0;padding:12px 0;border-bottom:1px solid var(--uc-line)}
+.uc-roster>.uc-section-head h2{margin:0 0 2px}
+.uc-roster>.uc-section-head p{margin:0}
+.uc-roster>.uc-section-head select{min-height:40px;padding-block:6px;background:transparent}
+.uc-columns{gap:0 20px}
+.uc-column{gap:0;border-top:1px solid var(--uc-line)}
+.uc-player{padding:9px 0;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:transparent;box-shadow:none}
+.uc-player.uc-speaking{padding-left:9px;border-left:3px solid var(--uc-gold);background:#dfbe7908}
+.uc-player.uc-out{background:transparent;opacity:.62}
+.uc-player-top{gap:8px;align-items:center}
+.uc-seat{min-width:36px;font-size:19px;color:#f2dfb5}
+#screen-urban .uc-player-top input{min-height:40px;padding:7px 8px;border-color:transparent;background:transparent;font-size:15px}
+#screen-urban .uc-player-top input:hover,#screen-urban .uc-player-top input:focus{border-color:#ffffff38;background:#071a1366}
+.uc-state{display:inline-flex;align-items:center;gap:4px}
+.uc-player-actions{gap:4px;margin-top:6px}
+#screen-urban .uc-player-actions button{min-width:44px;min-height:44px;background:transparent}
+.uc-role-hidden{display:flex;align-items:center;gap:6px;min-height:44px;margin:4px 0;color:#8da693}
+.uc-private-role-card{grid-template-columns:46px minmax(0,1fr);gap:9px;margin:5px 0;padding:5px 0;border:0;border-radius:0;background:transparent}
+.uc-private-role-art{width:46px;height:69px;border-radius:5px}
+.uc-private-role{margin:3px 0 0!important}
+.uc-private-role select{min-height:40px;padding-block:6px;background:transparent}
+.uc-role-team{margin-top:3px}
+.uc-role-badge{display:inline-flex;align-items:center;min-height:26px;max-width:100%;padding:4px 9px;border-radius:5px;background:#385546;color:#fff;font-size:11px;font-weight:800;line-height:1.2;overflow-wrap:anywhere}
+.uc-role-badge[data-role-id=town]{background:#c91d2e}
+.uc-role-badge[data-role-id=mafia]{background:#050706}
+.uc-role-badge[data-role-id=sheriff]{background-color:#c91d2e;background-image:repeating-linear-gradient(135deg,transparent 0 6px,#ffffff24 6px 9px)}
+.uc-role-badge[data-role-id=don]{background-color:#050706;background-image:repeating-linear-gradient(135deg,transparent 0 6px,#ffffff2b 6px 9px)}
+.uc-role-badge[data-team=town]:not([data-role-id=town]):not([data-role-id=sheriff]){background:#a33b48}
+.uc-role-badge[data-team=mafia]:not([data-role-id=mafia]):not([data-role-id=don]){background:#252927}
+.uc-role-badge[data-team=clan]{background:#604b89}
+.uc-role-badge[data-team=solo]{background:#8a641d}
+.uc-player-more{margin-top:4px}
+
+@media(min-width:761px){
+ .uc-player{display:grid;grid-template-columns:minmax(112px,1fr) auto minmax(108px,138px) 44px;column-gap:7px;align-items:center}
+ .uc-player-top{grid-column:1/-1;min-width:0}
+ .uc-role-hidden,.uc-private-role-card{grid-column:1;grid-row:2;min-width:0;margin:0}
+ .uc-player-actions{grid-column:2;grid-row:2;margin:0}
+ .uc-player>label{grid-column:3;min-width:0;margin:0}
+ .uc-player>.uc-player-more{grid-column:4;grid-row:2;width:44px;margin:0;border:0}
+ .uc-player>.uc-player-more>summary{justify-content:center;width:44px;padding:0;font-size:0}
+ .uc-player>.uc-player-more>summary:after{content:'•••';font-size:13px;letter-spacing:1px}
+ .uc-player>.uc-player-more[open]{grid-column:1/-1;grid-row:auto;width:auto;padding-top:5px;border-top:1px solid var(--uc-line)}
+ .uc-player>.uc-player-more[open]>summary{justify-content:flex-start;width:auto;font-size:11px}
+ .uc-player>.uc-player-more[open]>summary:after{content:none}
+ .uc-private-role-card{display:block;padding:0}
+ .uc-private-role-art{display:none}
+ .uc-private-role-card>div{display:grid;grid-template-columns:auto minmax(86px,1fr);gap:5px;align-items:center}
+ .uc-private-role{grid-column:2;margin:0!important;font-size:0!important}
+ #screen-urban .uc-private-role select{min-height:44px;padding:5px 7px;font-size:11px}
+ .uc-private-role svg,.uc-role-team{display:none}
+ .uc-role-badge{max-width:94px;padding-inline:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+
+.uc-setup>summary{padding:0}
+.uc-setup-intro{margin:12px 0 8px}
+.uc-preset-grid{gap:0;border-top:1px solid var(--uc-line);border-bottom:1px solid var(--uc-line)}
+#screen-urban button.uc-preset-card{min-height:78px;padding:12px;border:0;border-right:1px solid var(--uc-line);border-radius:0;background:transparent;box-shadow:none}
+#screen-urban button.uc-preset-card:last-child{border-right:0}
+#screen-urban button.uc-preset-card[aria-pressed=true]{background:#dfbe7917;color:#fff;border-color:var(--uc-gold);box-shadow:inset 0 -3px var(--uc-gold)}
+#screen-urban button.uc-preset-card[aria-pressed=true] strong{color:#f5ddb0}
+#screen-urban button.uc-preset-card[aria-pressed=true] span{color:var(--uc-muted)}
+.uc-lineup-bar{margin:10px 0 16px;padding:10px 0;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-lineup-summary>span{border:0;border-radius:5px;background:#ffffff09}
+.uc-setup-options{padding:0 16px 0 0;border:0;border-right:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-role-filters{background:#0b2118}
+.uc-role{padding:12px 0;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-role[data-team]{border-color:var(--uc-line)}
+.uc-role-art{border-radius:5px}
+.uc-team-badge{border-radius:5px}
+.uc-quick-deal .uc-section-head{margin:0 0 8px}
+.uc-quick-seats{gap:0;border-top:1px solid var(--uc-line);border-bottom:1px solid var(--uc-line)}
+#screen-urban .uc-quick-seats button{border:0;border-right:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-night{background:transparent;box-shadow:none}
+.uc-night-step{padding:10px 0;border:0;border-bottom:1px solid var(--uc-line);border-radius:0;background:transparent}
+.uc-morning{padding:16px 0 0;border:0;border-top:2px solid var(--uc-gold);border-radius:0;background:transparent}
+.uc-finish{opacity:1;background:transparent}
+
+@media(max-width:950px){
+ .uc-session{grid-template-columns:minmax(210px,1fr) auto auto}.uc-session #urbanSave{grid-column:1/-1;text-align:left}.uc-columns{grid-template-columns:1fr;column-gap:0}.uc-player{padding-block:8px}.uc-setup-options{padding-right:12px}
+}
+@media(max-width:980px){.uc-toolbar{top:var(--site-header-height,64px)}.uc-role-filters{top:calc(var(--site-header-height,64px) + 58px)}}
+@media(max-width:760px){
+ #screen-urban{padding-bottom:18px}.uc-header{align-items:stretch;margin-top:4px;padding-top:4px}.uc-header>.uc-actions{justify-content:flex-start}.uc-session{grid-template-columns:1fr auto;gap:7px 10px}.uc-session label{grid-column:1/-1}.uc-session #urbanSave{grid-column:1/-1}.uc-toolbar{top:var(--site-header-height,64px);display:grid!important;grid-template-columns:1fr;gap:5px;padding:6px 0}.uc-toolbar-leading{display:contents!important}.uc-toolbar-leading>.uc-actions{grid-row:1;margin:0}.uc-phase-nav{grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.uc-timer{grid-row:3;width:100%;justify-content:flex-end!important}.uc-roster>.uc-section-head{align-items:end}.uc-roster>.uc-section-head .uc-actions{width:100%;justify-content:space-between}.uc-player-top{display:grid;grid-template-columns:36px minmax(0,1fr)}.uc-player-top .uc-state{grid-column:2}.uc-private-role-card{grid-template-columns:44px minmax(0,1fr)}.uc-private-role-art{width:44px;height:66px}.uc-preset-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.uc-setup-options{padding:0 0 14px;border:0;border-bottom:1px solid var(--uc-line)}.uc-role-filters{top:calc(var(--site-header-height,64px) + 58px)}.uc-role{padding:12px 0}.uc-quick-seats{gap:1px}
+ #screen-urban[data-phase=night] .uc-toolbar{display:grid!important;grid-template-columns:1fr}#screen-urban[data-phase=night] .uc-toolbar-leading>.uc-actions,#screen-urban[data-phase=night] .uc-phase-nav,#screen-urban[data-phase=night] .uc-timer{grid-column:1;grid-row:auto}
+}
+@media(max-width:390px){
+ .uc-header>.uc-actions{display:flex;flex-wrap:nowrap;width:100%;gap:2px}.uc-header>.uc-actions button{flex:1;min-width:0;padding-inline:4px!important;font-size:11px!important}.uc-session{grid-template-columns:auto minmax(0,1fr)}.uc-session>strong,.uc-session>span{white-space:normal}.uc-session label,.uc-session #urbanSave{grid-column:1/-1}.uc-session label{grid-template-columns:1fr}.uc-toolbar-leading>.uc-actions{display:grid;grid-template-columns:auto minmax(0,1fr)}#screen-urban #urbanStart{width:100%}.uc-timer{justify-content:space-between!important}.uc-preset-grid{grid-template-columns:1fr}#screen-urban button.uc-preset-card{border-right:0;border-bottom:1px solid var(--uc-line)}.uc-lineup-bar{display:grid}.uc-role{grid-template-columns:88px minmax(0,1fr)}
+}
+@media(min-width:951px){
+ #screen-urban .uc-private-role-card>div{display:block}
+ #screen-urban .uc-private-role-card .uc-private-role-art{display:none}
+ #screen-urban .uc-private-role-card .uc-role-badge{max-width:100%;white-space:normal;overflow:visible;min-height:26px}
+ #screen-urban .uc-private-role-card .uc-private-role{display:block;margin-top:4px!important}
+}

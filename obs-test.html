@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Mafia Tool - OBS test</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0b1d14;color:#f4ecdc;font:clamp(16px,1.6vw,28px)/1.45 system-ui,sans-serif}body{padding:clamp(18px,3vw,48px)}main{max-width:1600px;margin:auto;border:3px solid #e2bd70;border-radius:24px;padding:clamp(20px,2vw,36px)}header{display:flex;gap:24px;align-items:start;justify-content:space-between;flex-wrap:wrap}.brand{color:#e2bd70;font-size:.65em;letter-spacing:.12em}h1{font-size:clamp(28px,3.4vw,64px);line-height:1.1;margin:.2em 0 .5em}p{margin:.6em 0}.muted{color:#b9cabc;font-size:.7em}.clock{font:700 clamp(30px,4.2vw,80px)/1.2 ui-monospace,monospace;color:#e2bd70;font-variant-numeric:tabular-nums}.colors{display:grid;grid-template-columns:repeat(4,1fr);height:clamp(35px,6vw,110px);border-radius:12px;overflow:hidden;margin:30px 0}.colors span:nth-child(1){background:#bf4747}.colors span:nth-child(2){background:#e2bd70}.colors span:nth-child(3){background:#3caa73}.colors span:nth-child(4){background:#3d7ecb}.seats{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;margin:24px 0}.seats span{display:grid;place-items:center;aspect-ratio:1;background:#163b29;border:1px solid #52735e;border-radius:10px;font-weight:800;font-size:1.4em}.result{padding:16px 20px;border-radius:12px;background:#163b29}#scriptStatus{color:#e2bd70}@media(max-width:600px){.seats{grid-template-columns:repeat(5,minmax(0,1fr))}main{border-radius:16px}.colors{margin:20px 0}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><div class="brand">MAFIA-TOOL.COM / OBS TEST</div><h1 id="testTitle">Тест подключения OBS</h1></div><output id="testClock" class="clock" aria-label="Часы">--:--:--</output></header>
+  <p id="testIntro">Это тестовый экран. Игровые данные здесь не отображаются.</p>
+  <div class="colors" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="seats" aria-label="Тестовые места"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>
+  <div class="result"><p id="staticStatus">Цветные полосы и номера видны: страница загрузилась.</p><p id="scriptStatus" role="status">JavaScript: ожидаем запуск часов.</p></div>
+  <p id="testNext">Если часы идут, замените тестовую ссылку в OBS ссылкой запущенной трансляции.</p>
+  <p class="muted" id="testSize">Размер источника OBS: 1920 × 1080.</p>
+</main>
+<script>
+(()=>{
+  const en=new URLSearchParams(location.search).get('lang')==='en';
+  document.documentElement.lang=en?'en':'ru';
+  const words=en?{
+    testTitle:'OBS connection test',testIntro:'This is a test screen. No game data is displayed here.',
+    staticStatus:'Colors and numbers are visible: the page has loaded.',scriptStatus:'JavaScript is working. The clock should keep moving.',
+    testNext:'If the clock is running, replace this test URL in OBS with your active broadcast URL.'
+  }:{scriptStatus:'JavaScript работает. Часы должны идти.'};
+  for(const [id,value] of Object.entries(words))document.getElementById(id).textContent=value;
+  document.querySelector('.seats').setAttribute('aria-label',en?'Test seats':'Тестовые места');
+  const clock=document.getElementById('testClock');clock.setAttribute('aria-label',en?'Clock':'Часы');
+  const tick=()=>{
+    clock.textContent=new Date().toLocaleTimeString(en?'en-GB':'ru-RU',{hour12:false});
+    document.getElementById('testSize').textContent=(en?'Recommended OBS size: 1920 × 1080. Current source: ':'Размер источника OBS: 1920 × 1080. Сейчас: ')+innerWidth+' × '+innerHeight+'.';
+  };
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>

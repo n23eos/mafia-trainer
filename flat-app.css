@@ -1,0 +1,52 @@
+/* Compact application surfaces and sports role labels. */
+.flat-shell-app .wrap{max-width:1480px}
+.flat-shell-app .menu-hero{padding:12px 0 20px;gap:24px}
+.flat-shell-app .hero-copy h1{font-family:Manrope,system-ui,sans-serif;font-size:clamp(26px,3.4vw,42px);line-height:1.18}
+.flat-shell-app .hero-visual{max-height:160px;border-radius:6px;box-shadow:none}
+.flat-shell-app .hero-visual img{max-height:160px;object-fit:cover}
+.flat-shell-app .card,.flat-shell-app .recent-game{border-radius:6px;box-shadow:none;background:#122a21}
+.flat-shell-app .card:hover{transform:none;box-shadow:none;background:#18372b}
+.flat-shell-app .home-grid{gap:20px}
+.flat-shell-app .card h3{font-family:Manrope,system-ui,sans-serif}
+.flat-shell-app .btn,.flat-shell-app input,.flat-shell-app select{border-radius:5px;box-shadow:none}
+.flat-shell-app #screen-host{--host-sticky-top:12px}
+.flat-shell-app #screen-host .hd-console-layout{grid-template-columns:150px minmax(0,1fr);gap:14px}
+.flat-shell-app #screen-host .hd-panel-nav{padding:0;border:0;border-radius:0;background:transparent}
+.flat-shell-app #screen-host .hd-panel-nav button{background:transparent;border:0;border-radius:4px;font-weight:600;padding:9px 10px;color:var(--hd-muted)}
+.flat-shell-app #screen-host .hd-panel-nav button:hover{background:#18372b}
+.flat-shell-app #screen-host .hd-panel-nav button[aria-current=page]{color:var(--hd-accent);background:#d5ad6114;border-left:3px solid var(--hd-accent);padding-left:7px}
+.flat-shell-app #screen-host :is(.hd-settings-panel,.hd-archive,.hd-stage,.hd-editor,.hd-voting,.hd-log,.hd-preparation){border-radius:6px;box-shadow:none}
+.flat-shell-app #screen-host :is(.hd-header,.hd-session,.hd-save-tools){box-shadow:none;border-radius:5px}
+.flat-shell-app #screen-host .device-entry button{background:transparent;border-color:transparent;border-radius:4px;font-size:12px}
+.flat-shell-app #screen-host .hd-seat .hd-role-name,.flat-shell-app #screen-host [data-list-role]{padding:3px 8px;border-radius:4px;height:auto;line-height:1.4;font-weight:700;color:#fff}
+.flat-shell-app #screen-host [data-role-team=red].hd-role-name,.flat-shell-app #screen-host [data-list-role][data-role-team=red]{background-color:#bc1425;color:#fff}
+.flat-shell-app #screen-host [data-role-team=black].hd-role-name,.flat-shell-app #screen-host [data-list-role][data-role-team=black]{background-color:#080a09;color:#fff}
+.flat-shell-app #screen-host .flat-role-striped{background-image:repeating-linear-gradient(135deg,transparent 0,transparent 4px,#ffffff29 4px,#ffffff29 6px)}
+.flat-shell-app #screen-host .hd-seat .hd-role-name[hidden],.flat-shell-app #screen-host [data-list-role][hidden]{display:none}
+@media(min-width:981px) and (max-width:1799px){
+  .flat-shell-app #screen-host .hd-console-layout{display:block}
+  .flat-shell-app #screen-host .hd-panel-nav{position:static;display:block;margin:0 0 10px;padding:4px 0;border-bottom:1px solid var(--hd-line)}
+  .flat-shell-app #screen-host #hostPanelNavItems{display:flex;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .flat-shell-app #screen-host .hd-panel-nav button{flex:1 1 120px;width:auto;min-width:0;min-height:44px;text-align:center}
+  .flat-shell-app #screen-host .hd-panel-nav button[aria-current=page]{border-left:0;border-bottom:3px solid var(--hd-accent);padding:9px 10px 6px}
+  .flat-shell-app #screen-host .hd-panel-stack,.flat-shell-app #screen-host .hd-workspace,.flat-shell-app #screen-host .hd-workspace>section{min-width:0;max-width:100%}
+}
+@media(min-width:981px) and (max-width:1399px){.flat-shell-app #screen-host[data-console-mode] .hd-workspace{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:980px){.flat-shell-app #screen-host{--host-sticky-top:64px}.flat-shell-app #screen-host .hd-console-layout{display:block}.flat-shell-app #screen-host .hd-panel-nav{background:#0b1e17}.flat-shell-app .menu-hero{gap:14px}.flat-shell-app .hero-visual{max-height:120px}}
+@media(max-width:600px){.flat-shell-app .hero-visual{display:none}.flat-shell-app .menu-hero{padding-bottom:14px}.flat-shell-app .home-start{gap:10px;margin-bottom:14px}}
+
+.flat-shell-app{background:#0b1e17}
+.flat-shell-app .site-sidebar .site-nav{display:block;position:static;inset:auto;flex:none;padding:0;border:0;box-shadow:none;background:transparent}
+.flat-shell-app .site-mobile-bar{margin:0;padding:0;backdrop-filter:none}
+.flat-shell-app .site-mobile-bar .site-header-inner{width:100%;min-height:58px;padding:7px 12px}
+.flat-shell-app .site-nav button.site-nav-link,.flat-shell-app .site-nav a.site-nav-link{white-space:normal;min-height:44px;padding:8px 10px;font-size:13px;font-weight:600;text-align:left}
+.flat-shell-app .site-brand{font-family:Manrope,system-ui,sans-serif;font-size:19px;font-weight:800}
+@media(max-width:980px){.flat-shell-app{padding:0 12px 40px}.flat-shell-app .site-mobile-bar{margin:0 -12px 12px}}
+
+.flat-shell-app #screen-urban>.broadcast-entry{display:none}
+.flat-shell-app #screen-urban>.device-entry{margin:0;min-height:0}
+.flat-shell-app #screen-urban>.device-entry>[data-evening-entry],.flat-shell-app #screen-urban>.device-entry>[data-device-entry],.flat-shell-app #screen-urban>.device-entry>[data-game-result-entry]{display:none}
+.flat-shell-app #screen-urban>.device-entry>[data-evening-context]{background:transparent;border:0;font-size:12px;text-align:left;padding:0}
+.flat-shell-app #screen-urban>.device-entry>[hidden]{display:none}
+
+.flat-shell-app #screen-host.hd-roles-visible .hd-seat .hd-role-name,.flat-shell-app #screen-host.hd-roles-visible [data-list-role]{color:#fff}
