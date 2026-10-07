@@ -2,8 +2,8 @@
 .flat-shell-app .wrap{max-width:1480px}
 .flat-shell-app .menu-hero{padding:12px 0 20px;gap:24px}
 .flat-shell-app .hero-copy h1{font-family:Manrope,system-ui,sans-serif;font-size:clamp(26px,3.4vw,42px);line-height:1.18}
-.flat-shell-app .hero-visual{max-height:160px;border-radius:6px;box-shadow:none}
-.flat-shell-app .hero-visual img{max-height:160px;object-fit:cover}
+.flat-shell-app .hero-visual{aspect-ratio:8/1;max-height:none;border:0;border-radius:6px;box-shadow:none}
+.flat-shell-app .hero-visual img{max-height:none;object-fit:cover}
 .flat-shell-app .card,.flat-shell-app .recent-game{border-radius:6px;box-shadow:none;background:#122a21}
 .flat-shell-app .card:hover{transform:none;box-shadow:none;background:#18372b}
 .flat-shell-app .home-grid{gap:20px}

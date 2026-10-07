@@ -189,3 +189,17 @@
  #screen-urban .uc-private-role-card .uc-role-badge{max-width:100%;white-space:normal;overflow:visible;min-height:26px}
  #screen-urban .uc-private-role-card .uc-private-role{display:block;margin-top:4px!important}
 }
+
+/* Player controls adapt to their column, including the persistent sidebar. */
+.uc-column{container-type:inline-size}
+@media(min-width:761px){
+@container (max-width:550px){
+ .uc-player{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:7px}
+ .uc-player-top{grid-column:1/-1;grid-row:1}
+ .uc-role-hidden,.uc-private-role-card{grid-column:1/-1;grid-row:2}
+ .uc-player-actions{grid-column:1;grid-row:3;flex-wrap:wrap;min-width:0}
+ .uc-player>label{grid-column:1/-1;grid-row:4}
+ .uc-player>.uc-player-more{grid-column:2;grid-row:3}
+ .uc-player>.uc-player-more[open]{grid-column:1/-1;grid-row:5}
+}
+}
