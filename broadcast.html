@@ -7,7 +7,25 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>Mafia Tool - OBS</title>
   <link rel="stylesheet" href="broadcast.css">
-  <script defer src="broadcast-viewer.bundle.js"></script>
+  <script>
+    window.addEventListener('error',event=>{
+      if(event.target?.id!=='broadcastScript')return;
+      const report=()=>{
+        const en=(navigator.language||'').toLowerCase().startsWith('en');
+        document.documentElement.lang=en?'en':'ru';
+        const status=document.createElement('div');
+        status.className='mt-broadcast__status';
+        status.setAttribute('role','status');
+        status.textContent=en?
+          'The display could not load. Refresh the Browser Source in OBS.':
+          'Не удалось загрузить экран. Обновите источник «Браузер» в OBS.';
+        document.getElementById('broadcastRoot').replaceChildren(status);
+      };
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',report,{once:true});
+      else report();
+    },true);
+  </script>
+  <script id="broadcastScript" defer src="broadcast-viewer.bundle.js"></script>
 </head>
 <body class="broadcast-page">
   <main id="broadcastRoot" class="mt-broadcast" aria-live="polite">
