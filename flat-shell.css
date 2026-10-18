@@ -78,3 +78,12 @@ body.flat-shell-static{padding-left:var(--site-sidebar-width);background:var(--s
 @media(prefers-reduced-motion:reduce){html.site-sidebar-ready .site-sidebar{transition:none}}
 @media print{body.flat-shell-app,body.flat-shell-static{padding:0;background:#fff;color:#000;font-size:12pt}.site-mobile-bar,.site-sidebar,.site-sidebar-backdrop,.language-switch,.cta,#analytics-choice,#analytics-settings,footer{display:none!important}.flat-shell-static main{width:auto;max-width:none;padding:0}.flat-shell-static main a{color:inherit}.flat-shell-static .verified{background:none;border-color:#000;color:#000}.flat-shell-static main h2,.flat-shell-static main h3{break-after:avoid}}
 .flat-shell-static main article>nav>a{display:inline-block;margin:3px 12px 3px 0}
+
+.flat-shell-static main :is(h1,h2,h3){font-family:Manrope,system-ui,sans-serif;font-weight:800;letter-spacing:-.025em}
+.flat-shell-static main h1{font-size:clamp(28px,4vw,40px);line-height:1.16}
+.flat-shell-static main :is(input:not([type=checkbox]):not([type=radio]),select,textarea){width:100%;max-width:100%;min-height:44px;padding:9px 11px;border:1px solid #657c6d;border-radius:5px;background:#10271b;color:var(--site-shell-text);font:inherit}
+.flat-shell-static main button{min-height:44px;padding:9px 13px;border:1px solid var(--site-shell-gold);border-radius:5px;background:#1d3d2f;color:var(--site-shell-text);font:inherit;font-weight:700;cursor:pointer}
+.flat-shell-static main button:disabled{cursor:default;opacity:.42}
+.flat-shell-static main :is(input,select,textarea,button,summary):focus-visible{outline:3px solid var(--site-shell-gold-bright);outline-offset:2px}
+.flat-shell-static .cta{display:inline-flex;align-items:center;min-height:44px;border-radius:5px}
+@media(max-width:390px){.flat-shell-static main,.flat-shell-static footer{padding-right:14px;padding-left:14px}.flat-shell-static main h1{font-size:28px}}

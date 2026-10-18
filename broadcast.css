@@ -75,3 +75,13 @@ body.broadcast-page #broadcastRoot{min-height:100vh}
   .mt-broadcast__player{border-radius:9px}.mt-broadcast__metadata{gap:5px}.mt-broadcast__role{display:grid;gap:1px}
 }
 @media(prefers-reduced-motion:reduce){.mt-broadcast *{scroll-behavior:auto}}
+
+#broadcastDialog .bc-availability{margin:16px 0;padding:16px;border:1px solid #68785b;border-radius:12px;background:#101b1580}
+#broadcastDialog .bc-availability h3{margin:0 0 8px}
+#broadcastDialog .bc-availability-status{margin:0;color:#e8d8af;font-weight:700}
+#broadcastDialog #broadcastInstall>p{color:#c9d4c4}
+#broadcastDialog .bc-install-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+#broadcastDialog #broadcastDownload{background:#d8ba78;color:#17231a;font-weight:800}
+#broadcastDialog #broadcastInstall ol{display:grid;gap:8px;margin:12px 0;padding-left:24px;color:#f7eed7}
+#broadcastDialog #broadcastInstall li{padding-left:4px;line-height:1.45}
+@media(max-width:600px){#broadcastDialog .bc-install-actions{display:grid}#broadcastDialog .bc-install-actions a{width:100%;justify-content:center}}
