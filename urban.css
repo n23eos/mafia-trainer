@@ -174,8 +174,9 @@
 .uc-finish{opacity:1;background:transparent}
 .uc-finish-form{margin-top:10px;padding:16px;border:1px solid #dfbe7955;border-radius:12px;background:#10271e}.uc-finish-form form{max-width:620px}.uc-finish-form h2{margin-bottom:4px}.uc-finish-form textarea{background:#071a13}.uc-finish-form .uc-actions{justify-content:flex-end}
 .uc-finished-summary{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:10px 0 4px;padding:14px 0;border-bottom:1px solid var(--uc-line);scroll-margin-top:180px}.uc-finished-summary h2{margin:3px 0}.uc-finished-summary p{margin:0;color:#f3ddb0;font-size:16px}.uc-finished-summary button{flex:none}
-#urbanVotes,#urbanNight,.uc-roster,#urbanFinishForm{scroll-margin-top:180px}
+#urbanVotes,#urbanNight,#urbanMorning,#urbanMorningTitle,.uc-roster,#urbanFinishForm{scroll-margin-top:180px}
 #screen-urban #urbanBallotElimination{font-weight:800}
+.uc-vote-outcome{margin:12px 0;padding:12px 14px;border-left:4px solid var(--uc-gold);border-radius:6px;background:#dfbe7912}.uc-vote-outcome strong{color:#f3ddb0}.uc-vote-outcome p{margin:4px 0 0}
 
 @media(max-width:950px){
  .uc-session{grid-template-columns:minmax(210px,1fr) auto auto}.uc-session #urbanSave{grid-column:1/-1;text-align:left}.uc-columns{grid-template-columns:1fr;column-gap:0}.uc-player{padding-block:8px}.uc-setup-options{padding-right:12px}
