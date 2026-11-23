@@ -1,4 +1,5 @@
 const mobileQuery='(max-width: 980px)';
+const COLLAPSE_KEY='mafia-tool-sidebar-collapsed-v1';
 
 export function setSiteNavigationCurrent(currentId,root=globalThis.document){
   if(!root)return;
@@ -18,7 +19,22 @@ export function setupSiteSidebar(root=globalThis.document){
   const backdrop=root.querySelector('.site-sidebar-backdrop');
   const media=windowRef.matchMedia(mobileQuery);
   const languageHome=sidebar.querySelector('.site-sidebar-foot');
+  const collapseBtn=documentRef.getElementById('siteSidebarCollapse');
   let returnFocus=null;
+  let collapsed=false;
+  if(collapseBtn){try{collapsed=windowRef.localStorage?.getItem(COLLAPSE_KEY)==='1';}catch{}}
+
+  const syncCollapsed=()=>{
+    if(!collapseBtn)return;
+    const active=collapsed&&!media.matches;
+    documentRef.body.classList.toggle('site-sidebar-collapsed',active);
+    collapseBtn.setAttribute('aria-expanded',String(!active));
+    const english=documentRef.documentElement.lang==='en';
+    const label=active?(english?'Expand menu':'Развернуть меню'):(english?'Collapse menu':'Свернуть меню');
+    collapseBtn.setAttribute('aria-label',label);
+    collapseBtn.setAttribute('title',label);
+    collapseBtn.textContent=active?'»':'«';
+  };
 
   const placeLanguageSwitch=()=>{
     const language=documentRef.getElementById('pageLanguage');
@@ -66,7 +82,15 @@ export function setupSiteSidebar(root=globalThis.document){
     if(media.matches)sidebar.setAttribute('aria-hidden','true');
     else sidebar.removeAttribute('aria-hidden');
     placeLanguageSwitch();
+    syncCollapsed();
   };
+
+  collapseBtn?.addEventListener('click',()=>{
+    collapsed=!collapsed;
+    try{windowRef.localStorage?.setItem(COLLAPSE_KEY,collapsed?'1':'0');}catch{}
+    syncCollapsed();
+  });
+  documentRef.addEventListener('protocol:language',syncCollapsed);
 
   toggle.addEventListener('click',()=>sidebar.classList.contains('is-open')?close():open());
   backdrop?.addEventListener('click',()=>close());

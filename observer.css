@@ -49,14 +49,14 @@
 #playerCard footer #playerNext{font-size:13px;padding:10px 14px;white-space:nowrap}
 #playerCard .optional-block{margin-top:8px}
 #playerCard .optional-block>summary{font-size:12px;min-height:44px;display:flex;align-items:center;cursor:pointer}
-#observerVoteSlot{padding:18px;background:var(--cream);color:var(--ink);border-radius:14px}
+#observerVoteSlot{padding:18px;background:var(--work-surface,#10291f);color:var(--cream);border:1px solid var(--work-line,rgba(244,236,220,.16));border-radius:8px}
 #observerVoteSlot[hidden],#observerEditorSlot[hidden]{display:none}
 #observerVoteSlot .vote-entry{margin:0;padding:0;border:0}
 #observerVoteSlot .vote-entry>summary{pointer-events:none;font:700 18px 'Manrope',sans-serif;list-style:none;margin-bottom:14px}
 #observerVoteSlot .vote-entry>summary::-webkit-details-marker{display:none}
 #observerVoteSlot .voter-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
 #observerVoteSlot #tableJump{display:block;margin-bottom:12px}
-#observerVoteSlot p{color:#514636}
+#observerVoteSlot p{color:var(--cream-dim)}
 #screen-live button:focus-visible,#playerCard button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 @media(max-width:750px){.observer-targets{grid-template-columns:repeat(5,minmax(44px,1fr))}}
 @media(min-width:1100px){.observer-roster{position:sticky;top:86px}}

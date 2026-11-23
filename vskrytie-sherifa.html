@@ -154,6 +154,25 @@ button.site-nav-link{width:100%}
 .site-sidebar-foot{display:flex;align-items:center;padding:11px 18px;border-top:1px solid var(--site-shell-line)}
 .language-switch{display:inline-flex;align-items:center;justify-content:center;min-width:46px;min-height:36px;padding:6px 10px;border:1px solid rgba(244,236,220,.25);border-radius:4px;background:transparent;color:var(--site-shell-text);font:700 12px 'PT Mono',monospace;cursor:pointer}
 .language-switch:hover{border-color:var(--site-shell-gold);color:var(--site-shell-gold-bright)}
+.site-brand-icon{display:none}
+.site-sidebar-collapse{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin-left:auto;border:1px solid var(--site-shell-line);border-radius:4px;background:transparent;color:var(--site-shell-text);font:700 16px 'PT Mono',monospace;cursor:pointer}
+.site-sidebar-collapse:hover{border-color:var(--site-shell-gold);color:var(--site-shell-gold-bright)}
+@media(min-width:981px){
+  body.site-sidebar-collapsed{--site-sidebar-width:64px}
+  body.site-sidebar-collapsed .site-sidebar-subtitle,
+  body.site-sidebar-collapsed .site-nav-label,
+  body.site-sidebar-collapsed .site-beta,
+  body.site-sidebar-collapsed .site-brand-text,
+  body.site-sidebar-collapsed .site-nav-link span{display:none}
+  body.site-sidebar-collapsed .site-brand-icon{display:inline-flex;color:var(--site-shell-gold)}
+  body.site-sidebar-collapsed .site-brand-icon .mt-icon{width:22px;height:22px}
+  body.site-sidebar-collapsed .site-sidebar-head{padding:14px 8px;text-align:center}
+  body.site-sidebar-collapsed .site-brand{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+  body.site-sidebar-collapsed .site-nav-link{justify-content:center;padding:8px}
+  body.site-sidebar-collapsed .site-sidebar-foot{flex-direction:column;gap:8px;padding:10px 8px}
+  body.site-sidebar-collapsed .site-sidebar-collapse{margin-left:0}
+}
+@media(max-width:980px){.site-sidebar-collapse{display:none}}
 .site-sidebar-toggle{display:none}.site-sidebar-backdrop{display:none}
 body.flat-shell{overflow-wrap:anywhere}
 body.flat-shell-app{padding-left:calc(var(--site-sidebar-width) + 18px);background:var(--site-shell-bg)}

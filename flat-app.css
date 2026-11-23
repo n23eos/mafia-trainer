@@ -31,7 +31,17 @@
   .flat-shell-app #screen-host .hd-panel-nav button[aria-current=page]{border-left:0;border-bottom:3px solid var(--hd-accent);padding:9px 10px 6px}
   .flat-shell-app #screen-host .hd-panel-stack,.flat-shell-app #screen-host .hd-workspace,.flat-shell-app #screen-host .hd-workspace>section{min-width:0;max-width:100%}
 }
-@media(min-width:981px) and (max-width:1399px){.flat-shell-app #screen-host[data-console-mode] .hd-workspace{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:981px) and (max-width:1399px){
+  body:not(.site-sidebar-collapsed).flat-shell-app #screen-host[data-console-mode] .hd-workspace{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:981px) and (max-width:1199px){
+  body.site-sidebar-collapsed.flat-shell-app #screen-host[data-console-mode] .hd-workspace{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:1200px) and (max-width:1399px){
+  body.site-sidebar-collapsed.flat-shell-app #screen-host[data-console-mode="pro"] .hd-workspace{grid-template-columns:minmax(0,1.45fr) minmax(290px,1fr)}
+}
+.flat-shell-app #screen-host .hd-new-game-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 12px;margin-bottom:8px}
+.flat-shell-app #screen-host .hd-new-game-bar p{margin:0;font-size:12px}
 @media(max-width:980px){.flat-shell-app #screen-host{--host-sticky-top:64px}.flat-shell-app #screen-host .hd-console-layout{display:block}.flat-shell-app #screen-host .hd-panel-nav{background:#0b1e17}.flat-shell-app .menu-hero{gap:14px}.flat-shell-app .hero-visual{max-height:120px}}
 @media(max-width:600px){.flat-shell-app .hero-visual{display:none}.flat-shell-app .menu-hero{padding-bottom:14px}.flat-shell-app .home-start{gap:10px;margin-bottom:14px}}
 
@@ -142,6 +152,9 @@
   background:var(--brass);
   color:#172219;
 }
+.flat-shell-app #screen-live :is(#liveMode,#toolCategories,#liveTools) button{
+  transition:none;
+}
 .flat-shell-app .observer-roster,
 .flat-shell-app #playerCard.observer-inline,
 .flat-shell-app .observer-takeaway,
@@ -160,6 +173,60 @@
   border-color:var(--brass);
   background:rgba(213,173,97,.14);
   color:var(--cream);
+}
+.flat-shell-app #screen-live .protocol{
+  border:1px solid var(--work-line);
+  border-radius:8px;
+  background:var(--work-surface);
+  color:var(--cream);
+  box-shadow:none;
+}
+.flat-shell-app #screen-live .protocol .ph-sub,
+.flat-shell-app #screen-live .note-empty,
+.flat-shell-app #screen-live .note-row .nr-k,
+.flat-shell-app #screen-live .live-log .le .lr,
+.flat-shell-app #screen-live .tech-log,
+.flat-shell-app #screen-live .lost-note,
+.flat-shell-app #screen-live #votePending{
+  color:var(--cream-dim);
+}
+.flat-shell-app #screen-live .note-empty{
+  border:0;
+}
+.flat-shell-app #screen-live .protocol .tab{
+  border-color:var(--work-line);
+  color:var(--cream-dim);
+}
+.flat-shell-app #screen-live .protocol .tab.active{
+  border-color:var(--brass);
+  background:rgba(213,173,97,.16);
+  color:var(--cream);
+}
+.flat-shell-app #screen-live :is(.voter,.voter-grid button,.vote-entry select,#noteInp){
+  border:1px solid #657c6d;
+  background:#0c2118;
+  color:var(--cream);
+}
+.flat-shell-app #screen-live :is(.voter.on,.voter[aria-pressed=true],.voter-grid button[aria-pressed=true]){
+  border-color:var(--brass);
+  background:rgba(213,173,97,.22);
+  color:var(--cream);
+}
+.flat-shell-app #screen-live .vg{
+  background:rgba(244,236,220,.04);
+  border-left-color:var(--brass-dim);
+}
+.flat-shell-app #screen-live .protocol .btn{
+  border-color:var(--brass-dim);
+  color:var(--cream);
+}
+.flat-shell-app #screen-live .note-row,
+.flat-shell-app #screen-live .live-log .le{
+  border-bottom-color:var(--work-line);
+  color:var(--cream);
+}
+.flat-shell-app #screen-live .live-log .plus{
+  color:#8fd29e;
 }
 .flat-shell-app #screen-advanced .protocol{
   border:1px solid var(--work-line);
